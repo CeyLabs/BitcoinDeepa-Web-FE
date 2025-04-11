@@ -1,22 +1,47 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "@/styles/theme.css";
+import type React from "react"
+import type { Metadata } from "next/dist/lib/metadata/types/metadata-interface"
+import { Exo_2 } from "next/font/google"
+import "./globals.css"
+import { ThemeProvider } from "@/src/components/theme-provider"
 
-const inter = Inter({ subsets: ["latin"] });
+const exo2 = Exo_2({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-exo2",
+})
 
 export const metadata: Metadata = {
-    title: "BitcoinDeepa",
-    description: "Bitcoin Deepa — Where innovation, Bitcoin, and community build together in Sri Lanka 🇱🇰",
-};
+  title: "BitcoinDeepa",
+  description: "Bitcoin Deepa — Where innovation, Bitcoin, and community build together in Sri Lanka 🇱🇰",
+    generator: 'Next.js 15.3.0',
+  applicationName: 'BitcoinDeepa',
+  referrer: 'origin-when-cross-origin',
+  keywords: [
+    "Bitcoin",
+    "Sri Lanka",
+    "Bitcoin Community",
+    "Bitcoin Education",
+    "Bitcoin News",
+    "Bitcoin Events",
+    "Bitcoin Resources",
+    "Bitcoin Wallets",],
+}
 
 export default function RootLayout({
-    children,
+  children,
 }: Readonly<{
-    children: React.ReactNode;
+  children: React.ReactNode
 }>) {
-    return (
-        <html lang="en">
-            <body className={inter.className}>{children}</body>
-        </html>
-    );
+  return (
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${exo2.className} antialiased`}>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} disableTransitionOnChange>
+          {children}
+        </ThemeProvider>
+      </body>
+    </html>
+  )
 }
+
+
+import './globals.css'
