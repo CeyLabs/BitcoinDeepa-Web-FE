@@ -35,11 +35,11 @@ export default function Hero() {
               finance together.
             </p>
             <div className="flex flex-row gap-4 justify-center lg:justify-start max-w-[95%] mx-auto lg:mx-0 lg:max-w-none">
-              <Button size="lg" className="bg-bitcoin hover:bg-bitcoin-dark text-white font-medium">
+              <Button className="bg-bitcoin hover:bg-bitcoin-dark text-white font-medium">
                 Join Community
               </Button>
               <Button
-                size="lg"
+                // size="lg"
                 variant="outline"
                 className="border-bitcoin text-bitcoin hover:bg-bitcoin/10 font-medium"
               >
