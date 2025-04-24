@@ -2,7 +2,14 @@
 
 import type React from "react";
 import { useState, useEffect, useRef } from "react";
-import { ArrowRight, ArrowLeft, Clock, MapPin } from "lucide-react";
+import {
+  ArrowRight,
+  ArrowLeft,
+  Clock,
+  MapPin,
+  ExternalLink,
+  Calendar,
+} from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface EventData {
@@ -14,6 +21,28 @@ interface EventData {
   location_type: string;
   url: string;
   image_url?: string;
+  latitude?: string;
+  longitude?: string;
+  geo_address_info?: {
+    city?: string;
+    address?: string;
+    country?: string;
+    full_address?: string;
+  };
+}
+
+function getDisplayLocation(
+  event: EventData,
+  type: "short" | "full" = "short"
+) {
+  if (event.location_type === "ONLINE") return "Online Event";
+  if (event.geo_address_info) {
+    const { address, city, country, full_address } = event.geo_address_info;
+    if (type === "full" && full_address) return full_address;
+    if (address && city) return `${address}, ${city}`;
+    if (city) return city;
+  }
+  return event.location || "Location TBA";
 }
 
 export default function EventsSection() {
@@ -21,6 +50,7 @@ export default function EventsSection() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(0);
+  const [hoveredMapId, setHoveredMapId] = useState<string | null>(null);
   const carouselRef = useRef<HTMLDivElement>(null);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
@@ -30,21 +60,37 @@ export default function EventsSection() {
       try {
         setLoading(true);
 
-        const response = await fetch("https://ceylabs.io/api/luma-events/v2/", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${process.env.NEXT_PUBLIC_UUID}`,
-          },
-          body: JSON.stringify({
-            uuid: "cal-ScJJJWHs8MPxBGt",
-          }),
-        });
+        const response = await fetch(
+          "https://ceylabs.io/api/luma-events/v3/?calendar=cal-wMA8oEbnEEFAAH5",
+          {
+            headers: {
+              Authorization: `Bearer ${process.env.NEXT_PUBLIC_UUID}`,
+            },
+          }
+        );
 
         if (!response.ok) throw new Error("Failed to fetch events");
 
         const data = await response.json();
-        setEvents(data);
+
+        const transformed: EventData[] = (data || []).map((item: any) => {
+          const event = item.event;
+          return {
+            id: event.api_id,
+            title: event.name,
+            start_time: event.start_at,
+            end_time: event.end_at,
+            location: item.calendar?.geo_city || "N/A",
+            location_type: event.location_type,
+            url: `https://lu.ma/${event.url}`,
+            image_url: event.cover_url,
+            latitude: event.geo_latitude,
+            longitude: event.geo_longitude,
+            geo_address_info: event.geo_address_info,
+          };
+        });
+
+        setEvents(transformed);
       } catch (err) {
         console.error("Error fetching events:", err);
         setError("Unable to load events at this time");
@@ -65,27 +111,33 @@ export default function EventsSection() {
     });
   };
 
-  const formatTime = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleTimeString("en-US", {
+  const formatTimeRange = (start: string, end: string) => {
+    const startTime = new Date(start);
+    const endTime = new Date(end);
+    const options: Intl.DateTimeFormatOptions = {
       hour: "numeric",
       minute: "2-digit",
       hour12: true,
-    });
+    };
+    return `${startTime.toLocaleTimeString(
+      "en-US",
+      options
+    )} - ${endTime.toLocaleTimeString("en-US", options)}`;
+  };
+
+  const getGoogleMapsUrl = (lat?: string, lng?: string) => {
+    if (!lat || !lng) return "#";
+    return `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
   };
 
   const totalPages = Math.ceil(events.length / 3);
 
   const nextSlide = () => {
-    if (currentPage < totalPages - 1) {
-      setCurrentPage(currentPage + 1);
-    }
+    if (currentPage < totalPages - 1) setCurrentPage(currentPage + 1);
   };
 
   const prevSlide = () => {
-    if (currentPage > 0) {
-      setCurrentPage(currentPage - 1);
-    }
+    if (currentPage > 0) setCurrentPage(currentPage - 1);
   };
 
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -99,27 +151,16 @@ export default function EventsSection() {
   const handleTouchEnd = () => {
     if (!touchStart || !touchEnd) return;
     const distance = touchStart - touchEnd;
-    const isLeftSwipe = distance > 50;
-    const isRightSwipe = distance < -50;
-
-    if (isLeftSwipe && currentPage < totalPages - 1) {
-      nextSlide();
-    }
-
-    if (isRightSwipe && currentPage > 0) {
-      prevSlide();
-    }
-
+    if (distance > 50 && currentPage < totalPages - 1) nextSlide();
+    if (distance < -50 && currentPage > 0) prevSlide();
     setTouchStart(null);
     setTouchEnd(null);
   };
 
   return (
     <section id="events" className="py-16 md:py-24 relative overflow-hidden">
-      {/* Background elements */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-bitcoin/5 via-transparent to-transparent pointer-events-none"></div>
-
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -133,8 +174,8 @@ export default function EventsSection() {
               <span className="text-bitcoin ml-2">Meetups</span>
             </h2>
             <p className="text-gray-400 max-w-md">
-              Join us at our upcoming events to connect with fellow Bitcoin
-              enthusiasts in Sri Lanka
+              Be part of the Bitcoin Deepa community join our events, share
+              ideas, and vibe with the community across Sri Lanka.
             </p>
           </div>
 
@@ -143,7 +184,7 @@ export default function EventsSection() {
               <button
                 onClick={prevSlide}
                 disabled={currentPage === 0}
-                className="border border-bitcoin/20 text-bitcoin hover:bg-bitcoin/10 hover:border-bitcoin disabled:opacity-30 h-10 w-10 rounded-full flex items-center justify-center"
+                className="border border-bitcoin/20 text-bitcoin hover:bg-bitcoin/10 hover:border-bitcoin disabled:opacity-30 h-10 w-10 rounded-full flex items-center justify-center transition-colors"
               >
                 <ArrowLeft className="h-5 w-5" />
                 <span className="sr-only">Previous page</span>
@@ -154,7 +195,7 @@ export default function EventsSection() {
               <button
                 onClick={nextSlide}
                 disabled={currentPage >= totalPages - 1}
-                className="border border-bitcoin/20 text-bitcoin hover:bg-bitcoin/10 hover:border-bitcoin disabled:opacity-30 h-10 w-10 rounded-full flex items-center justify-center"
+                className="border border-bitcoin/20 text-bitcoin hover:bg-bitcoin/10 hover:border-bitcoin disabled:opacity-30 h-10 w-10 rounded-full flex items-center justify-center transition-colors"
               >
                 <ArrowRight className="h-5 w-5" />
                 <span className="sr-only">Next page</span>
@@ -164,14 +205,25 @@ export default function EventsSection() {
         </motion.div>
 
         {loading ? (
-          <div className="flex justify-center items-center min-h-[400px]">
-            <div className="flex flex-col items-center">
-              <div className="relative w-16 h-16">
-                <div className="absolute top-0 left-0 w-full h-full border-4 border-bitcoin/20 rounded-full"></div>
-                <div className="absolute top-0 left-0 w-full h-full border-4 border-transparent border-t-bitcoin rounded-full animate-spin"></div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {Array.from({
+              length: events.length
+                ? events.slice(currentPage * 3, currentPage * 3 + 3).length
+                : 3,
+            }).map((_, i) => (
+              <div
+                key={i}
+                className="animate-pulse flex flex-col h-full bg-zinc-900/50 backdrop-blur-sm border border-bitcoin/10 rounded-xl overflow-hidden"
+              >
+                <div className="w-full aspect-[1/1] bg-zinc-800" />
+                <div className="p-5 space-y-4">
+                  <div className="h-4 bg-zinc-700 rounded w-3/4" />
+                  <div className="h-3 bg-zinc-700 rounded w-1/2" />
+                  <div className="h-3 bg-zinc-700 rounded w-1/3" />
+                  <div className="h-8 bg-bitcoin/50 rounded mt-4" />
+                </div>
               </div>
-              <p className="mt-4 text-gray-400">Loading events...</p>
-            </div>
+            ))}
           </div>
         ) : error ? (
           <div className="bg-zinc-900/50 backdrop-blur-sm border border-red-500/20 rounded-xl p-8 text-center">
@@ -200,30 +252,23 @@ export default function EventsSection() {
           </div>
         ) : events.length === 0 ? (
           <div className="bg-zinc-900/50 backdrop-blur-sm border border-bitcoin/10 rounded-xl p-8 text-center">
-            <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-bitcoin/10 mb-4">
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="text-bitcoin"
-              >
-                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                <line x1="16" y1="2" x2="16" y2="6"></line>
-                <line x1="8" y1="2" x2="8" y2="6"></line>
-                <line x1="3" y1="10" x2="21" y2="10"></line>
-              </svg>
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-bitcoin/10 mb-4">
+              <Calendar className="h-8 w-8 text-bitcoin" />
             </div>
-            <h3 className="text-xl font-medium text-white mb-2">
-              No Upcoming Events
+            <h3 className="text-2xl font-medium text-white mb-3">
+              No Upcoming Events happening at the moment.
             </h3>
-            <p className="text-gray-400">
-              Check back soon for new Bitcoin meetups and events
+            <p className="text-gray-400 max-w-md mx-auto mb-6">
+              Check back later for new events.
             </p>
+            {/* <a
+              href="https://t.me/bitcoindeepa"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center rounded-md text-sm font-medium bg-bitcoin hover:bg-bitcoin-dark text-black h-10 px-5 py-2 transition-colors"
+            >
+              Join Our Telegram
+            </a> */}
           </div>
         ) : (
           <div
@@ -243,6 +288,12 @@ export default function EventsSection() {
                 className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
               >
                 {events
+                  .slice()
+                  .sort(
+                    (a, b) =>
+                      new Date(a.start_time).getTime() -
+                      new Date(b.start_time).getTime()
+                  )
                   .slice(currentPage * 3, currentPage * 3 + 3)
                   .map((event) => (
                     <motion.div
@@ -250,82 +301,85 @@ export default function EventsSection() {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.3 }}
+                      className="flex flex-col h-full bg-zinc-900/50 backdrop-blur-sm border border-bitcoin/10 hover:border-bitcoin/30 transition-all duration-300 rounded-xl overflow-hidden"
                     >
-                      <div className="flex flex-col h-full bg-zinc-900/50 backdrop-blur-sm border border-bitcoin/10 hover:border-bitcoin/30 transition-all duration-300 overflow-hidden rounded-xl">
+                      <div className="relative w-full aspect-[1/1] overflow-hidden">
                         {event.image_url ? (
-                          <div className="relative w-full pt-[56.25%] overflow-hidden">
-                            <img
-                              src={event.image_url || "/placeholder.svg"}
-                              alt={event.title}
-                              className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 hover:scale-110"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 to-transparent opacity-60"></div>
-                            <div className="absolute bottom-3 left-3 bg-bitcoin text-black text-sm font-medium px-3 py-1 rounded-full">
-                              {formatDate(event.start_time)}
-                            </div>
-                          </div>
+                          <img
+                            src={event.image_url || "/placeholder.svg"}
+                            alt={event.title}
+                            className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                          />
                         ) : (
-                          <div className="relative w-full pt-[56.25%] bg-gradient-to-br from-zinc-800 to-zinc-900">
-                            <div className="absolute inset-0 flex items-center justify-center">
-                              <svg
-                                width="64"
-                                height="64"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="1"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                className="text-bitcoin/20"
-                              >
-                                <rect
-                                  x="3"
-                                  y="4"
-                                  width="18"
-                                  height="18"
-                                  rx="2"
-                                  ry="2"
-                                ></rect>
-                                <line x1="16" y1="2" x2="16" y2="6"></line>
-                                <line x1="8" y1="2" x2="8" y2="6"></line>
-                                <line x1="3" y1="10" x2="21" y2="10"></line>
-                              </svg>
-                            </div>
-                            <div className="absolute bottom-3 left-3 bg-bitcoin text-black text-sm font-medium px-3 py-1 rounded-full">
-                              {formatDate(event.start_time)}
-                            </div>
+                          <div className="flex items-center justify-center h-full bg-gradient-to-br from-zinc-800 to-zinc-900">
+                            <Calendar className="h-16 w-16 text-bitcoin/20" />
                           </div>
                         )}
 
-                        <div className="p-5">
-                          <h3 className="text-xl font-semibold text-white line-clamp-2 mb-4">
-                            {event.title}
-                          </h3>
+                        {/* Strong gradient overlay from bottom to top */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] to-transparent"></div>
 
-                          <div className="space-y-3 text-sm text-gray-400">
-                            <div className="flex items-start">
-                              <Clock className="w-4 h-4 mr-2 mt-0.5 flex-shrink-0 text-bitcoin" />
-                              <span>{formatTime(event.start_time)}</span>
-                            </div>
-                            <div className="flex items-start">
-                              <MapPin className="w-4 h-4 mr-2 mt-0.5 flex-shrink-0 text-bitcoin" />
-                              <span className="line-clamp-2">
-                                {event.location}
+                        {/* Date badge with shadow and glow effect */}
+                        <div className="absolute top-3 left-3 bg-bitcoin text-black text-sm font-medium px-3 py-1 rounded-md shadow-[0_0_15px_rgba(255,153,0,0.5)] backdrop-blur-[1px]">
+                          {formatDate(event.start_time)}
+                        </div>
+                      </div>
+
+                      <div className="p-5 flex flex-col flex-grow">
+                        <h3 className="text-white text-xl font-bold mb-4 line-clamp-2 min-h-[3.5rem]">
+                          {event.title}
+                        </h3>
+
+                        <div className="space-y-2 text-sm text-gray-400 mb-4">
+                          <div className="flex items-center">
+                            <Clock className="w-4 h-4 mr-2 text-bitcoin" />
+                            <span>
+                              {formatTimeRange(
+                                event.start_time,
+                                event.end_time
+                              )}
+                            </span>
+                          </div>
+
+                          <div className="relative">
+                            <a
+                              href={getGoogleMapsUrl(
+                                event.latitude,
+                                event.longitude
+                              )}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-start gap-2 group"
+                              onMouseEnter={() => setHoveredMapId(event.id)}
+                              onMouseLeave={() => setHoveredMapId(null)}
+                            >
+                              <MapPin className="w-4 h-4 min-w-[1rem] text-bitcoin group-hover:text-bitcoin-light transition-colors mt-0.5" />
+                              <span className="group-hover:text-bitcoin-light transition-colors break-words whitespace-pre-line relative z-20">
+                                {getDisplayLocation(event, "short")}
+                                <span className="absolute z-50 top-full left-0 mt-2 bg-zinc-900 text-white text-xs font-medium px-3 py-2 rounded shadow-lg opacity-0 hover:opacity-100 group-hover:opacity-100 transition-opacity w-max max-w-[300px] hidden md:block">
+                                  {getDisplayLocation(event, "full")}
+                                </span>
                               </span>
-                            </div>
+
+                              {hoveredMapId === event.id && (
+                                <div className="absolute -top-8 right-0 bg-bitcoin text-black text-xs font-medium px-2 py-1 rounded whitespace-nowrap flex items-center z-50">
+                                  Take me there
+                                  <ExternalLink className="w-3 h-3 ml-1" />
+                                  <div className="absolute -bottom-1 left-3 w-2 h-2 bg-bitcoin rotate-45"></div>
+                                </div>
+                              )}
+                            </a>
                           </div>
                         </div>
 
-                        <div className="mt-auto p-5 pt-0">
-                          <a
-                            href={event.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center justify-center rounded-full text-sm font-medium bg-bitcoin hover:bg-bitcoin-dark text-black h-10 px-5 py-2 w-full transition-colors"
-                          >
-                            Register Now
-                          </a>
-                        </div>
+                        <a
+                          href={event.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="mt-auto inline-flex items-center justify-center rounded-md text-sm font-medium bg-bitcoin hover:bg-bitcoin-dark text-black h-10 px-5 py-2 w-full transition-colors"
+                        >
+                          Register Now
+                        </a>
                       </div>
                     </motion.div>
                   ))}
