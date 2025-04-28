@@ -1,21 +1,23 @@
-"use client"
+"use client";
 
-import { useState, useRef, useEffect } from "react"
-import Link from "next/link"
-import Image from "next/image"
-import { X, Rocket } from "lucide-react"
-import { motion, AnimatePresence } from "framer-motion"
+import { useState, useRef, useEffect } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { X, Rocket } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function Navbar() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
-  const [activeMobileSection, setActiveMobileSection] = useState<string | null>("socials")
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [activeMobileSection, setActiveMobileSection] = useState<string | null>(
+    "socials"
+  );
 
   // Hover effect state
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
-  const [activeIndex, setActiveIndex] = useState(0)
-  const [hoverStyle, setHoverStyle] = useState({})
-  const tabRefs = useRef<(HTMLDivElement | null)[]>([])
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [hoverStyle, setHoverStyle] = useState({});
+  const tabRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   // Navigation items
   const navItems = [
@@ -23,47 +25,47 @@ export default function Navbar() {
     { label: "Community", dropdown: "community" },
     { label: "FAQ", href: "#faq" },
     { label: "Resources", dropdown: "resources" },
-  ]
+  ];
 
   // Update hover indicator position
   useEffect(() => {
     if (hoveredIndex !== null) {
-      const hoveredElement = tabRefs.current[hoveredIndex]
+      const hoveredElement = tabRefs.current[hoveredIndex];
       if (hoveredElement) {
-        const { offsetLeft, offsetWidth } = hoveredElement
+        const { offsetLeft, offsetWidth } = hoveredElement;
         setHoverStyle({
           left: `${offsetLeft}px`,
           width: `${offsetWidth}px`,
-        })
+        });
       }
     }
-  }, [hoveredIndex])
+  }, [hoveredIndex]);
 
   const handleMouseEnter = (index: number, dropdown?: string) => {
-    setHoveredIndex(index)
+    setHoveredIndex(index);
     if (dropdown) {
-      setActiveDropdown(dropdown)
+      setActiveDropdown(dropdown);
     }
-  }
+  };
 
   const handleMouseLeave = () => {
-    setHoveredIndex(null)
-    setActiveDropdown(null)
-  }
+    setHoveredIndex(null);
+    setActiveDropdown(null);
+  };
 
   const toggleMobileSection = (section: string) => {
     if (activeMobileSection === section) {
-      setActiveMobileSection(null)
+      setActiveMobileSection(null);
     } else {
-      setActiveMobileSection(section)
+      setActiveMobileSection(section);
     }
-  }
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 my-4 relative">
         <div
-          className="relative bg-black/60 backdrop-blur-xl rounded-3xl border border-zinc-800/50 shadow-lg overflow-visible"
+          className="relative bg-white/10 backdrop-blur-xl rounded-3xl border border-zinc-800/50 shadow-lg overflow-visible"
           onMouseLeave={handleMouseLeave}
         >
           {/* Main Navigation Bar */}
@@ -102,7 +104,11 @@ export default function Navbar() {
                     onClick={() => item.href && setActiveIndex(index)}
                   >
                     <div className="text-sm font-medium leading-5 whitespace-nowrap flex items-center justify-center h-full">
-                      {item.href ? <Link href={item.href}>{item.label}</Link> : item.label}
+                      {item.href ? (
+                        <Link href={item.href}>{item.label}</Link>
+                      ) : (
+                        item.label
+                      )}
                     </div>
                   </div>
                 ))}
@@ -125,7 +131,10 @@ export default function Navbar() {
             </div>
 
             {/* Mobile Menu Button */}
-            <button className="md:hidden text-bitcoin" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            <button
+              className="md:hidden text-bitcoin"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
               {isMenuOpen ? (
                 <X className="h-6 w-6" />
               ) : (
@@ -153,10 +162,14 @@ export default function Navbar() {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-6">
                       <div className="bg-bitcoin rounded-xl overflow-hidden">
                         <div className="p-6">
-                          <h3 className="text-white font-semibold mb-1">Bitcoin Basics</h3>
-                          <p className="text-white/80 text-sm mb-4 font-light">Start your journey into Bitcoin</p>
+                          <h3 className="text-white font-semibold mb-1">
+                            Bitcoindeepa Blog
+                          </h3>
+                          <p className="text-white/80 text-sm mb-4 font-light">
+                            Start your journey into Bitcoin
+                          </p>
                           <Link
-                            href="#bitcoin-basics"
+                            href="https://blog.bitcoindeepa.com"
                             className="text-white text-sm font-medium hover:underline inline-flex items-center"
                           >
                             Explore guides →
@@ -193,9 +206,13 @@ export default function Navbar() {
                                 <path d="M18 14a2 2 0 0 1-4 0" />
                               </svg>
                             </div>
-                            <h3 className="text-white font-semibold">Wallets & Security</h3>
+                            <h3 className="text-white font-semibold">
+                              Wallets & Security
+                            </h3>
                           </div>
-                          <p className="text-gray-400 text-sm font-light">Learn how to secure your Bitcoin</p>
+                          <p className="text-gray-400 text-sm font-light">
+                            Learn how to secure your Bitcoin
+                          </p>
                           <Link
                             href="#wallets"
                             className="text-bitcoin text-sm font-medium hover:underline mt-2 inline-flex items-center"
@@ -209,7 +226,13 @@ export default function Navbar() {
                         <div className="p-6">
                           <div className="flex items-center mb-2">
                             <div className="w-10 h-10 rounded-full bg-zinc-700 flex items-center justify-center mr-3">
-                              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="text-bitcoin">
+                              <svg
+                                width="20"
+                                height="20"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                className="text-bitcoin"
+                              >
                                 <path
                                   d="M12 16L7 11M12 16L17 11M12 16V4M21 20H3"
                                   stroke="currentColor"
@@ -219,9 +242,13 @@ export default function Navbar() {
                                 />
                               </svg>
                             </div>
-                            <h3 className="text-white font-semibold">Lightning Network</h3>
+                            <h3 className="text-white font-semibold">
+                              Lightning Network
+                            </h3>
                           </div>
-                          <p className="text-gray-400 text-sm font-light">Discover fast & cheap Bitcoin transactions</p>
+                          <p className="text-gray-400 text-sm font-light">
+                            Discover fast & cheap Bitcoin transactions
+                          </p>
                           <Link
                             href="#lightning"
                             className="text-bitcoin text-sm font-medium hover:underline mt-2 inline-flex items-center"
@@ -237,8 +264,12 @@ export default function Navbar() {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-6">
                       <div className="bg-bitcoin rounded-xl overflow-hidden">
                         <div className="p-6">
-                          <h3 className="text-white font-semibold mb-1">Events & Meetups</h3>
-                          <p className="text-white/80 text-sm mb-4 font-light">Connect with Bitcoiners in Sri Lanka</p>
+                          <h3 className="text-white font-semibold mb-1">
+                            Events & Meetups
+                          </h3>
+                          <p className="text-white/80 text-sm mb-4 font-light">
+                            Connect with Bitcoiners in Sri Lanka
+                          </p>
                           <Link
                             href="#events"
                             className="text-white text-sm font-medium hover:underline inline-flex items-center"
@@ -252,7 +283,13 @@ export default function Navbar() {
                         <div className="p-6">
                           <div className="flex items-center mb-2">
                             <div className="w-10 h-10 rounded-full bg-zinc-700 flex items-center justify-center mr-3">
-                              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="text-bitcoin">
+                              <svg
+                                width="20"
+                                height="20"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                className="text-bitcoin"
+                              >
                                 <path
                                   d="M17 8C17 10.7614 14.7614 13 12 13C9.23858 13 7 10.7614 7 8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8Z"
                                   stroke="currentColor"
@@ -266,9 +303,13 @@ export default function Navbar() {
                                 />
                               </svg>
                             </div>
-                            <h3 className="text-white font-semibold">Join Our Telegram</h3>
+                            <h3 className="text-white font-semibold">
+                              Join Our Telegram
+                            </h3>
                           </div>
-                          <p className="text-gray-400 text-sm font-light">Connect with our active community</p>
+                          <p className="text-gray-400 text-sm font-light">
+                            Connect with our active community
+                          </p>
                           <Link
                             href="#telegram"
                             className="text-bitcoin text-sm font-medium hover:underline mt-2 inline-flex items-center"
@@ -282,13 +323,23 @@ export default function Navbar() {
                         <div className="p-6">
                           <div className="flex items-center mb-2">
                             <div className="w-10 h-10 rounded-full bg-zinc-700 flex items-center justify-center mr-3">
-                              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="text-bitcoin">
+                              <svg
+                                width="20"
+                                height="20"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                className="text-bitcoin"
+                              >
                                 <path
                                   d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
                                   stroke="currentColor"
                                   strokeWidth="2"
                                 />
-                                <path d="M2 12H22" stroke="currentColor" strokeWidth="2" />
+                                <path
+                                  d="M2 12H22"
+                                  stroke="currentColor"
+                                  strokeWidth="2"
+                                />
                                 <path
                                   d="M12 2C14.5013 4.73835 15.9228 8.29203 16 12C15.9228 15.708 14.5013 19.2616 12 22C9.49872 19.2616 8.07725 15.708 8 12C8.07725 8.29203 9.49872 4.73835 12 2Z"
                                   stroke="currentColor"
@@ -296,9 +347,13 @@ export default function Navbar() {
                                 />
                               </svg>
                             </div>
-                            <h3 className="text-white font-semibold">Global Network</h3>
+                            <h3 className="text-white font-semibold">
+                              Global Network
+                            </h3>
                           </div>
-                          <p className="text-gray-400 text-sm font-light">Connect with Bitcoiners worldwide</p>
+                          <p className="text-gray-400 text-sm font-light">
+                            Connect with Bitcoiners worldwide
+                          </p>
                           <Link
                             href="#global"
                             className="text-bitcoin text-sm font-medium hover:underline mt-2 inline-flex items-center"
@@ -314,8 +369,12 @@ export default function Navbar() {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-6">
                       <div className="bg-bitcoin rounded-xl overflow-hidden">
                         <div className="p-6">
-                          <h3 className="text-white font-semibold mb-1">Learning Hub</h3>
-                          <p className="text-white/80 text-sm mb-4 font-light">Educational resources for all levels</p>
+                          <h3 className="text-white font-semibold mb-1">
+                            Learning Hub
+                          </h3>
+                          <p className="text-white/80 text-sm mb-4 font-light">
+                            Educational resources for all levels
+                          </p>
                           <Link
                             href="#resources"
                             className="text-white text-sm font-medium hover:underline inline-flex items-center"
@@ -329,7 +388,13 @@ export default function Navbar() {
                         <div className="p-6">
                           <div className="flex items-center mb-2">
                             <div className="w-10 h-10 rounded-full bg-zinc-700 flex items-center justify-center mr-3">
-                              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="text-bitcoin">
+                              <svg
+                                width="20"
+                                height="20"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                className="text-bitcoin"
+                              >
                                 <path
                                   d="M12 6.25278V19.2528M12 6.25278L6.5 10.0028M12 6.25278L17.5 10.0028M3 17.2528V8.75278C3 8.34038 3.18273 7.95278 3.48986 7.75278L11.4899 3.25278C11.8094 3.03054 12.1906 3.03054 12.5101 3.25278L20.5101 7.75278C20.8173 7.95278 21 8.34038 21 8.75278V17.2528C21 17.6652 20.8173 18.0528 20.5101 18.2528L12.5101 22.7528C12.1906 22.975 11.8094 22.975 11.4899 22.7528L3.48986 18.2528C3.18273 18.0528 3 17.6652 3 17.2528Z"
                                   stroke="currentColor"
@@ -339,9 +404,13 @@ export default function Navbar() {
                                 />
                               </svg>
                             </div>
-                            <h3 className="text-white font-semibold">Developer Resources</h3>
+                            <h3 className="text-white font-semibold">
+                              Developer Resources
+                            </h3>
                           </div>
-                          <p className="text-gray-400 text-sm font-light">Build on Bitcoin and Lightning</p>
+                          <p className="text-gray-400 text-sm font-light">
+                            Build on Bitcoin and Lightning
+                          </p>
                           <Link
                             href="#dev"
                             className="text-bitcoin text-sm font-medium hover:underline mt-2 inline-flex items-center"
@@ -355,7 +424,13 @@ export default function Navbar() {
                         <div className="p-6">
                           <div className="flex items-center mb-2">
                             <div className="w-10 h-10 rounded-full bg-zinc-700 flex items-center justify-center mr-3">
-                              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="text-bitcoin">
+                              <svg
+                                width="20"
+                                height="20"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                className="text-bitcoin"
+                              >
                                 <path
                                   d="M9 12H15M9 16H15M17 21H7C5.89543 21 5 20.1046 5 19V5C5 3.89543 5.89543 3 7 3H12.5858C12.851 3 13.1054 3.10536 13.2929 3.29289L18.7071 8.70711C18.8946 8.89464 19 9.149 19 9.41421V19C19 20.1046 18.1046 21 17 21Z"
                                   stroke="currentColor"
@@ -364,9 +439,13 @@ export default function Navbar() {
                                 />
                               </svg>
                             </div>
-                            <h3 className="text-white font-semibold">Whitepapers & Research</h3>
+                            <h3 className="text-white font-semibold">
+                              Whitepapers & Research
+                            </h3>
                           </div>
-                          <p className="text-gray-400 text-sm font-light">Deep dive into Bitcoin technology</p>
+                          <p className="text-gray-400 text-sm font-light">
+                            Deep dive into Bitcoin technology
+                          </p>
                           <Link
                             href="#research"
                             className="text-bitcoin text-sm font-medium hover:underline mt-2 inline-flex items-center"
@@ -399,7 +478,9 @@ export default function Navbar() {
                       className="w-full px-4 py-3 flex justify-between items-center"
                       onClick={() => toggleMobileSection("community")}
                     >
-                      <span className="text-bitcoin font-medium">COMMUNITY</span>
+                      <span className="text-bitcoin font-medium">
+                        COMMUNITY
+                      </span>
                       <span className="text-orange-500">→</span>
                     </button>
                   </div>
@@ -421,7 +502,9 @@ export default function Navbar() {
                       className="w-full px-4 py-3 flex justify-between items-center"
                       onClick={() => toggleMobileSection("resources")}
                     >
-                      <span className="text-bitcoin font-medium">RESOURCES</span>
+                      <span className="text-bitcoin font-medium">
+                        RESOURCES
+                      </span>
                       <span className="text-orange-500">→</span>
                     </button>
                   </div>
@@ -433,7 +516,9 @@ export default function Navbar() {
                       onClick={() => toggleMobileSection("socials")}
                     >
                       <span className="text-bitcoin font-medium">SOCIALS</span>
-                      <span className="text-orange-500">{activeMobileSection === "socials" ? "↓" : "→"}</span>
+                      <span className="text-orange-500">
+                        {activeMobileSection === "socials" ? "↓" : "→"}
+                      </span>
                     </button>
                     <AnimatePresence>
                       {activeMobileSection === "socials" && (
@@ -501,9 +586,21 @@ export default function Navbar() {
                                 strokeLinejoin="round"
                                 className="mb-1"
                               >
-                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <rect
+                                  x="2"
+                                  y="2"
+                                  width="20"
+                                  height="20"
+                                  rx="5"
+                                  ry="5"
+                                ></rect>
                                 <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                                <line
+                                  x1="17.5"
+                                  y1="6.5"
+                                  x2="17.51"
+                                  y2="6.5"
+                                ></line>
                               </svg>
                               <span className="text-sm">Instagram</span>
                             </Link>
@@ -528,5 +625,5 @@ export default function Navbar() {
         </div>
       </div>
     </header>
-  )
+  );
 }
