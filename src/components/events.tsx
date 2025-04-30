@@ -316,10 +316,8 @@ export default function EventsSection() {
                           </div>
                         )}
 
-                        {/* Strong gradient overlay from bottom to top */}
                         <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] to-transparent"></div>
 
-                        {/* Date badge with shadow and glow effect */}
                         <div className="absolute top-3 left-3 bg-bitcoin text-black text-sm font-medium px-3 py-1 rounded-md shadow-[0_0_15px_rgba(255,153,0,0.5)] backdrop-blur-[1px]">
                           {formatDate(event.start_time)}
                         </div>
@@ -341,7 +339,11 @@ export default function EventsSection() {
                             </span>
                           </div>
 
-                          <div className="relative">
+                          <div
+                            className="relative mb-4"
+                            onMouseEnter={() => setHoveredMapId(event.id)}
+                            onMouseLeave={() => setHoveredMapId(null)}
+                          >
                             <a
                               href={getGoogleMapsUrl(
                                 event.latitude,
@@ -350,25 +352,22 @@ export default function EventsSection() {
                               target="_blank"
                               rel="noopener noreferrer"
                               className="flex items-start gap-2 group"
-                              onMouseEnter={() => setHoveredMapId(event.id)}
-                              onMouseLeave={() => setHoveredMapId(null)}
                             >
                               <MapPin className="w-4 h-4 min-w-[1rem] text-bitcoin group-hover:text-bitcoin-light transition-colors mt-0.5" />
                               <span className="group-hover:text-bitcoin-light transition-colors break-words whitespace-pre-line relative z-20">
                                 {getDisplayLocation(event, "short")}
-                                <span className="absolute z-50 top-full left-0 mt-2 bg-zinc-900 text-white text-xs font-medium px-3 py-2 rounded shadow-lg opacity-0 hover:opacity-100 group-hover:opacity-100 transition-opacity w-max max-w-[300px] hidden md:block">
+                                <span className="absolute z-50 top-full left-0 mt-2 bg-zinc-900 text-white text-xs font-medium px-3 py-2 rounded shadow-lg opacity-0 hover:opacity-100 group-hover:opacity-100 transition-opacity w-max max-w-[300px] hidden md:block pointer-events-none">
                                   {getDisplayLocation(event, "full")}
                                 </span>
                               </span>
-
-                              {hoveredMapId === event.id && (
-                                <div className="absolute -top-8 right-0 bg-bitcoin text-black text-xs font-medium px-2 py-1 rounded whitespace-nowrap flex items-center z-50">
-                                  Take me there
-                                  <ExternalLink className="w-3 h-3 ml-1" />
-                                  <div className="absolute -bottom-1 left-3 w-2 h-2 bg-bitcoin rotate-45"></div>
-                                </div>
-                              )}
                             </a>
+                            {hoveredMapId === event.id && (
+                              <div className="absolute -top-8 right-0 bg-bitcoin text-black text-xs font-medium px-2 py-1 rounded whitespace-nowrap flex items-center z-50 pointer-events-none">
+                                Take me there
+                                <ExternalLink className="w-3 h-3 ml-1" />
+                                <div className="absolute -bottom-1 left-3 w-2 h-2 bg-bitcoin rotate-45"></div>
+                              </div>
+                            )}
                           </div>
                         </div>
 
@@ -376,7 +375,7 @@ export default function EventsSection() {
                           href={event.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="mt-auto inline-flex items-center justify-center rounded-md text-sm font-medium bg-bitcoin hover:bg-bitcoin-dark text-black h-10 px-5 py-2 w-full transition-colors"
+                          className="mt-2 inline-flex items-center justify-center rounded-md text-sm font-medium bg-bitcoin hover:bg-bitcoin-dark text-black h-10 px-5 py-2 w-full transition-colors"
                         >
                           Register Now
                         </a>
