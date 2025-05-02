@@ -1,11 +1,11 @@
-import Hero from "@/src/components/hero"
-import Navbar from "@/src/components/navbar"
-import FeaturesWithGradient from "@/src/components/features-with-gradient"
-import Community from "@/src/components/community"
-import BitcoinCard from "@/src/components/bitcoin-card"
-import Faq from "@/src/components/faq"
-import Footer from "@/src/components/footer"
-import JoinSection from "@/src/components/join-section"
+import Hero from "@/src/components/hero";
+import Navbar from "@/src/components/navbar";
+import FeaturesWithGradient from "@/src/components/features-with-gradient";
+import Community from "@/src/components/community";
+import BitcoinCard from "@/src/components/bitcoin-card";
+import Faq from "@/src/components/faq";
+import Footer from "@/src/components/footer";
+import JoinCommunity from "@/src/components/join-community";
 
 export default function Home() {
   return (
@@ -27,10 +27,10 @@ export default function Home() {
           <Community />
           <BitcoinCard />
           <Faq />
-          <JoinSection />
+          <JoinCommunity />
           <Footer />
         </div>
       </div>
     </div>
-  )
+  );
 }
