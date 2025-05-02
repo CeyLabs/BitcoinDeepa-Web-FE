@@ -63,7 +63,7 @@ export default function Navbar() {
     <header className="fixed top-0 left-0 right-0 z-50">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 my-4 relative">
         <div
-          className="relative bg-black/60 backdrop-blur-xl rounded-3xl border border-zinc-800/50 shadow-lg overflow-visible"
+          className="relative border-gray-800 backdrop-blur-xl rounded-3xl border border-zinc-800/50 shadow-lg overflow-visible"
           onMouseLeave={handleMouseLeave}
         >
           {/* Main Navigation Bar */}
