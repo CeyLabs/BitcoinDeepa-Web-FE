@@ -6,6 +6,7 @@ import BitcoinCard from "@/src/components/bitcoin-card";
 import Faq from "@/src/components/faq";
 import Footer from "@/src/components/footer";
 import JoinCommunity from "@/src/components/join-community";
+import Events from "../components/events";
 
 export default function Home() {
   return (
@@ -26,6 +27,7 @@ export default function Home() {
           <FeaturesWithGradient />
           <Community />
           <BitcoinCard />
+          <Events />
           <Faq />
           <JoinCommunity />
           <Footer />

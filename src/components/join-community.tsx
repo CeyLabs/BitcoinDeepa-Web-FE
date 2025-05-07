@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { Bitcoin, ExternalLink } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { BitcoinIcon1, BitcoinIcon2, LightningIcon } from "./icons";
 
 const FloatingElement = ({
   icon,
@@ -50,56 +51,14 @@ const FloatingElement = ({
   );
 };
 
-const BitcoinIcon1 = ({ className }: { className?: string }) => (
-  <svg
-    viewBox="0 0 24 24"
-    width="100%"
-    height="100%"
-    className={className}
-    fill="currentColor"
-  >
-    <path d="M11.5 11.5V8.5C11.5 7.4 10.6 6.5 9.5 6.5H7.5V11.5H11.5ZM11.5 11.5V14.5C11.5 15.6 10.6 16.5 9.5 16.5H7.5V11.5H11.5ZM11.5 11.5H13.5C14.6 11.5 15.5 10.6 15.5 9.5C15.5 8.4 14.6 7.5 13.5 7.5H11.5V11.5Z" />
-    <path d="M12 0.5C5.7 0.5 0.5 5.7 0.5 12C0.5 18.3 5.7 23.5 12 23.5C18.3 23.5 23.5 18.3 23.5 12C23.5 5.7 18.3 0.5 12 0.5ZM12 21.5C6.8 21.5 2.5 17.2 2.5 12C2.5 6.8 6.8 2.5 12 2.5C17.2 2.5 21.5 6.8 21.5 12C21.5 17.2 17.2 21.5 12 21.5Z" />
-  </svg>
-);
-
-const BitcoinIcon2 = ({ className }: { className?: string }) => (
-  <svg
-    viewBox="0 0 24 24"
-    width="100%"
-    height="100%"
-    className={className}
-    fill="currentColor"
-  >
-    <path d="M13.1 11.2v-3.1c0-1.6-1.3-2.9-2.9-2.9H6.8v8.9h3.4c1.6 0 2.9-1.3 2.9-2.9zm-2.9-4.3c0.7 0 1.2 0.5 1.2 1.2v3.1c0 0.7-0.5 1.2-1.2 1.2H8.5V6.9h1.7z" />
-    <path d="M13.1 13.9v3.1c0 1.6-1.3 2.9-2.9 2.9H6.8v-8.9h3.4c1.6 0 2.9 1.3 2.9 2.9zm-2.9 4.3c0.7 0 1.2-0.5 1.2-1.2v-3.1c0-0.7-0.5-1.2-1.2-1.2H8.5v5.5h1.7z" />
-    <path d="M17.2 9.7c0 1.1-0.9 2-2 2h-2.1V5.7h2.1c1.1 0 2 0.9 2 2v2zm-1.7 0v-2c0-0.2-0.1-0.3-0.3-0.3h-0.4v2.6h0.4c0.2 0 0.3-0.1 0.3-0.3z" />
-    <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.6 0 12 0zm0 22.5C6.2 22.5 1.5 17.8 1.5 12S6.2 1.5 12 1.5 22.5 6.2 22.5 12 17.8 22.5 12 22.5z" />
-  </svg>
-);
-
-const LightningIcon = ({ className }: { className?: string }) => (
-  <svg
-    viewBox="0 0 24 24"
-    width="100%"
-    height="100%"
-    className={className}
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" />
-  </svg>
-);
-
 export default function JoinCommunity() {
   const [floatingElements, setFloatingElements] = useState<React.ReactNode[]>(
     []
   );
 
   useEffect(() => {
+    let resizeTimeout: NodeJS.Timeout;
+
     const generateElements = () => {
       const elements = [];
       const count = window.innerWidth < 768 ? 8 : 15;
@@ -134,8 +93,16 @@ export default function JoinCommunity() {
 
     generateElements();
 
-    window.addEventListener("resize", generateElements);
-    return () => window.removeEventListener("resize", generateElements);
+    const debouncedResize = () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(generateElements, 300);
+    };
+
+    window.addEventListener("resize", debouncedResize);
+    return () => {
+      clearTimeout(resizeTimeout);
+      window.removeEventListener("resize", debouncedResize);
+    };
   }, []);
 
   return (
@@ -159,9 +126,8 @@ export default function JoinCommunity() {
             </span>
           </h2>
           <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
-            Connect with fellow Bitcoin enthusiasts, attend exclusive events,
-            and stay updated with the latest news and educational resources from
-            the Sri Lankan Bitcoin community.
+            Learn, connect, and grow with Sri Lanka’s Bitcoin community from
+            grassroots meetups to BitcoinDeepa initiatives by Pearl of Satoshi.
           </p>
 
           <div className="relative">
@@ -189,19 +155,19 @@ export default function JoinCommunity() {
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 rounded-full bg-bitcoin"></div>
               <p className="text-gray-300 font-medium text-base sm:text-lg">
-                Monthly Meetups
+                Community Meetups 🗓️
               </p>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 rounded-full bg-bitcoin"></div>
               <p className="text-gray-300 font-medium text-base sm:text-lg">
-                Educational Resources
+                BitcoinDeepa Initiatives ⚡
               </p>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 rounded-full bg-bitcoin"></div>
               <p className="text-gray-300 font-medium text-base sm:text-lg">
-                Global Network
+                Global Reach 🌍
               </p>
             </div>
           </div>
