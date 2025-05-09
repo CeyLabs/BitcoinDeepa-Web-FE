@@ -7,6 +7,7 @@ import Faq from "@/src/components/faq";
 import Footer from "@/src/components/footer";
 import JoinSection from "@/src/components/join-section";
 import Events from "../components/events";
+import BlogSection from "../components/blog-section";
 
 export default function Home() {
   return (
@@ -28,6 +29,7 @@ export default function Home() {
           <Community />
           <BitcoinCard />
           <Events />
+          <BlogSection />
           <Faq />
           <JoinSection />
           <Footer />
