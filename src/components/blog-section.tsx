@@ -57,7 +57,6 @@ export default function BlogSection() {
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
 
-  // Memoizing the formatDate function
   const formatDate = useMemo(
     () => (dateString: string) => {
       const date = new Date(dateString);
@@ -70,32 +69,24 @@ export default function BlogSection() {
     []
   );
 
-  const fetchPosts = useCallback(async () => {
-    try {
-      setLoading(true);
-      const apiKey = process.env.NEXT_PUBLIC_GHOST_CONTENT_API_KEY;
-      const apiUrl = process.env.NEXT_PUBLIC_GHOST_API_URL;
-      const url = `${apiUrl}/ghost/api/content/posts/?key=${apiKey}&include=authors,tags&limit=6`;
-
-      const response = await fetch(url);
-
-      if (!response.ok) {
-        throw new Error(`Failed to fetch posts: ${response.status}`);
-      }
-
-      const data: GhostApiResponse = await response.json();
-      setPosts(data.posts);
-    } catch (err) {
-      console.error("Error fetching blog posts:", err);
-      setError("Failed to load blog posts. Please try again later.");
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
   useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await fetch("/api/Ghost/fetchPosts");
+        if (!response.ok) {
+          throw new Error("Failed to fetch posts");
+        }
+        const data = await response.json();
+        setPosts(data.posts);
+      } catch (error) {
+        setError("Failed to load blog posts");
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchPosts();
-  }, [fetchPosts]); // Only re-run the effect if fetchPosts changes
+  }, []);
 
   const nextSlide = () => {
     if (currentSlide < posts.length - 1) {
