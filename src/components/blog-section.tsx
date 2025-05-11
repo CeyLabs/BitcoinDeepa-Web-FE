@@ -70,9 +70,9 @@ export default function BlogSection() {
   );
 
   useEffect(() => {
-    const fetchPosts = async () => {
+    const blogPosts = async () => {
       try {
-        const response = await fetch("/api/Ghost/fetchPosts");
+        const response = await fetch("/api/blog/posts");
         if (!response.ok) {
           throw new Error("Failed to fetch posts");
         }
@@ -85,7 +85,7 @@ export default function BlogSection() {
       }
     };
 
-    fetchPosts();
+    blogPosts();
   }, []);
 
   const nextSlide = () => {
