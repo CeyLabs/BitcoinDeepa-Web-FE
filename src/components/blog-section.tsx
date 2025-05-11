@@ -126,13 +126,13 @@ export default function BlogSection() {
     <section id="blog" className="py-16 md:py-24 relative overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-bitcoin/5 via-transparent to-transparent pointer-events-none"></div>
 
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="flex flex-col md:flex-row items-center justify-between mb-12"
+          className="flex flex-col items-center justify-between mb-12 md:flex-row"
         >
           <div className="text-center md:text-left mb-6 md:mb-0">
             <h2 className="text-3xl md:text-4xl font-bold mb-3">
@@ -144,47 +144,55 @@ export default function BlogSection() {
             </p>
           </div>
 
-          <div className="flex items-center space-x-3">
-            <Link
-              href="https://blog.bitcoindeepa.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-bitcoin hover:text-bitcoin-light transition-colors text-sm font-medium"
-            >
-              View all posts
-            </Link>
+          {posts.length > 0 && (
+            <div className="flex items-center space-x-3">
+              <Link
+                href="https://blog.bitcoindeepa.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-bitcoin hover:text-bitcoin-light transition-colors text-sm font-medium mr-6"
+              >
+                View all posts
+              </Link>
 
-            <div className="flex md:hidden items-center space-x-3">
-              <button
-                onClick={prevSlide}
-                className="border border-bitcoin/20 text-bitcoin hover:bg-bitcoin/10 hover:border-bitcoin h-10 w-10 rounded-full flex items-center justify-center transition-colors"
-              >
-                <ArrowLeft className="h-5 w-5" />
-                <span className="sr-only">Previous</span>
-              </button>
-              <div className="text-sm text-gray-400">
-                {currentSlide + 1} / {Math.ceil(posts.length / 1)}
+              <div className="flex md:hidden items-center space-x-3">
+                <button
+                  onClick={prevSlide}
+                  className="border border-bitcoin/20 text-bitcoin hover:bg-bitcoin/10 hover:border-bitcoin h-10 w-10 rounded-full flex items-center justify-center transition-colors"
+                >
+                  <ArrowLeft className="h-5 w-5" />
+                  <span className="sr-only">Previous</span>
+                </button>
+                <div className="text-sm text-gray-400">
+                  {currentSlide + 1} / {Math.ceil(posts.length / 1)}
+                </div>
+                <button
+                  onClick={nextSlide}
+                  className="border border-bitcoin/20 text-bitcoin hover:bg-bitcoin/10 hover:border-bitcoin h-10 w-10 rounded-full flex items-center justify-center transition-colors"
+                >
+                  <ArrowRight className="h-5 w-5" />
+                  <span className="sr-only">Next</span>
+                </button>
               </div>
-              <button
-                onClick={nextSlide}
-                className="border border-bitcoin/20 text-bitcoin hover:bg-bitcoin/10 hover:border-bitcoin h-10 w-10 rounded-full flex items-center justify-center transition-colors"
-              >
-                <ArrowRight className="h-5 w-5" />
-                <span className="sr-only">Next</span>
-              </button>
             </div>
-          </div>
+          )}
         </motion.div>
 
         {loading ? (
-          <div className="flex justify-center items-center min-h-[400px]">
-            <div className="flex flex-col items-center">
-              <div className="relative w-16 h-16">
-                <div className="absolute top-0 left-0 w-full h-full border-4 border-bitcoin/20 rounded-full"></div>
-                <div className="absolute top-0 left-0 w-full h-full border-4 border-transparent border-t-bitcoin rounded-full animate-spin"></div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <div
+                key={i}
+                className="animate-pulse flex flex-col h-full bg-zinc-900/50 backdrop-blur-sm border border-bitcoin/10 rounded-xl overflow-hidden"
+              >
+                <div className="w-full aspect-[16/9] bg-zinc-800" />
+                <div className="p-5 space-y-4">
+                  <div className="h-4 bg-zinc-700 rounded w-3/4" />
+                  <div className="h-3 bg-zinc-700 rounded w-1/2" />
+                  <div className="h-3 bg-zinc-700 rounded w-1/3" />
+                </div>
               </div>
-              <p className="mt-4 text-gray-400">Loading blog posts...</p>
-            </div>
+            ))}
           </div>
         ) : error ? (
           <div className="bg-zinc-900/50 backdrop-blur-sm border border-red-500/20 rounded-xl p-8 text-center">
@@ -275,7 +283,7 @@ export default function BlogSection() {
               </div>
             </div>
 
-            <div className="hidden md:grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="hidden md:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {posts.slice(0, 3).map((post) => (
                 <BlogPostCard key={post.id} post={post} />
               ))}
@@ -340,12 +348,6 @@ function BlogPostCard({ post }: { post: GhostPost }) {
             </svg>
           </div>
         )}
-
-        {/* {post.featured && (
-          <div className="absolute top-3 right-3 w-8 h-8 bg-bitcoin rounded-full flex items-center justify-center">
-            <Star className="h-4 w-4 text-black" fill="black" />
-          </div>
-        )} */}
       </Link>
 
       <div className="flex-1 p-6 flex flex-col">
