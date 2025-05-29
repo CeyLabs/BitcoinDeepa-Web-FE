@@ -13,6 +13,7 @@ import {
 } from "framer-motion";
 import { GradientButton } from "./gradient-button";
 import { CardModal } from "@/src/components/ui/card-modal";
+import { LightningPattern } from "./icons";
 
 export default function BitcoinCard() {
   const [isFlipped, setIsFlipped] = useState(false);
@@ -87,34 +88,7 @@ export default function BitcoinCard() {
 
       {/* Lightning bolt patterns */}
       <div className="absolute inset-0 opacity-10 pointer-events-none">
-        <svg
-          width="100%"
-          height="100%"
-          viewBox="0 0 100 100"
-          preserveAspectRatio="none"
-        >
-          <path
-            d="M30,10 L20,45 L35,45 L15,90"
-            stroke="#f90"
-            strokeWidth="0.5"
-            fill="none"
-            className="absolute transform scale-150"
-          />
-          <path
-            d="M70,10 L60,45 L75,45 L55,90"
-            stroke="#f90"
-            strokeWidth="0.5"
-            fill="none"
-            className="absolute transform scale-150 translate-x-20"
-          />
-          <path
-            d="M50,5 L40,40 L55,40 L35,95"
-            stroke="#f90"
-            strokeWidth="0.5"
-            fill="none"
-            className="absolute transform scale-150 translate-x-10"
-          />
-        </svg>
+        <LightningPattern />
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
