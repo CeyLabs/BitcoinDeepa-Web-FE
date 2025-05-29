@@ -138,6 +138,5 @@ export const LightningPattern = () => (
       fill="none"
       className="absolute transform scale-150 translate-x-10"
     />
-  );
-  
+  </svg>
 );
