@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server';
 
-export async function GET() {
-  const apiKey = process.env.GHOST_CONTENT_API_KEY;  
-  const apiUrl = process.env.GHOST_API_URL;  
+const apiKey = process.env.GHOST_CONTENT_API_KEY;
+const apiUrl = process.env.GHOST_API_URL;
 
+export async function GET() {
   try {
     const response = await fetch(`${apiUrl}/ghost/api/content/posts/?key=${apiKey}&include=authors,tags&limit=6`);
 
