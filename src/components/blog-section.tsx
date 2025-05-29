@@ -1,11 +1,13 @@
 "use client";
 
 import type React from "react";
-import { useState, useEffect, useRef, useCallback, useMemo, use } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft, ArrowRight, Star, Clock } from "lucide-react";
 import { motion } from "framer-motion";
+import { formatDate } from "../lib/utils";
+import { AlertCircleIcon, EmptyFileIcon, EmptyImageIcon } from "./icons";
 
 interface GhostAuthor {
   id: string;
@@ -56,18 +58,6 @@ export default function BlogSection() {
   const sliderRef = useRef<HTMLDivElement>(null);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
-
-  const formatDate = useMemo(
-    () => (dateString: string) => {
-      const date = new Date(dateString);
-      return date.toLocaleDateString("en-US", {
-        month: "long",
-        day: "numeric",
-        year: "numeric",
-      });
-    },
-    []
-  );
 
   useEffect(() => {
     const blogPosts = async () => {
@@ -158,9 +148,9 @@ export default function BlogSection() {
               <div className="flex md:hidden items-center space-x-3">
                 <button
                   onClick={prevSlide}
-                  className="border border-bitcoin/20 text-bitcoin hover:bg-bitcoin/10 hover:border-bitcoin h-10 w-10 rounded-full flex items-center justify-center transition-colors"
+                  className="border border-bitcoin/20 text-bitcoin hover:bg-bitcoin/10 hover:border-bitcoin size-10 rounded-full flex items-center justify-center transition-colors"
                 >
-                  <ArrowLeft className="h-5 w-5" />
+                  <ArrowLeft className="size-5" />
                   <span className="sr-only">Previous</span>
                 </button>
                 <div className="text-sm text-gray-400">
@@ -168,9 +158,9 @@ export default function BlogSection() {
                 </div>
                 <button
                   onClick={nextSlide}
-                  className="border border-bitcoin/20 text-bitcoin hover:bg-bitcoin/10 hover:border-bitcoin h-10 w-10 rounded-full flex items-center justify-center transition-colors"
+                  className="border border-bitcoin/20 text-bitcoin hover:bg-bitcoin/10 hover:border-bitcoin size-10 rounded-full flex items-center justify-center transition-colors"
                 >
-                  <ArrowRight className="h-5 w-5" />
+                  <ArrowRight className="size-5" />
                   <span className="sr-only">Next</span>
                 </button>
               </div>
@@ -196,23 +186,8 @@ export default function BlogSection() {
           </div>
         ) : error ? (
           <div className="bg-zinc-900/50 backdrop-blur-sm border border-red-500/20 rounded-xl p-8 text-center">
-            <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-red-500/10 mb-4">
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="text-red-500"
-              >
-                <path
-                  d="M12 8V12M12 16H12.01M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+            <div className="inline-flex items-center justify-center size-12 rounded-full bg-red-500/10 mb-4">
+              <AlertCircleIcon />
             </div>
             <h3 className="text-xl font-medium text-white mb-2">
               Unable to Load Blog Posts
@@ -221,21 +196,8 @@ export default function BlogSection() {
           </div>
         ) : posts.length === 0 ? (
           <div className="bg-zinc-900/50 backdrop-blur-sm border border-bitcoin/10 rounded-xl p-8 text-center">
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-bitcoin/10 mb-4">
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="text-bitcoin"
-              >
-                <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
-                <polyline points="14 2 14 8 20 8" />
-              </svg>
+            <div className="inline-flex items-center justify-center size-16 rounded-full bg-bitcoin/10 mb-4">
+              <EmptyFileIcon />
             </div>
             <h3 className="text-2xl font-medium text-white mb-3">
               No Blog Posts Found
@@ -271,7 +233,7 @@ export default function BlogSection() {
                     <button
                       key={index}
                       onClick={() => setCurrentSlide(index)}
-                      className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                      className={`size-2 rounded-full transition-all duration-300 ${
                         currentSlide === index
                           ? "bg-bitcoin w-6"
                           : "bg-zinc-700 hover:bg-zinc-600"
@@ -296,15 +258,6 @@ export default function BlogSection() {
 }
 
 function BlogPostCard({ post }: { post: GhostPost }) {
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString("en-US", {
-      month: "long",
-      day: "numeric",
-      year: "numeric",
-    });
-  };
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -327,25 +280,8 @@ function BlogPostCard({ post }: { post: GhostPost }) {
             className="object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
-          <div className="w-full h-full bg-zinc-800 flex items-center justify-center">
-            <svg
-              width="48"
-              height="48"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1"
-              className="text-zinc-700"
-            >
-              <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18" />
-              <line x1="7" y1="2" x2="7" y2="22" />
-              <line x1="17" y1="2" x2="17" y2="22" />
-              <line x1="2" y1="12" x2="22" y2="12" />
-              <line x1="2" y1="7" x2="7" y2="7" />
-              <line x1="2" y1="17" x2="7" y2="17" />
-              <line x1="17" y1="17" x2="22" y2="17" />
-              <line x1="17" y1="7" x2="22" y2="7" />
-            </svg>
+          <div className="size-full bg-zinc-800 flex items-center justify-center">
+            <EmptyImageIcon />
           </div>
         )}
       </Link>
@@ -353,12 +289,14 @@ function BlogPostCard({ post }: { post: GhostPost }) {
       <div className="flex-1 p-6 flex flex-col">
         <div className="flex justify-between items-center mb-3">
           <span className="text-sm text-gray-400">
-            {post.primary_tag ? post.primary_tag.name : "Bitcoin"} •{" "}
-            {formatDate(post.published_at)}
+            <span className="text-bitcoin font-semibold">
+              {post.primary_tag ? post.primary_tag.name : "Bitcoin"}
+            </span>{" "}
+            • {formatDate(post.published_at)}
           </span>
 
           <div className="flex items-center text-xs text-gray-500">
-            <Clock className="h-3 w-3 mr-1" />
+            <Clock className="size-3 mr-1" />
             <span>{post.reading_time ? post.reading_time : 0} min read</span>
           </div>
         </div>
@@ -379,7 +317,7 @@ function BlogPostCard({ post }: { post: GhostPost }) {
         </p>
 
         <div className="mt-auto flex items-center">
-          <div className="w-8 h-8 rounded-full overflow-hidden bg-zinc-800 mr-3 flex-shrink-0">
+          <div className="size-8 rounded-full overflow-hidden bg-zinc-800 mr-3 flex-shrink-0">
             {post.primary_author.profile_image ? (
               <Image
                 src={post.primary_author.profile_image || "/placeholder.svg"}
@@ -389,7 +327,7 @@ function BlogPostCard({ post }: { post: GhostPost }) {
                 className="object-cover"
               />
             ) : (
-              <div className="w-full h-full bg-bitcoin/20 flex items-center justify-center text-bitcoin">
+              <div className="size-full bg-bitcoin/20 flex items-center justify-center text-bitcoin">
                 {post.primary_author.name.charAt(0)}
               </div>
             )}
