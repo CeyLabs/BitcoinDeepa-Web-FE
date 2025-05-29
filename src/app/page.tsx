@@ -5,7 +5,7 @@ import Community from "@/src/components/community";
 import BitcoinCard from "@/src/components/bitcoin-card";
 import Faq from "@/src/components/faq";
 import Footer from "@/src/components/footer";
-import JoinSection from "@/src/components/join-section";
+import JoinCommunity from "@/src/components/join-community";
 import Events from "../components/events";
 
 export default function Home() {
@@ -29,7 +29,7 @@ export default function Home() {
           <BitcoinCard />
           <Events />
           <Faq />
-          <JoinSection />
+          <JoinCommunity />
           <Footer />
         </div>
       </div>
