@@ -1,11 +1,11 @@
 "use client";
 
 import type React from "react";
-import { BitcoinIcon } from "lucide-react";
+import { BitcoinIcon as LucideBitcoinIcon } from "lucide-react";
 
-export const Bitcoin = (props: React.ComponentProps<typeof BitcoinIcon>) => (
-  <BitcoinIcon {...props} />
-);
+export const Bitcoin = (
+  props: React.ComponentProps<typeof LucideBitcoinIcon>
+) => <LucideBitcoinIcon {...props} />;
 
 export const BitcoinIcon1 = ({ className }: { className?: string }) => (
   <svg
