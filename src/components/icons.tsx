@@ -107,5 +107,37 @@ export const EmptyImageIcon = (props: React.SVGProps<SVGSVGElement>) => (
     <line x1="2" y1="17" x2="7" y2="17" />
     <line x1="17" y1="17" x2="22" y2="17" />
     <line x1="17" y1="7" x2="22" y2="7" />
-  </svg>
+    </svg>
+  );
+
+export const LightningPattern = () => (
+  <svg
+    width="100%"
+    height="100%"
+    viewBox="0 0 100 100"
+    preserveAspectRatio="none"
+  >
+    <path
+      d="M30,10 L20,45 L35,45 L15,90"
+      stroke="#f90"
+      strokeWidth="0.5"
+      fill="none"
+      className="absolute transform scale-150"
+    />
+    <path
+      d="M70,10 L60,45 L75,45 L55,90"
+      stroke="#f90"
+      strokeWidth="0.5"
+      fill="none"
+      className="absolute transform scale-150 translate-x-20"
+    />
+    <path
+      d="M50,5 L40,40 L55,40 L35,95"
+      stroke="#f90"
+      strokeWidth="0.5"
+      fill="none"
+      className="absolute transform scale-150 translate-x-10"
+    />
+  );
+  
 );
