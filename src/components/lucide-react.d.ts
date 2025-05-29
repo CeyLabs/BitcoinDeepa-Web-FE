@@ -4,7 +4,9 @@ declare module "lucide-react" {
   export const BitcoinIcon: LucideIcon
   export const Menu: LucideIcon
   export const X: LucideIcon
+  export const Star: LucideIcon
   export const ChevronDown: LucideIcon
+  export const BitcoinIcon: LucideIcon
   export const ChevronUp: LucideIcon
   export const ChevronRight: LucideIcon
   export const ExternalLink: LucideIcon
