@@ -6,34 +6,80 @@ import { ChevronDown, X } from "lucide-react";
 
 const faqs = [
   {
-    question: "What is BitcoinDeepa?",
+    question: "What is Bitcoin Deepa?",
     answer:
-      "BitcoinDeepa is the Sri Lankan Bitcoin Community, also known as the Pearl of Satoshi. We are dedicated to Bitcoin education, adoption, and community building in Sri Lanka.",
+      "Bitcoin Deepa – Pearl of Satoshi is Sri Lanka's leading grassroots Bitcoin-only community. We focus on educating, connecting, and empowering individuals around the philosophy, technology, and use cases of Bitcoin.",
   },
   {
-    question: "How can I join the community?",
+    question: "Why is it Bitcoin-only?",
     answer:
-      "You can join our community by attending our local meetups, joining our Telegram group, following us on social media, or participating in our online events and discussions.",
+      "We believe Bitcoin is fundamentally different from other cryptocurrencies. It's decentralized, immutable, and has a clear monetary policy. Our mission is to preserve and promote the values of sound money and financial sovereignty.",
   },
   {
     question: "Is Bitcoin legal in Sri Lanka?",
     answer:
-      "While cryptocurrency regulations are evolving in Sri Lanka, Bitcoin itself is not illegal. However, we recommend staying informed about the latest regulatory developments and consulting with legal professionals for specific advice.",
+      "Bitcoin is not banned in Sri Lanka, but it's not formally regulated either. We advocate for education and responsible use, while staying compliant with local laws. We do not promote illegal activity or trading platforms that violate regulations.",
   },
   {
-    question: "Do I need technical knowledge to join?",
+    question: "How can I join the community?",
     answer:
-      "Not at all! Our community welcomes everyone from beginners to experts. We provide resources and support for all knowledge levels, and our events are designed to be accessible to newcomers.",
+      "You can join our Telegram group, attend meetups, and follow us on social media. We also host regular IRL events, workshops, and discussions. Check out our event calendar or DM us.",
   },
   {
-    question: "How can I contribute to the community?",
-    answer:
-      "There are many ways to contribute: sharing your knowledge, helping organize events, creating educational content, translating resources into local languages, or simply participating in discussions and helping newcomers.",
+    question: "I'm new to Bitcoin. Where should I start?",
+    answer: (
+      <>
+        Start with these basics: Watch{" "}
+        <a
+          href="https://youtu.be/-1ErJsH73Lk"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-bitcoin hover:underline"
+        >
+          'What is Bitcoin?' series on YouTube
+        </a>
+        , read{" "}
+        <a
+          href="https://saifedean.com/tbs"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-bitcoin hover:underline"
+        >
+          'The Bitcoin Standard' by Saifedean Ammous
+        </a>
+        , and attend a local Bitcoin Deepa meetup to ask questions in person.
+      </>
+    ),
   },
   {
-    question: "Where can I learn more about Bitcoin?",
+    question: "Do you support trading or investment advice?",
     answer:
-      "We offer various educational resources including workshops, online courses, reading materials, and mentorship programs. Join our community to access these resources and connect with experienced Bitcoin users.",
+      "No. We focus on education, not speculation. We do not offer trading tips or price predictions. Our aim is to help people understand Bitcoin's long-term value as a tool for economic freedom.",
+  },
+  {
+    question: "Is Bitcoin mining part of your agenda?",
+    answer:
+      "We discuss Bitcoin mining in our education sessions, but we do not run or promote industrial mining operations. However, we support the idea of localized, renewable-powered mining for decentralization.",
+  },
+  {
+    question: "What does 'Pearl of Satoshi' mean?",
+    answer:
+      "It's a play on Sri Lanka's nickname 'Pearl of the Indian Ocean' and Satoshi Nakamoto, the pseudonymous creator of Bitcoin. It symbolizes our belief that Sri Lanka can shine globally through Bitcoin.",
+  },
+  {
+    question: "Are your events open to everyone?",
+    answer:
+      "Yes. Bitcoin Deepa is inclusive. Whether you're a beginner, developer, business owner, or just curious—we welcome anyone who wants to explore Bitcoin in an open, respectful environment.",
+  },
+  {
+    question: "Do you collaborate with international Bitcoin organizations?",
+    answer:
+      "Yes. We're working on connecting with global Bitcoin educators, dev communities, and advocacy groups to bring more value to Sri Lanka and create knowledge bridges.",
+  },
+  {
+    question: "How is Bitcoin Deepa funded?",
+    answer:
+      "We are community-driven. Events are often funded by donations, community sponsorships, or volunteers. We may also work with aligned Bitcoin-only sponsors to maintain neutrality and decentralization.",
   },
 ];
 
@@ -56,9 +102,8 @@ export default function Faq() {
         >
           <h2 className="text-5xl font-bold mb-4">FAQs</h2>
           <p className="text-gray-400 max-w-2xl mx-auto">
-            Common questions about BitcoinDeepa and the Sri Lankan Bitcoin
-            community. Have a question not listed here? Reach out to us
-            directly!
+            Got questions about Bitcoin Deepa? Find quick answers below or reach
+            out to our community for more.
           </p>
         </motion.div>
 
