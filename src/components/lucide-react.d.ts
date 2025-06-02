@@ -1,11 +1,15 @@
 declare module "lucide-react" {
   import type { LucideIcon } from "lucide-react"
   export const Bitcoin: LucideIcon
+  export const BitcoinIcon: LucideIcon
   export const Menu: LucideIcon
   export const X: LucideIcon
+  export const Star: LucideIcon
   export const ChevronDown: LucideIcon
+  export const BitcoinIcon: LucideIcon
   export const ChevronUp: LucideIcon
   export const ChevronRight: LucideIcon
+  export const ExternalLink: LucideIcon
   export const BookOpen: LucideIcon
   export const Users: LucideIcon
   export const Wallet: LucideIcon
@@ -16,4 +20,10 @@ declare module "lucide-react" {
   export const Youtube: LucideIcon
   export const MessageCircle: LucideIcon
   export const Rocket: LucideIcon
+  export const ArrowRight: LucideIcon
+  export const ArrowLeft: LucideIcon
+  export const Clock: LucideIcon
+  export const MapPin: LucideIcon
+  export const ExternalLink: LucideIcon
+  export const Calendar: LucideIcon
 }

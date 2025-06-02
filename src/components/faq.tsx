@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { ChevronDown, X } from "lucide-react"
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ChevronDown, X } from "lucide-react";
 
 const faqs = [
   {
@@ -35,14 +35,14 @@ const faqs = [
     answer:
       "We offer various educational resources including workshops, online courses, reading materials, and mentorship programs. Join our community to access these resources and connect with experienced Bitcoin users.",
   },
-]
+];
 
 export default function Faq() {
-  const [openIndex, setOpenIndex] = useState<number | null>(0)
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   const toggleFaq = (index: number) => {
-    setOpenIndex(openIndex === index ? null : index)
-  }
+    setOpenIndex(openIndex === index ? null : index);
+  };
 
   return (
     <section id="faq" className="py-16 md:py-24 relative">
@@ -56,8 +56,9 @@ export default function Faq() {
         >
           <h2 className="text-5xl font-bold mb-4">FAQs</h2>
           <p className="text-gray-400 max-w-2xl mx-auto">
-            Common questions about BitcoinDeepa and the Sri Lankan Bitcoin community. Have a question not listed here?
-            Reach out to us directly!
+            Common questions about BitcoinDeepa and the Sri Lankan Bitcoin
+            community. Have a question not listed here? Reach out to us
+            directly!
           </p>
         </motion.div>
 
@@ -72,13 +73,19 @@ export default function Faq() {
               className="mb-4"
             >
               <div
-                className={`bg-zinc-900/80 backdrop-blur-sm border ${openIndex === index ? "border-bitcoin/30" : "border-bitcoin/10"} rounded-xl overflow-hidden transition-all duration-300`}
+                className={`bg-zinc-900/80 backdrop-blur-sm border ${
+                  openIndex === index
+                    ? "border-bitcoin/30"
+                    : "border-bitcoin/10"
+                } rounded-xl overflow-hidden transition-all duration-300`}
               >
                 <button
                   onClick={() => toggleFaq(index)}
                   className="w-full p-6 text-left flex items-center justify-between"
                 >
-                  <span className="text-lg font-medium text-white">{faq.question}</span>
+                  <span className="text-lg font-medium text-white">
+                    {faq.question}
+                  </span>
                   {openIndex === index ? (
                     <X className="h-5 w-5 text-bitcoin" />
                   ) : (
@@ -94,7 +101,9 @@ export default function Faq() {
                       transition={{ duration: 0.3 }}
                       className="overflow-hidden"
                     >
-                      <div className="p-6 pt-0 text-gray-400 border-t border-bitcoin/10">{faq.answer}</div>
+                      <div className="p-6 pt-0 text-gray-400 border-t border-bitcoin/10">
+                        {faq.answer}
+                      </div>
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -104,5 +113,5 @@ export default function Faq() {
         </div>
       </div>
     </section>
-  )
+  );
 }
