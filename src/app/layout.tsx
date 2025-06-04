@@ -5,6 +5,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/src/components/theme-provider";
 import Navbar from "@/src/components/navbar";
 import Footer from "@/src/components/footer";
+import LenisProvider from "@/src/components/lenis-provider";
 
 const exo2 = Exo_2({
   subsets: ["latin"],
@@ -45,9 +46,11 @@ export default function RootLayout({
           enableSystem={false}
           disableTransitionOnChange
         >
-          <Navbar />
-          {children}
-          <Footer />
+          <LenisProvider>
+            <Navbar />
+            {children}
+            <Footer />
+          </LenisProvider>
         </ThemeProvider>
       </body>
     </html>
