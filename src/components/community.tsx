@@ -2,10 +2,10 @@
 
 import { motion } from "framer-motion";
 import { GradientButton } from "./gradient-button";
-import { useRef } from "react";
-export default function Community() {
-  const imageRef = useRef<HTMLDivElement>(null);
+import Image from "next/image";
+import Link from "next/link";
 
+export default function Community() {
   return (
     <section id="community" className="py-16 md:py-24 relative overflow-hidden">
       <div className="container mx-auto px-8 sm:px-8 md:px-24 relative z-10">
@@ -16,17 +16,18 @@ export default function Community() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
             className="flex-1"
-            ref={imageRef}
           >
             <div className="relative w-full aspect-square max-w-lg mx-auto rounded-2xl overflow-hidden group">
-              <img
+              <Image
                 src="/images/bitcoindeepa-intro.png"
                 alt="BitcoinDeepa Community"
-                className="absolute inset-0 w-full h-full object-cover opacity-75"
+                fill
+                className="object-cover opacity-75"
+                priority
               />
 
               {/* Decorative elements */}
-              <div className="absolute inset-0 bg-gradient-to-br from-bitcoin/20 to-transparent "></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-bitcoin/20 to-transparent"></div>
             </div>
           </motion.div>
 
@@ -69,13 +70,13 @@ export default function Community() {
                 </motion.li>
               ))}
             </ul>
-            <a
+            <Link
               href="https://t.me/bitcoindeepa"
               target="_blank"
               rel="noopener noreferrer"
             >
               <GradientButton>Join Our Community</GradientButton>
-            </a>
+            </Link>
           </motion.div>
         </div>
       </div>
