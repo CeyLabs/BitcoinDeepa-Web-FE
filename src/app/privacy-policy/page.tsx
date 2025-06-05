@@ -1,5 +1,3 @@
-import Footer from "@/src/components/footer";
-import Navbar from "@/src/components/navbar";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -15,7 +13,6 @@ export default function Privacy() {
         <div className="absolute top-[20%] left-1/2 -translate-x-1/2 w-full h-[600px] bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-bitcoin/20 via-transparent to-transparent"></div>
       </div>
       <div className="relative z-10">
-        <Navbar />
         <main className="pt-32 pb-20">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto">
@@ -24,12 +21,12 @@ export default function Privacy() {
                   <span className="text-white">Privacy</span>
                   <span className="text-bitcoin ml-2">Policy</span>
                 </h1>
-                <p className="text-gray-400">Last updated: Apr 28, 2025</p>
+                <p className="text-gray-400">Last updated: Jun 05, 2025</p>
               </div>
 
               <div className="space-y-10">
                 <section className="bg-zinc-900/50 backdrop-blur-sm border border-zinc-800 rounded-xl p-6 md:p-8">
-                  <p className="text-gray-300 mb-4">
+                  <p className="text-gray-300 mb-4 text-justify">
                     At BitcoinDeepa, we are committed to protecting the privacy
                     and security of our community members’ personal information.
                     This Privacy Policy outlines how we collect, use, and
@@ -74,7 +71,7 @@ export default function Privacy() {
                   <h2 className="text-2xl font-bold text-white mb-4">
                     Use of Information
                   </h2>
-                  <ul className="list-disc pl-6 text-gray-300 space-y-2">
+                  <ul className="list-disc pl-6 text-gray-300 space-y-2 text-justify">
                     <li>
                       To process and fulfill your event registrations or
                       purchases.
@@ -102,7 +99,7 @@ export default function Privacy() {
                   <h2 className="text-2xl font-bold text-white mb-4">
                     Information Sharing
                   </h2>
-                  <ul className="list-disc pl-6 text-gray-300 space-y-2">
+                  <ul className="list-disc pl-6 text-gray-300 space-y-2 text-justify">
                     <li>
                       <span className="font-semibold text-bitcoin">
                         Trusted service providers:
@@ -121,7 +118,7 @@ export default function Privacy() {
                       law or in response to valid legal requests or orders.
                     </li>
                   </ul>
-                  <p className="text-gray-300 mt-2">
+                  <p className="text-gray-300 mt-2 text-justify">
                     We do not sell, trade, or otherwise transfer your personal
                     information to third parties without your consent, except as
                     described above.
@@ -132,7 +129,7 @@ export default function Privacy() {
                   <h2 className="text-2xl font-bold text-white mb-4">
                     Data Security
                   </h2>
-                  <p className="text-gray-300">
+                  <p className="text-gray-300 text-justify">
                     We implement industry-standard security measures to protect
                     your personal information from unauthorized access,
                     alteration, disclosure, or destruction. However, please be
@@ -146,13 +143,13 @@ export default function Privacy() {
                   <h2 className="text-2xl font-bold text-white mb-4">
                     Cookies and Tracking Technologies
                   </h2>
-                  <p className="text-gray-300 mb-2">
+                  <p className="text-gray-300 mb-2 text-justify">
                     We use cookies and similar technologies to enhance your
                     browsing experience, analyze website traffic, and gather
                     information about your preferences and interactions with our
                     website.
                   </p>
-                  <p className="text-gray-300">
+                  <p className="text-gray-300 text-justify">
                     You have the option to disable cookies through your browser
                     settings, but this may limit certain features and
                     functionality of our website.
@@ -163,7 +160,7 @@ export default function Privacy() {
                   <h2 className="text-2xl font-bold text-white mb-4">
                     Changes to the Privacy Policy
                   </h2>
-                  <p className="text-gray-300">
+                  <p className="text-gray-300 text-justify">
                     We reserve the right to update or modify this Privacy Policy
                     at any time. Any changes will be posted on this page with a
                     revised “last updated” date. We encourage you to review this
@@ -176,7 +173,7 @@ export default function Privacy() {
                   <h2 className="text-2xl font-bold text-white mb-4">
                     Contact Us
                   </h2>
-                  <p className="text-gray-300 mb-2">
+                  <p className="text-gray-300 mb-2 text-justify">
                     If you have any questions, concerns, or requests regarding
                     our Privacy Policy or the handling of your personal
                     information, please contact us:
@@ -185,23 +182,23 @@ export default function Privacy() {
                     <p className="text-gray-300">
                       By email:{" "}
                       <a
-                        href="mailto:info@bitcoindeepa.com"
+                        href="mailto:hello@bitcoindeepa.com"
                         className="text-bitcoin hover:underline"
                       >
-                        info@bitcoindeepa.com
+                        hello@bitcoindeepa.com
                       </a>
                     </p>
                     <p className="text-gray-300">
                       By visiting our website:{" "}
                       <a
-                        href="https://bitcoindeepa.com/contact"
+                        href="https://bitcoindeepa.com/"
                         className="text-bitcoin hover:underline"
                       >
                         bitcoindeepa.com
                       </a>
                     </p>
                     <p className="text-gray-300">
-                      By Telegram:{" "}
+                      By Telegram Community:{" "}
                       <a
                         href="https://t.me/bitcoindeepa"
                         className="text-bitcoin hover:underline"
@@ -215,7 +212,6 @@ export default function Privacy() {
             </div>
           </div>
         </main>
-        <Footer />
       </div>
     </div>
   );
