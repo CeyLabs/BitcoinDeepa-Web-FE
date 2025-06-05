@@ -71,21 +71,37 @@ const Footer = () => {
         </div>
 
         <div className="flex flex-wrap gap-x-6 gap-y-1 mb-4 justify-center">
-          <NavLink href="#about" label="About" small />
+          <NavLink
+            href="https://blog.bitcoindeepa.com/about/"
+            label="About"
+            small
+          />
           <NavLink href="#events" label="Events" small />
-          <NavLink href="#resources" label="Resources" small />
+          <NavLink
+            href="https://blog.bitcoindeepa.com/resources/"
+            label="Resources"
+            small
+          />
           <NavLink href="#faq" label="FAQ" small />
         </div>
 
         <div className="flex justify-center">
-          <div className="grid grid-cols-3 gap-2 w-full max-w-xs">
-            <SecondaryButton href="/privacy" label="Privacy" small />
+          <div className="grid grid-cols-3 gap-2 w-full max-w-md">
             <SecondaryButton
-              href="https://t.me/bitcoindeepabot"
-              label="TG Bot"
+              href="/privacy-policy"
+              label="Privacy Policy"
               small
             />
-            <SecondaryButton href="/community" label="Community" small />
+            <SecondaryButton
+              href="https://t.me/bitcoindeepabot"
+              label="Bitcoindeepa Bot"
+              small
+            />
+            <SecondaryButton
+              href="https://blog.bitcoindeepa.com/community"
+              label="Community"
+              small
+            />
             <SecondaryButton
               href="https://blog.bitcoindeepa.com"
               label="Blog"
@@ -96,7 +112,7 @@ const Footer = () => {
               label="Luma"
               small
             />
-            <div className="col-span-1">
+            <div className="relative">
               <motion.button
                 ref={heartRef}
                 className={`flex items-center justify-center w-full h-8 rounded-lg bg-zinc-800 hover:bg-zinc-700 transition-all duration-300 ${
@@ -230,7 +246,7 @@ const SecondaryButton = ({
   return (
     <motion.a
       href={href}
-      className="flex items-center justify-center w-full h-8 rounded-lg bg-zinc-800 text-zinc-300 hover:text-white hover:bg-zinc-700 transition-all duration-300 text-sm px-3"
+      className="flex items-center justify-center w-full h-8 rounded-lg bg-zinc-800 text-zinc-300 hover:text-white hover:bg-zinc-700 transition-all duration-300 text-[11px] leading-tight sm:text-sm px-1.5 sm:px-3"
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
     >
