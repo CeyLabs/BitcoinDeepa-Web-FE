@@ -311,8 +311,8 @@ export default function BitcoinCard() {
           </div>
 
           <div className="mt-8 flex justify-center">
-            <GradientButton className="px-8 py-3 text-lg">
-              Request Your Card
+            <GradientButton className="px-8 py-3 text-lg" disabled>
+              Coming Soon
             </GradientButton>
           </div>
         </div>

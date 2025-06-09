@@ -1,42 +1,48 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
+import ReactDOM from "react-dom";
 
-import { useEffect, useRef } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { X } from "lucide-react"
-import { useOutsideClick } from "@/src/hooks/use-outside-click"
+import { useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { X } from "lucide-react";
+import { useOutsideClick } from "@/src/hooks/use-outside-click";
 
 interface CardModalProps {
-  isOpen: boolean
-  onClose: () => void
-  children: React.ReactNode
-  layoutId?: string
+  isOpen: boolean;
+  onClose: () => void;
+  children: React.ReactNode;
+  layoutId?: string;
 }
 
-export function CardModal({ isOpen, onClose, children, layoutId }: CardModalProps) {
-  const containerRef = useRef<HTMLDivElement>(null)
+export function CardModal({
+  isOpen,
+  onClose,
+  children,
+  layoutId,
+}: CardModalProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") {
-        onClose()
+        onClose();
       }
     }
 
     if (isOpen) {
-      document.body.style.overflow = "hidden"
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = "auto"
+      document.body.style.overflow = "auto";
     }
 
-    window.addEventListener("keydown", onKeyDown)
-    return () => window.removeEventListener("keydown", onKeyDown)
-  }, [isOpen, onClose])
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [isOpen, onClose]);
 
-  useOutsideClick(containerRef, onClose)
+  useOutsideClick(containerRef as React.RefObject<HTMLDivElement>, onClose);
 
-  return (
+  const modalContent = (
     <AnimatePresence>
       {isOpen && (
         <div className="fixed inset-0 h-screen z-50 overflow-auto">
@@ -66,5 +72,10 @@ export function CardModal({ isOpen, onClose, children, layoutId }: CardModalProp
         </div>
       )}
     </AnimatePresence>
-  )
+  );
+
+  if (typeof window !== "undefined") {
+    return ReactDOM.createPortal(modalContent, document.body);
+  }
+  return null;
 }
