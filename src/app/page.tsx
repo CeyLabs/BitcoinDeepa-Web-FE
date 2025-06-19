@@ -25,6 +25,7 @@ export default function Home() {
           <Features />
           <Community />
           <BitcoinCard />
+
           <Events />
           <BlogSection />
           <Faq />
