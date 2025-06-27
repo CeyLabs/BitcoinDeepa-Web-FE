@@ -12,15 +12,15 @@ const PER_PAGE = 10;
  */
 export async function GET() {
   try {
+    if (!process.env.GITHUB_TOKEN) {
+      return;
+    }
+
     const headers: HeadersInit = {
       Accept: 'application/vnd.github.v3+json',
+      Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+      'X-Github-Api-Version': '2022-11-28',
     };
-
-    // Only add the token if it exists in environment variables
-    // Use GITHUB_TOKEN (server-side only) instead of exposing it to the client
-    if (process.env.GITHUB_TOKEN) {
-      headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
-    }
 
     const response = await fetch(
       `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/releases?per_page=${PER_PAGE}`,
