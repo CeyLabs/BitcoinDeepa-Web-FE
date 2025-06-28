@@ -14,6 +14,7 @@ import {
   DeveloperIcon,
   ResearchIcon,
 } from "./icons";
+import PriceTicker from "./price-ticker";
 
 const mobileMenuVariants = {
   initial: { opacity: 0, height: 0 },
@@ -88,6 +89,7 @@ export default function Navbar() {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50">
+      <PriceTicker />
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 my-4 relative">
         <div
           className="relative bg-white/10 backdrop-blur-xl rounded-3xl border border-zinc-800/50 shadow-lg overflow-visible"
