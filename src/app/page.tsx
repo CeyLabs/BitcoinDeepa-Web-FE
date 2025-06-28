@@ -20,7 +20,7 @@ export default function Home() {
       </div> */}
 
       <div className="relative z-10">
-        <div className="pt-28">
+        <div className="pt-32">
           <Hero />
           <Features />
           <Community />
