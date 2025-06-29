@@ -90,3 +90,26 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
+
+@layer utilities {
+  .h-screen-dynamic {
+    height: 100vh;
+  }
+  .min-h-screen-dynamic {
+    min-height: 100vh;
+  }
+  .min-h-hero {
+    min-height: 79vh;
+  }
+  @supports (height: 100svh) {
+    .h-screen-dynamic {
+      height: 100svh;
+    }
+    .min-h-screen-dynamic {
+      min-height: 100svh;
+    }
+    .min-h-hero {
+      min-height: 79svh;
+    }
+  }
+}
