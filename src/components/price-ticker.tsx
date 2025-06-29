@@ -37,7 +37,7 @@ export default function PriceTicker({ className }: PriceTickerProps) {
         className
       )}
     >
-      <span className="font-medium">1 BTC ≈ {price ? price.toLocaleString("en-US") : "--"} LKR</span>
+      <span className="font-medium">1 BTC ≈ රු. {price ? price.toLocaleString("en-US") : "--"}</span>
     </div>
   );
 }
