@@ -4,6 +4,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Rocket, ChevronDown } from "lucide-react";
+import PriceTicker from "./price-ticker";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   TwitterIcon,
@@ -149,6 +150,7 @@ export default function Navbar() {
               >
                 Login
               </Link> */}
+              <PriceTicker />
               <Link
                 href="https://t.me/bitcoindeepa"
                 className="px-5 py-2 text-sm font-medium text-white bg-bitcoin hover:bg-bitcoin-dark transition-colors rounded-full flex items-center"
@@ -486,6 +488,7 @@ export default function Navbar() {
                     </AnimatePresence>
                   </div>
 
+                  <PriceTicker className="mt-4" />
                   {/* Join Button */}
                   <Link
                     href="https://t.me/bitcoindeepa"

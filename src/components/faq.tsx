@@ -31,7 +31,7 @@ const faqs = [
       <>
         Start with these basics: Watch{" "}
         <a
-          href="https://youtu.be/-1ErJsH73Lk"
+          href="https://youtu.be/gS05vIvAW9I?list=PL0wRLuowx3txfNX4NzbRDLja2SSWL0c3g"
           target="_blank"
           rel="noopener noreferrer"
           className="text-bitcoin hover:underline"
@@ -146,7 +146,7 @@ export default function Faq() {
                       transition={{ duration: 0.3 }}
                       className="overflow-hidden"
                     >
-                      <div className="p-6 pt-0 text-gray-400 border-t border-bitcoin/10">
+                      <div className="p-6 pt-4 text-gray-400 border-t border-bitcoin/10">
                         {faq.answer}
                       </div>
                     </motion.div>
