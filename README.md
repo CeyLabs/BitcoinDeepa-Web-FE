@@ -1,5 +1,5 @@
 # BitcoinDeepa-Web-FE
-Learn, connect, and grow with Sri Lanka’s Bitcoin community from grassroots meetups to BitcoinDeepa initiatives by Pearl of Satoshi.
+Learn, connect, and grow with Sri Lanka’s Bitcoin community from grassroots meetups to Bitcoin Deepa initiatives by Pearl of Satoshi.
 
 ## 🛠️ Tech Stack
 
@@ -108,4 +108,4 @@ src/
 - `bun start` / `npm run start`: Start production server
 - `bun lint` / `npm run lint`: Run ESLint
 
-Built with ❤️ by team Bitcoindeepa
+Built with ❤️ by Bitcoin දීප Team

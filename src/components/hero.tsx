@@ -12,7 +12,7 @@ export default function Hero() {
       <div className="absolute -bottom-20 -right-20 md:-bottom-40 md:-right-40 w-[600px] h-[600px] opacity-5 pointer-events-none z-0">
         <Image
           src="/images/bitcoindeepa-logo.svg"
-          alt="BitcoinDeepa Logo"
+          alt="Bitcoin Deepa Logo (Bitcoin දීප)"
           width={600}
           height={600}
           className="size-full"
@@ -74,7 +74,7 @@ export default function Hero() {
                   <div className="absolute inset-2 rounded-full bg-black flex items-center justify-center">
                     <Image
                       src="/images/bitcoindeepa-logo.png"
-                      alt="BitcoinDeepa Logo"
+                      alt="Bitcoin Deepa Logo (Bitcoin දීප)"
                       width={180}
                       height={180}
                       className="size-40 md:size-52"

@@ -7,6 +7,7 @@ import { Bitcoin, ExternalLink } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { BitcoinIcon1, BitcoinIcon2, LightningIcon } from "./icons";
+import { BrandName } from "./brand-provider";
 
 const FloatingElement = ({
   icon,
@@ -127,7 +128,7 @@ export default function JoinCommunity() {
           </h2>
           <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
             Learn, connect, and grow with Sri Lanka’s Bitcoin community from
-            grassroots meetups to BitcoinDeepa initiatives by Pearl of Satoshi.
+            grassroots meetups to <BrandName /> initiatives by Pearl of Satoshi.
           </p>
 
           <div className="relative">
@@ -161,7 +162,7 @@ export default function JoinCommunity() {
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 rounded-full bg-bitcoin"></div>
               <p className="text-gray-300 font-medium text-base sm:text-lg">
-                BitcoinDeepa Initiatives ⚡
+                <BrandName /> Initiatives ⚡
               </p>
             </div>
             <div className="flex items-center gap-2">

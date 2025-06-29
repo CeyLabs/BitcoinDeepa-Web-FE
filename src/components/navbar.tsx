@@ -15,6 +15,7 @@ import {
   DeveloperIcon,
   ResearchIcon,
 } from "./icons";
+import { BrandName, useBrand } from "./brand-provider";
 
 const mobileMenuVariants = {
   initial: { opacity: 0, height: 0 },
@@ -50,6 +51,7 @@ export default function Navbar() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [hoverStyle, setHoverStyle] = useState({});
   const tabRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const { brand } = useBrand();
 
   const handleMouseEnter = useCallback((index: number, dropdown?: string) => {
     setHoveredIndex(index);
@@ -99,7 +101,7 @@ export default function Navbar() {
             <Link href="/" className="flex items-center">
               <Image
                 src="/images/bitcoindeepa-h-logo.svg"
-                alt="BitcoinDeepa"
+                alt={brand}
                 width={160}
                 height={32}
                 className="h-8 w-auto"
@@ -201,7 +203,7 @@ export default function Navbar() {
                       <div className="bg-bitcoin rounded-xl overflow-hidden">
                         <div className="p-6">
                           <h3 className="text-white font-semibold mb-1">
-                            Bitcoindeepa Blog
+                            <BrandName /> Blog
                           </h3>
                           <p className="text-white/80 text-sm mb-4 font-light">
                             Start your journey into Bitcoin
@@ -226,7 +228,7 @@ export default function Navbar() {
                             </h3>
                           </div>
                           <p className="text-gray-400 text-sm font-light">
-                            Learn about Bitcoin stuffs in Sinhala
+                            Learn about Bitcoin topics in Sinhala
                           </p>
                           <Link
                             href="#https://blog.ceyloncash.com"

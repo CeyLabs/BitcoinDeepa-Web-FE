@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Bitcoin, BookOpen, Users, Wallet, Globe, Shield } from "lucide-react";
+import { BrandName } from "./brand-provider";
 
 const features = [
   {
@@ -58,7 +59,7 @@ export default function Features() {
             <span className="text-bitcoin">What</span> we love to do
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto">
-            Discover How BitcoinDeepa Is Shaping the Future of Web3 in Sri
+            Discover How <BrandName /> Is Shaping the Future of Web3 in Sri
             Lanka.
           </p>
         </motion.div>

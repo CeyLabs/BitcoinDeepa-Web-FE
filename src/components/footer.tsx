@@ -6,6 +6,7 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
 import { TwitterIcon, TelegramIcon, InstagramIcon } from "./icons";
+import { BrandName } from "./brand-provider";
 
 const CURRENT_YEAR = new Date().getFullYear();
 
@@ -60,7 +61,7 @@ const Footer = () => {
           <div className="absolute right-0 bottom-0 w-[260px] h-[260px] opacity-[0.1]">
             <Image
               src="/images/bitcoindeepa-logo.svg"
-              alt="BitcoinDeepa Logo"
+              alt="Bitcoin Deepa Logo (Bitcoin දීප)"
               width={260}
               height={260}
               className="object-contain"
@@ -111,7 +112,7 @@ const Footer = () => {
               />
               <SecondaryButton
                 href="https://t.me/bitcoindeepabot"
-                label="Bitcoindeepa Bot"
+                label="BitcoinDeepaBot"
                 small
               />
               <SecondaryButton
@@ -167,7 +168,7 @@ const Footer = () => {
           </div>
 
           <div className="text-center text-zinc-500 text-sm mt-10">
-            &copy; {CURRENT_YEAR} Bitcoindeepa. All rights reserved.
+            &copy; {CURRENT_YEAR} <BrandName />. All rights reserved.
           </div>
         </div>
       </div>
