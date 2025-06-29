@@ -14,6 +14,9 @@ const CONFETTI_CONFIG = {
   spread: 60,
   colors: ["#f90", "#ffb84d", "#e68a00"],
   disableForReducedMotion: true,
+  // Display bitcoin emoji instead of regular confetti shapes
+  emojis: ["\u20BF"],
+  emojiSize: 32,
 };
 
 const ICON_COMPONENTS = {

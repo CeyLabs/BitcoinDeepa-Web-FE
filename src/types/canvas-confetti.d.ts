@@ -14,6 +14,8 @@ declare module 'canvas-confetti' {
     };
     colors?: string[];
     shapes?: ('square' | 'circle')[];
+    emojis?: string[];
+    emojiSize?: number;
     scalar?: number;
     zIndex?: number;
     disableForReducedMotion?: boolean;
