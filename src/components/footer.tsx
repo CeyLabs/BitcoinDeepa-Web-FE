@@ -104,16 +104,21 @@ const Footer = () => {
 
           <div className="flex justify-center">
             <div className="grid grid-cols-3 gap-2 w-full max-w-md">
-              <SecondaryButton
-                href="/privacy-policy"
-                label="Privacy Policy"
-                small
-              />
-              <SecondaryButton
-                href="https://t.me/bitcoindeepabot"
-                label="Bitcoindeepa Bot"
-                small
-              />
+            <SecondaryButton
+              href="/privacy-policy"
+              label="Privacy Policy"
+              small
+            />
+            <SecondaryButton
+              href="/license"
+              label="License"
+              small
+            />
+            <SecondaryButton
+              href="https://t.me/bitcoindeepabot"
+              label="Bitcoindeepa Bot"
+              small
+            />
               <SecondaryButton
                 href="https://blog.bitcoindeepa.com/community"
                 label="Community"
@@ -233,7 +238,7 @@ const SecondaryButton = ({
   return (
     <motion.a
       href={href}
-      className="flex items-center justify-center w-full h-8 rounded-lg bg-zinc-800 text-zinc-300 hover:text-white hover:bg-zinc-700 transition-all duration-300 text-[11px] leading-tight sm:text-sm px-1.5 sm:px-3"
+      className="flex items-center justify-center w-full h-8 rounded-lg bg-zinc-800 text-zinc-300 hover:text-white hover:bg-zinc-700 transition-all duration-300 text-xs leading-tight sm:text-sm px-1.5 sm:px-3"
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
     >

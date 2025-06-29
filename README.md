@@ -109,3 +109,7 @@ src/
 - `bun lint` / `npm run lint`: Run ESLint
 
 Built with ❤️ by team Bitcoindeepa
+
+## License
+
+This project is released under the [MIT License](LICENSE). See the [license page](/license) on the website for details.
