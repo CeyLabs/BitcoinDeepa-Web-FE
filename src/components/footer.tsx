@@ -95,12 +95,9 @@ const Footer = () => {
               small
             />
             <NavLink href="#events" label="Events" small />
-            <NavLink
-              href="https://blog.bitcoindeepa.com/resources/"
-              label="Resources"
-              small
-            />
+            <NavLink href="/releases" label="Release Notes" small />
             <NavLink href="#faq" label="FAQ" small />
+            <NavLink href="/license" label="License" small />
           </div>
 
           <div className="flex justify-center">
@@ -214,7 +211,7 @@ const NavLink = ({
     <Link
       href={href}
       className={`text-zinc-300 hover:text-white transition-colors ${
-        small ? "text-lg" : "text-[22px]"
+        small ? "text-sm" : "text-[14px]"
       }`}
     >
       {label}

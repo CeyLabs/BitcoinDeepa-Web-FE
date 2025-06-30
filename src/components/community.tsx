@@ -42,7 +42,7 @@ export default function Community() {
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               <span className="text-white">Join the</span>
               <span className="block text-bitcoin mt-2">
-                Bitcoin Revolution
+                Bitcoin දීප Revolution
               </span>
             </h2>
             <p className="text-gray-400 mb-6">
