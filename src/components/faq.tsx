@@ -3,87 +3,88 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, X } from "lucide-react";
-
-const faqs = [
-  {
-    question: "What is Bitcoin Deepa?",
-    answer:
-      "Bitcoin Deepa – Pearl of Satoshi is Sri Lanka's leading grassroots Bitcoin-only community. We focus on educating, connecting, and empowering individuals around the philosophy, technology, and use cases of Bitcoin.",
-  },
-  {
-    question: "Why is it Bitcoin-only?",
-    answer:
-      "We believe Bitcoin is fundamentally different from other cryptocurrencies. It's decentralized, immutable, and has a clear monetary policy. Our mission is to preserve and promote the values of sound money and financial sovereignty.",
-  },
-  {
-    question: "Is Bitcoin legal in Sri Lanka?",
-    answer:
-      "Bitcoin is not banned in Sri Lanka, but it's not formally regulated either. We advocate for education and responsible use, while staying compliant with local laws. We do not promote illegal activity or trading platforms that violate regulations.",
-  },
-  {
-    question: "How can I join the community?",
-    answer:
-      "You can join our Telegram group, attend meetups, and follow us on social media. We also host regular IRL events, workshops, and discussions. Check out our event calendar or DM us.",
-  },
-  {
-    question: "I'm new to Bitcoin. Where should I start?",
-    answer: (
-      <>
-        Start with these basics: Watch{" "}
-        <a
-          href="https://youtu.be/gS05vIvAW9I?list=PL0wRLuowx3txfNX4NzbRDLja2SSWL0c3g"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-bitcoin hover:underline"
-        >
-          'What is Bitcoin?' series on YouTube
-        </a>
-        , read{" "}
-        <a
-          href="https://saifedean.com/tbs"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-bitcoin hover:underline"
-        >
-          'The Bitcoin Standard' by Saifedean Ammous
-        </a>
-        , and attend a local Bitcoin Deepa meetup to ask questions in person.
-      </>
-    ),
-  },
-  {
-    question: "Do you support trading or investment advice?",
-    answer:
-      "No. We focus on education, not speculation. We do not offer trading tips or price predictions. Our aim is to help people understand Bitcoin's long-term value as a tool for economic freedom.",
-  },
-  {
-    question: "Is Bitcoin mining part of your agenda?",
-    answer:
-      "We discuss Bitcoin mining in our education sessions, but we do not run or promote industrial mining operations. However, we support the idea of localized, renewable-powered mining for decentralization.",
-  },
-  {
-    question: "What does 'Pearl of Satoshi' mean?",
-    answer:
-      "It's a play on Sri Lanka's nickname 'Pearl of the Indian Ocean' and Satoshi Nakamoto, the pseudonymous creator of Bitcoin. It symbolizes our belief that Sri Lanka can shine globally through Bitcoin.",
-  },
-  {
-    question: "Are your events open to everyone?",
-    answer:
-      "Yes. Bitcoin Deepa is inclusive. Whether you're a beginner, developer, business owner, or just curious—we welcome anyone who wants to explore Bitcoin in an open, respectful environment.",
-  },
-  {
-    question: "Do you collaborate with international Bitcoin organizations?",
-    answer:
-      "Yes. We're working on connecting with global Bitcoin educators, dev communities, and advocacy groups to bring more value to Sri Lanka and create knowledge bridges.",
-  },
-  {
-    question: "How is Bitcoin Deepa funded?",
-    answer:
-      "We are community-driven. Events are often funded by donations, community sponsorships, or volunteers. We may also work with aligned Bitcoin-only sponsors to maintain neutrality and decentralization.",
-  },
-];
+import { BrandName, useBrand } from "./brand-provider";
 
 export default function Faq() {
+  const { brand } = useBrand();
+  const faqs = [
+    {
+      question: `What is ${brand}?`,
+      answer: `${brand} – Pearl of Satoshi is Sri Lanka's leading grassroots Bitcoin-only community. We focus on educating, connecting, and empowering individuals around the philosophy, technology, and use cases of Bitcoin.`,
+    },
+    {
+      question: "Why is it Bitcoin-only?",
+      answer:
+        "We believe Bitcoin is fundamentally different from other cryptocurrencies. It's decentralized, immutable, and has a clear monetary policy. Our mission is to preserve and promote the values of sound money and financial sovereignty.",
+    },
+    {
+      question: "Is Bitcoin legal in Sri Lanka?",
+      answer:
+        "Bitcoin is not banned in Sri Lanka, but it's not formally regulated either. We advocate for education and responsible use, while staying compliant with local laws. We do not promote illegal activity or trading platforms that violate regulations.",
+    },
+    {
+      question: "How can I join the community?",
+      answer:
+        "You can join our Telegram group, attend meetups, and follow us on social media. We also host regular IRL events, workshops, and discussions. Check out our event calendar or DM us.",
+    },
+    {
+      question: "I'm new to Bitcoin. Where should I start?",
+      answer: (
+        <>
+          Start with these basics: Watch{" "}
+          <a
+            href="https://youtu.be/gS05vIvAW9I?list=PL0wRLuowx3txfNX4NzbRDLja2SSWL0c3g"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-bitcoin hover:underline"
+          >
+            'What is Bitcoin?' series on YouTube
+          </a>
+          , read{" "}
+          <a
+            href="https://saifedean.com/tbs"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-bitcoin hover:underline"
+          >
+            'The Bitcoin Standard' by Saifedean Ammous
+          </a>
+          , and attend a local {brand} meetup to ask questions in person.
+        </>
+      ),
+    },
+    {
+      question: "Do you support trading or investment advice?",
+      answer:
+        "No. We focus on education, not speculation. We do not offer trading tips or price predictions. Our aim is to help people understand Bitcoin's long-term value as a tool for economic freedom.",
+    },
+    {
+      question: "Is Bitcoin mining part of your agenda?",
+      answer:
+        "We discuss Bitcoin mining in our education sessions, but we do not run or promote industrial mining operations. However, we support the idea of localized, renewable-powered mining for decentralization.",
+    },
+    {
+      question: "What does 'Pearl of Satoshi' mean?",
+      answer:
+        "It's a play on Sri Lanka's nickname 'Pearl of the Indian Ocean' and Satoshi Nakamoto, the pseudonymous creator of Bitcoin. It symbolizes our belief that Sri Lanka can shine globally through Bitcoin.",
+    },
+    {
+      question: "Are your events open to everyone?",
+      answer:
+        `Yes. ${brand} is inclusive. Whether you're a beginner, developer, business owner, or just curious—we welcome anyone who wants to explore Bitcoin in an open, respectful environment.`,
+    },
+    {
+      question: "Do you collaborate with international Bitcoin organizations?",
+      answer:
+        "Yes. We're working on connecting with global Bitcoin educators, dev communities, and advocacy groups to bring more value to Sri Lanka and create knowledge bridges.",
+    },
+    {
+      question: `How is ${brand} funded?`,
+      answer:
+        "We are community-driven. Events are often funded by donations, community sponsorships, or volunteers. We may also work with aligned Bitcoin-only sponsors to maintain neutrality and decentralization.",
+    },
+  ];
+
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   const toggleFaq = (index: number) => {
@@ -102,8 +103,7 @@ export default function Faq() {
         >
           <h2 className="text-5xl font-bold mb-4">FAQs</h2>
           <p className="text-gray-400 max-w-2xl mx-auto">
-            Got questions about Bitcoin Deepa? Find quick answers below or reach
-            out to our community for more.
+            Got questions about {brand}? Find quick answers below or reach out to our community for more.
           </p>
         </motion.div>
 
@@ -119,9 +119,7 @@ export default function Faq() {
             >
               <div
                 className={`bg-zinc-900/80 backdrop-blur-sm border ${
-                  openIndex === index
-                    ? "border-bitcoin/30"
-                    : "border-bitcoin/10"
+                  openIndex === index ? "border-bitcoin/30" : "border-bitcoin/10"
                 } rounded-xl overflow-hidden transition-all duration-300`}
               >
                 <button

@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/src/components/theme-provider";
 import Navbar from "@/src/components/navbar";
 import Footer from "@/src/components/footer";
 import LenisProvider from "@/src/components/lenis-provider";
+import { BrandProvider } from "@/src/components/brand-provider";
 
 const exo2 = Exo_2({
   subsets: ["latin"],
@@ -14,11 +15,11 @@ const exo2 = Exo_2({
 });
 
 export const metadata: Metadata = {
-  title: "BitcoinDeepa",
+  title: "Bitcoin Deepa",
   description:
     "Bitcoin Deepa — Where innovation, Bitcoin, and community build together in Sri Lanka 🇱🇰",
   generator: "Next.js 15.3.0",
-  applicationName: "BitcoinDeepa",
+  applicationName: "Bitcoin Deepa",
   referrer: "origin-when-cross-origin",
   keywords: [
     "Bitcoin",
@@ -46,11 +47,13 @@ export default function RootLayout({
           enableSystem={false}
           disableTransitionOnChange
         >
-          <LenisProvider>
-            <Navbar />
-            {children}
-            <Footer />
-          </LenisProvider>
+          <BrandProvider>
+            <LenisProvider>
+              <Navbar />
+              {children}
+              <Footer />
+            </LenisProvider>
+          </BrandProvider>
         </ThemeProvider>
       </body>
     </html>

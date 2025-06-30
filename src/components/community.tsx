@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { GradientButton } from "./gradient-button";
 import Image from "next/image";
 import Link from "next/link";
+import { BrandName } from "./brand-provider";
 
 export default function Community() {
   return (
@@ -20,7 +21,7 @@ export default function Community() {
             <div className="relative w-full aspect-square max-w-lg mx-auto rounded-2xl overflow-hidden group">
               <Image
                 src="/images/bitcoindeepa-intro.png"
-                alt="BitcoinDeepa Community"
+                alt="Bitcoin Deepa Community (Bitcoin දීප)"
                 fill
                 className="object-cover opacity-75"
                 priority
@@ -41,11 +42,11 @@ export default function Community() {
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               <span className="text-white">Join the</span>
               <span className="block text-bitcoin mt-2">
-                Bitcoin Revolution
+                Bitcoin දීප Revolution
               </span>
             </h2>
             <p className="text-gray-400 mb-6">
-              BitcoinDeepa is more than just a community - it's a movement to
+              <BrandName /> is more than just a community - it's a movement to
               bring financial sovereignty to Sri Lanka through Bitcoin education
               and adoption.
             </p>

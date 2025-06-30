@@ -14,6 +14,7 @@ import {
 
 import { GradientButton } from "./gradient-button";
 import { LightningPattern } from "./icons";
+import { BrandName } from "./brand-provider";
 import { Dialog, DialogContent, DialogTrigger, DialogTitle } from "./ui/dialog";
 
 const CARD_FEATURES = [
@@ -99,7 +100,7 @@ const ViewMoreDialog: React.FC = () => {
         >
           <p className="text-bitcoin text-lg font-medium">Lightning Network</p>
           <DialogTitle className="text-3xl md:text-4xl font-bold mt-2 mb-6">
-            BitcoinDeepa Bolt Card
+            <BrandName /> Bolt Card
           </DialogTitle>
 
           <div className="bg-zinc-800 rounded-2xl p-6 mb-6">
@@ -107,7 +108,7 @@ const ViewMoreDialog: React.FC = () => {
               Lightning Network Bolt Card
             </h3>
             <p className="text-gray-300 mb-6">
-              The BitcoinDeepa Card is more than just a card - it's your gateway
+              The <BrandName /> Card is more than just a card - it's your gateway
               to the future of payments. With embedded LNURLW technology, you
               can make instant Bitcoin payments with just a tap.
             </p>
@@ -115,7 +116,7 @@ const ViewMoreDialog: React.FC = () => {
               <div className="relative w-[280px] h-[175px] md:w-[400px] md:h-[250px] rounded-xl overflow-hidden">
                 <Image
                   src="/images/card-front.png"
-                  alt="BitcoinDeepa Card Front"
+                  alt="Bitcoin Deepa Card Front"
                   width={400}
                   height={250}
                   className="w-full h-full object-cover"
@@ -225,7 +226,7 @@ export default function BitcoinCard() {
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
                 <span className="text-white">Get Your</span>
                 <span className="block text-bitcoin mt-2">
-                  BitcoinDeepa Card Today
+                  <BrandName /> Card Today
                 </span>
               </h2>
               <p className="text-gray-400 text-lg mb-6">
@@ -289,7 +290,7 @@ export default function BitcoinCard() {
                 >
                   <Image
                     src="/images/card-front.png"
-                    alt="BitcoinDeepa Card Front"
+                    alt="Bitcoin Deepa Card Front"
                     width={640}
                     height={400}
                     className="w-full h-full object-cover"
@@ -314,7 +315,7 @@ export default function BitcoinCard() {
                 >
                   <Image
                     src="/images/card-back.png"
-                    alt="BitcoinDeepa Card Back"
+                    alt="Bitcoin Deepa Card Back"
                     width={640}
                     height={400}
                     className="w-full h-full object-cover"

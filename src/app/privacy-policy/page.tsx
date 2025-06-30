@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import { BrandName } from "@/src/components/brand-provider";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | BitcoinDeepa",
-  description: "Privacy Policy for BitcoinDeepa - Sri Lankan Bitcoin Community",
+  title: "Privacy Policy | Bitcoin Deepa",
+  description: "Privacy Policy for Bitcoin Deepa - Sri Lankan Bitcoin Community",
 };
 
 export default function Privacy() {
@@ -27,7 +28,7 @@ export default function Privacy() {
               <div className="space-y-10">
                 <section className="bg-zinc-900/50 backdrop-blur-sm border border-zinc-800 rounded-xl p-6 md:p-8">
                   <p className="text-gray-300 mb-4 text-justify">
-                    At BitcoinDeepa, we are committed to protecting the privacy
+                    At <BrandName />, we are committed to protecting the privacy
                     and security of our community members’ personal information.
                     This Privacy Policy outlines how we collect, use, and
                     safeguard your information when you visit or interact with
