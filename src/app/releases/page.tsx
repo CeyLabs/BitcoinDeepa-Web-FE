@@ -1,10 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-// Import standard icons from Lucide
+import { useState, useEffect, useRef } from "react";
 import { Calendar, ExternalLink } from "lucide-react";
-// Import custom icons from our icons component
 import {
   Download,
   Github,
@@ -14,39 +11,152 @@ import {
 } from "@/src/components/icons";
 import Link from "next/link";
 import { Button } from "@/src/components/ui/button";
-
-// Import types and utilities
-import { GitHubRelease } from "@/src/types/github";
+import { Tabs, TabsList, TabsTrigger } from "@/src/components/ui/tabs";
+import type { GitHubRelease } from "@/src/types/github";
 import { formatDate, parseMarkdown } from "@/src/lib/github-utils";
 
+// Repository configurations
+const REPOSITORIES = {
+  web: {
+    name: "Bitcoin deepa Web",
+    displayName: "Bitcoin deepa Web",
+    description: "The Main Bitcoin Deepa web Landing Repository",
+    githubUrl: "https://github.com/CeyLabs/BitcoinDeepa-Web-FE",
+  },
+  bot: {
+    name: "Bitcoin deepa Bot",
+    displayName: "Bitcoin deepa Bot",
+    description:
+      "@BitcoinDeepaBot 🏅 - A Telegram Lightning ⚡️ Bitcoin wallet and tip bot for group chats.",
+    githubUrl: "https://github.com/CeyLabs/BitcoinDeepaBot",
+  },
+  tma: {
+    name: "Bitcoin deepa TMA",
+    displayName: "Bitcoin deepa TMA",
+    description: "The Bitcoin deepa TMA Repository",
+    githubUrl: "https://github.com/CeyLabs/BitcoinDeepaBot-TMA",
+  },
+};
+
+type RepoKey = keyof typeof REPOSITORIES;
+
 export default function ReleasesPage() {
-  const [releases, setReleases] = useState<GitHubRelease[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [activeRepo, setActiveRepo] = useState<RepoKey>("web");
+  const [releases, setReleases] = useState<Record<RepoKey, GitHubRelease[]>>({
+    web: [],
+    bot: [],
+    tma: [],
+  });
+  const [loading, setLoading] = useState<Record<RepoKey, boolean>>({
+    web: false,
+    bot: false,
+    tma: false,
+  });
+  const [error, setError] = useState<Record<RepoKey, string | null>>({
+    web: null,
+    bot: null,
+    tma: null,
+  });
 
-  // Fetch from our server-side API route, not directly from GitHub
-  const fetchReleases = async () => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [hoverStyle, setHoverStyle] = useState({});
+  const tabRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  const repoKeys = Object.keys(REPOSITORIES) as RepoKey[];
+
+  // Update hover indicator position (only when activeIndex changes)
+  useEffect(() => {
+    const currentElement = tabRefs.current[activeIndex];
+
+    if (currentElement) {
+      const { offsetLeft, offsetWidth } = currentElement;
+      setHoverStyle({
+        left: `${offsetLeft}px`,
+        width: `${offsetWidth}px`,
+      });
+    }
+  }, [activeIndex]);
+
+  // Update active index when repo changes with quick smooth transitions
+  useEffect(() => {
+    const newIndex = repoKeys.indexOf(activeRepo);
+    setActiveIndex(newIndex);
+    
+    // Apply quick smooth transition effect on content change
+    const contentElements = document.querySelectorAll('.transition-opacity');
+    contentElements.forEach(el => {
+      (el as HTMLElement).style.opacity = '0';
+      setTimeout(() => {
+        (el as HTMLElement).style.opacity = '1';
+      }, 20); // Much faster fade-in
+    });
+  }, [activeRepo, repoKeys]);
+
+  // Fetch releases for a specific repository using your existing API structure
+  const fetchReleasesForRepo = async (repoKey: RepoKey) => {
     try {
-      setLoading(true);
-      setError(null);
+      setLoading((prev) => ({ ...prev, [repoKey]: true }));
+      setError((prev) => ({ ...prev, [repoKey]: null }));
 
-      const response = await fetch("/api/github/releases");
+      // Use your existing API endpoint with repo parameter
+      const response = await fetch(`/api/github/releases?repo=${repoKey}`);
 
-      if (!response.ok) throw new Error("Failed to fetch releases");
+      if (!response.ok) {
+        throw new Error(
+          `Failed to fetch releases for ${REPOSITORIES[repoKey].displayName}`
+        );
+      }
 
       const data: GitHubRelease[] = await response.json();
-      setReleases(data);
+
+      setReleases((prev) => ({
+        ...prev,
+        [repoKey]: data,
+      }));
     } catch (err) {
-      console.error("Error fetching releases:", err);
-      setError("Failed to load releases");
+      console.error(
+        `Error fetching releases for ${REPOSITORIES[repoKey].displayName}:`,
+        err
+      );
+      setError((prev) => ({
+        ...prev,
+        [repoKey]: `Failed to load ${REPOSITORIES[repoKey].displayName} releases`,
+      }));
     } finally {
-      setLoading(false);
+      setLoading((prev) => ({ ...prev, [repoKey]: false }));
     }
   };
 
+  // Load releases for active repository
   useEffect(() => {
-    fetchReleases();
+    if (releases[activeRepo].length === 0) {
+      fetchReleasesForRepo(activeRepo);
+    }
+  }, [activeRepo]);
+
+  // Load initial repositories on mount
+  useEffect(() => {
+    // Fetch the initial repository (web)
+    fetchReleasesForRepo("web");
+
+    // Pre-fetch the TMA repository as it's newly updated
+    fetchReleasesForRepo("tma");
   }, []);
+
+  const handleTabChange = (repoKey: RepoKey) => {
+    setActiveRepo(repoKey);
+    const index = repoKeys.indexOf(repoKey);
+    setActiveIndex(index);
+  };
+
+  const handleRetry = () => {
+    fetchReleasesForRepo(activeRepo);
+  };
+
+  const currentRepo = REPOSITORIES[activeRepo];
+  const currentReleases = releases[activeRepo];
+  const isLoading = loading[activeRepo];
+  const currentError = error[activeRepo];
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-black">
@@ -54,43 +164,105 @@ export default function ReleasesPage() {
       <div className="fixed inset-0 z-0 opacity-30 pointer-events-none">
         <div className="absolute top-[20%] left-1/2 -translate-x-1/2 w-full h-[600px] bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-bitcoin/20 via-transparent to-transparent"></div>
       </div>
+
       <div className="relative z-10">
         <main className="pt-32 pb-20">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto">
+              {/* Fixed height content container to prevent layout shift */}
+              <div className="min-h-[calc(100vh-16rem)]">
               {/* Header */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="text-center mb-12"
+              <div className="text-center mb-12"
               >
                 <h1 className="text-4xl md:text-5xl font-bold mb-4">
                   <span className="text-white">Release</span>
                   <span className="text-bitcoin ml-2">Notes</span>
                 </h1>
                 <p className="text-gray-400 max-w-2xl mx-auto mb-8">
-                  Stay up to date with the latest features and improvements.
+                  Stay up to date with the latest features and improvements
+                  across all BitcoinDeepa projects.
                 </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Link
-                    href="https://github.com/CeyLabs/BitcoinDeepa-Web-FE/releases"
-                    target="_blank"
+
+                {/* Compact Repository Tabs using ShadcnUI with magnetic effect */}
+                <div className="flex justify-center mb-8">
+                  <Tabs
+                    value={activeRepo}
+                    onValueChange={(value) => {
+                      // Quick fade out
+                      const contentElements = document.querySelectorAll('.transition-opacity');
+                      contentElements.forEach(el => {
+                        (el as HTMLElement).style.opacity = '0';
+                      });
+                      
+                      // Update state almost instantly
+                      setTimeout(() => {
+                        const repoKey = value as RepoKey;
+                        setActiveRepo(repoKey);
+                      }, 80); // Faster state update
+                    }}
+                    className="max-w-md w-full"
                   >
-                    <Button className="bg-bitcoin hover:bg-bitcoin-dark">
+                    <TabsList className="grid grid-cols-3 bg-zinc-900/60 backdrop-blur-xl rounded-[0.75rem] border border-zinc-800/50 p-1 h-[48px] relative">
+                      {/* Custom Magnetic Highlight */}
+                      <div
+                        className="absolute h-[40px] transition-all duration-300 ease-out bg-white/10 rounded-[0.75rem]"
+                        style={{
+                          ...hoverStyle,
+                          opacity: 1,
+                          top: "4px",
+                        }}
+                      />
+
+                      {repoKeys.map((repoKey, index) => (
+                        <div
+                          key={repoKey}
+                          ref={(el) => {
+                            if (tabRefs.current) tabRefs.current[index] = el;
+                          }}
+                          className="relative"
+                        >
+                          <TabsTrigger
+                            value={repoKey}
+                            className="text-xs font-medium rounded-[0.75rem] py-2 transition-colors duration-300 h-[40px] w-full bg-transparent data-[state=active]:bg-transparent data-[state=active]:text-bitcoin data-[state=inactive]:text-white/80 shadow-none data-[state=active]:shadow-none relative z-10"
+                          >
+                            {REPOSITORIES[repoKey].name}
+                          </TabsTrigger>
+                        </div>
+                      ))}
+                    </TabsList>
+                  </Tabs>
+                </div>
+
+                {/* Current Repository Info */}
+                <div
+                  key={activeRepo}
+                  className="bg-zinc-900/30 backdrop-blur-sm border border-zinc-800 rounded-[0.75rem] p-6 mb-8 transition-opacity duration-150"
+                >
+                  <h2 className="text-xl font-semibold text-bitcoin mb-3">
+                    {currentRepo.displayName}
+                  </h2>
+                  <p className="text-gray-400 text-sm mb-5 leading-relaxed">
+                    {currentRepo.description}
+                  </p>
+                  <Link href={currentRepo.githubUrl} target="_blank">
+                    <Button
+                      variant="outline"
+                      className="border-bitcoin text-bitcoin hover:bg-bitcoin/10 bg-transparent"
+                    >
                       <Github className="h-4 w-4 mr-2" />
                       View on GitHub
                     </Button>
                   </Link>
                 </div>
-              </motion.div>
+              </div>
 
               {/* Loading State */}
-              {loading && (
+              {isLoading && (
                 <div className="space-y-6">
                   {[...Array(3)].map((_, i) => (
                     <div
                       key={i}
-                      className="bg-zinc-900/50 backdrop-blur-sm border border-zinc-800 rounded-xl p-6 animate-pulse"
+                      className="bg-zinc-900/50 backdrop-blur-sm border border-zinc-800 rounded-[0.75rem] p-6 animate-pulse"
                     >
                       <div className="h-6 bg-zinc-700 rounded w-1/3 mb-4"></div>
                       <div className="h-4 bg-zinc-700 rounded w-full mb-2"></div>
@@ -101,16 +273,16 @@ export default function ReleasesPage() {
               )}
 
               {/* Error State */}
-              {error && (
+              {currentError && (
                 <div className="text-center py-12">
-                  <div className="bg-zinc-900/50 backdrop-blur-sm border border-red-500/20 rounded-xl p-8 max-w-md mx-auto">
+                  <div className="bg-zinc-900/50 backdrop-blur-sm border border-red-500/20 rounded-[0.75rem] p-8 max-w-md mx-auto">
                     <AlertCircle className="h-12 w-12 text-red-400 mx-auto mb-4" />
                     <h3 className="text-xl font-bold text-white mb-2">
                       Failed to Load Releases
                     </h3>
-                    <p className="text-gray-400 mb-6">{error}</p>
+                    <p className="text-gray-400 mb-6">{currentError}</p>
                     <Button
-                      onClick={fetchReleases}
+                      onClick={handleRetry}
                       className="bg-bitcoin hover:bg-bitcoin-dark"
                     >
                       <RefreshCw className="h-4 w-4 mr-2" />
@@ -121,15 +293,15 @@ export default function ReleasesPage() {
               )}
 
               {/* Releases */}
-              {!loading && !error && (
-                <div className="space-y-8">
-                  {releases.map((release, index) => (
-                    <motion.div
+              {!isLoading && !currentError && (
+                <div
+                  key={activeRepo}
+                  className="space-y-8 transition-opacity duration-150"
+                >
+                  {currentReleases.map((release, index) => (
+                    <div
                       key={release.id}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: index * 0.1 }}
-                      className="bg-zinc-900/50 backdrop-blur-sm border border-zinc-800 rounded-xl p-6 md:p-8 hover:border-bitcoin/30 transition-all"
+                      className="bg-zinc-900/50 backdrop-blur-sm border border-zinc-800 rounded-[0.75rem] p-6 md:p-8 hover:border-bitcoin/30 transition-all"
                     >
                       {/* Release Header */}
                       <div className="flex items-start justify-between mb-6">
@@ -141,10 +313,6 @@ export default function ReleasesPage() {
                             <div className="flex items-center gap-1">
                               <Calendar className="h-4 w-4" />
                               <span>{formatDate(release.published_at)}</span>
-                            </div>
-                            <div className="flex items-center gap-1">
-                              <User className="h-4 w-4" />
-                              <span>{release.author.login}</span>
                             </div>
                             <Link
                               href={release.html_url}
@@ -194,17 +362,19 @@ export default function ReleasesPage() {
                             ))}
                           </div>
                         </div>
-                      )}
-                    </motion.div>
+                      )}                      </div>
                   ))}
 
-                  {releases.length === 0 && (
+                  {currentReleases.length === 0 && (
                     <div className="text-center py-12">
-                      <p className="text-gray-400">No releases found.</p>
+                      <p className="text-gray-400">
+                        No releases found for {currentRepo.displayName}.
+                      </p>
                     </div>
                   )}
                 </div>
               )}
+              </div> {/* Close fixed height container */}
             </div>
           </div>
         </main>
