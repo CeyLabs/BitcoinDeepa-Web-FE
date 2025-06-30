@@ -4,6 +4,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Rocket, ChevronDown } from "lucide-react";
+import PriceTicker from "./price-ticker";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   TwitterIcon,
@@ -105,8 +106,8 @@ export default function Navbar() {
               />
             </Link>
 
-            {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center relative">
+            {/* Desktop Navigation - Absolutely positioned and centered */}
+            <nav className="hidden md:flex items-center absolute left-0 right-0 mx-auto" style={{ width: "fit-content", margin: "0 auto" }}>
               {/* Hover Highlight */}
               <div
                 className="absolute h-[30px] transition-all duration-300 ease-out bg-white/10 rounded-[6px] flex items-center"
@@ -117,7 +118,7 @@ export default function Navbar() {
               />
 
               {/* Navigation Items */}
-              <div className="relative flex space-x-1 items-center">
+              <div className="relative flex space-x-2 items-center">
                 {navItems.map((item, index) => (
                   <div
                     key={index}
@@ -142,16 +143,19 @@ export default function Navbar() {
               </div>
             </nav>
 
-            <div className="hidden md:flex items-center space-x-2">
+            <div className="hidden md:flex items-center space-x-3">
               {/* <Link
                 href="#login"
                 className="px-4 py-2 text-sm text-gray-300 hover:text-white transition-colors rounded-md font-medium"
               >
                 Login
               </Link> */}
+              <div className="hidden xl:block">
+                <PriceTicker className="min-w-[165px]" />
+              </div>
               <Link
                 href="https://t.me/bitcoindeepa"
-                className="px-5 py-2 text-sm font-medium text-white bg-bitcoin hover:bg-bitcoin-dark transition-colors rounded-full flex items-center"
+                className="px-5 py-2 text-sm font-medium text-white bg-bitcoin hover:bg-bitcoin-dark transition-colors rounded-full flex items-center whitespace-nowrap"
               >
                 Join the Community
               </Link>
@@ -486,6 +490,12 @@ export default function Navbar() {
                     </AnimatePresence>
                   </div>
 
+                  {/* Price Ticker Section */}
+                  <div className="bg-zinc-800/50 rounded-lg overflow-hidden">
+                    <div className="w-full px-4 py-3 flex items-center text-white font-medium">
+                      <PriceTicker className="bg-transparent px-0 py-0 rounded-none" />
+                    </div>
+                  </div>
                   {/* Join Button */}
                   <Link
                     href="https://t.me/bitcoindeepa"
