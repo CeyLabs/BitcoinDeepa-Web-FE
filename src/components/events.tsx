@@ -62,7 +62,7 @@ export default function EventsSection() {
         setLoading(true);
 
         const response = await fetch(
-          "https://ceylabs.io/api/luma-events/v3/?calendar=cal-wMA8oEbnEEFAAH5",
+          `https://ceylabs.io/api/luma-events/v3/?calendar=${process.env.NEXT_PUBLIC_LUMA_CALENDAR_ID}`,
           {
             headers: {
               Authorization: `Bearer ${process.env.NEXT_PUBLIC_UUID}`,

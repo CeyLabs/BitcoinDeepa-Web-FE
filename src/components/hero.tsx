@@ -7,7 +7,11 @@ import Link from "next/link";
 
 export default function Hero() {
   return (
-    <section className="min-h-[79svh] flex items-center bg-black relative overflow-hidden">
+    <section
+      className="min-h-hero flex items-center bg-black relative overflow-hidden"
+      role="region"
+      aria-label="Hero Section"
+    >
       {/* Background SVG positioned in the corner with low opacity */}
       <div className="absolute -bottom-20 -right-20 md:-bottom-40 md:-right-40 w-[600px] h-[600px] opacity-5 pointer-events-none z-0">
         <Image
