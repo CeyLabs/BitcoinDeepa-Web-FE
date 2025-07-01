@@ -8,6 +8,7 @@ import { ArrowLeft, ArrowRight, Star, Clock } from "lucide-react";
 import { motion } from "framer-motion";
 import { formatDate } from "../lib/utils";
 import { AlertCircleIcon, EmptyFileIcon, EmptyImageIcon } from "./icons";
+import { BrandName } from "./brand-provider";
 
 interface GhostAuthor {
   id: string;
@@ -130,7 +131,7 @@ export default function BlogSection() {
               <span className="text-bitcoin ml-2">Blog</span>
             </h2>
             <p className="text-gray-400 max-w-md">
-              Explore insights and stories from the pearl of sathoshi
+              Explore insights and stories from the Pearl of Satoshi
             </p>
           </div>
 
@@ -204,7 +205,7 @@ export default function BlogSection() {
             </h3>
             <p className="text-gray-400 max-w-md mx-auto mb-6">
               We don't have any published blog posts at the moment. Check back
-              soon for updates from the BitcoinDeepa community.
+              soon for updates from the <BrandName /> community.
             </p>
           </div>
         ) : (

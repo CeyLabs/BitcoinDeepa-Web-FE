@@ -1,5 +1,5 @@
 # BitcoinDeepa-Web-FE
-Learn, connect, and grow with Sri Lanka’s Bitcoin community from grassroots meetups to BitcoinDeepa initiatives by Pearl of Satoshi.
+Learn, connect, and grow with Sri Lanka’s Bitcoin community from grassroots meetups to Bitcoin Deepa initiatives by Pearl of Satoshi.
 
 ## 🛠️ Tech Stack
 
@@ -40,6 +40,8 @@ Create a `.env` file in the root directory of the project and add the following 
 NEXT_PUBLIC_UUID=
 GHOST_CONTENT_API_KEY=
 GHOST_API_URL=
+NEXT_PUBLIC_LUMA_CALENDAR_ID=
+GITHUB_TOKEN=
 ```
 
 #### Environment Variables Description
@@ -47,6 +49,8 @@ GHOST_API_URL=
 - `NEXT_PUBLIC_UUID`: Unique identifier for the application
 - `GHOST_CONTENT_API_KEY`: API key for Ghost CMS to fetch blog content
 - `GHOST_API_URL`: Base URL for your Ghost CMS instance
+- `NEXT_PUBLIC_LUMA_CALENDAR_ID`: Luma Calendar ID
+- `GITHUB_TOKEN`: GitHub PAT for authenticating and fetching data from private repositories.
 
 4. **Run the development server**
    ```bash
@@ -108,8 +112,8 @@ src/
 - `bun start` / `npm run start`: Start production server
 - `bun lint` / `npm run lint`: Run ESLint
 
-Built with ❤️ by team Bitcoindeepa
-
 ## License
 
-This project is released under the [MIT License](LICENSE). See the [license page](/license) on the website for details.
+This project is released under the [MIT License](LICENSE). See the [license page](https://bitcoindeepa.com/license) on the website for details.
+
+Built with ❤️ by Bitcoin දීප Team

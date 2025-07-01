@@ -11,6 +11,7 @@ import {
   Calendar,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { BrandName } from "./brand-provider";
 
 interface EventData {
   id: string;
@@ -174,7 +175,7 @@ export default function EventsSection() {
               <span className="text-bitcoin ml-2">Meetups</span>
             </h2>
             <p className="text-gray-400 max-w-md">
-              Be part of the Bitcoin Deepa community join our events, share
+              Be part of the <BrandName /> community join our events, share
               ideas, and vibe with the community across Sri Lanka.
             </p>
           </div>

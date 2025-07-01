@@ -6,6 +6,7 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
 import { TwitterIcon, TelegramIcon, InstagramIcon } from "./icons";
+import { BrandName } from "./brand-provider";
 
 const CURRENT_YEAR = new Date().getFullYear();
 
@@ -60,7 +61,7 @@ const Footer = () => {
           <div className="absolute right-0 bottom-0 w-[260px] h-[260px] opacity-[0.1]">
             <Image
               src="/images/bitcoindeepa-logo.svg"
-              alt="BitcoinDeepa Logo"
+              alt="Bitcoin Deepa Logo (Bitcoin දීප)"
               width={260}
               height={260}
               className="object-contain"
@@ -94,31 +95,23 @@ const Footer = () => {
               small
             />
             <NavLink href="#events" label="Events" small />
-            <NavLink
-              href="https://blog.bitcoindeepa.com/resources/"
-              label="Resources"
-              small
-            />
+            <NavLink href="/releases" label="Release Notes" small />
             <NavLink href="#faq" label="FAQ" small />
+            <NavLink href="/license" label="License" small />
           </div>
 
           <div className="flex justify-center">
             <div className="grid grid-cols-3 gap-2 w-full max-w-md">
-            <SecondaryButton
-              href="/privacy-policy"
-              label="Privacy Policy"
-              small
-            />
-            <SecondaryButton
-              href="/license"
-              label="License"
-              small
-            />
-            <SecondaryButton
-              href="https://t.me/bitcoindeepabot"
-              label="Bitcoindeepa Bot"
-              small
-            />
+              <SecondaryButton
+                href="/privacy-policy"
+                label="Privacy Policy"
+                small
+              />
+              <SecondaryButton
+                href="https://t.me/bitcoindeepabot"
+                label="BitcoinDeepaBot"
+                small
+              />
               <SecondaryButton
                 href="https://blog.bitcoindeepa.com/community"
                 label="Community"
@@ -172,7 +165,7 @@ const Footer = () => {
           </div>
 
           <div className="text-center text-zinc-500 text-sm mt-10">
-            &copy; {CURRENT_YEAR} Bitcoindeepa. All rights reserved.
+            &copy; {CURRENT_YEAR} <BrandName />. All rights reserved.
           </div>
         </div>
       </div>
@@ -218,7 +211,7 @@ const NavLink = ({
     <Link
       href={href}
       className={`text-zinc-300 hover:text-white transition-colors ${
-        small ? "text-lg" : "text-[22px]"
+        small ? "text-sm" : "text-[14px]"
       }`}
     >
       {label}
