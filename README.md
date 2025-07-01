@@ -40,6 +40,8 @@ Create a `.env` file in the root directory of the project and add the following 
 NEXT_PUBLIC_UUID=
 GHOST_CONTENT_API_KEY=
 GHOST_API_URL=
+NEXT_PUBLIC_LUMA_CALENDAR_ID=
+GITHUB_TOKEN=
 ```
 
 #### Environment Variables Description
@@ -47,6 +49,8 @@ GHOST_API_URL=
 - `NEXT_PUBLIC_UUID`: Unique identifier for the application
 - `GHOST_CONTENT_API_KEY`: API key for Ghost CMS to fetch blog content
 - `GHOST_API_URL`: Base URL for your Ghost CMS instance
+- `NEXT_PUBLIC_LUMA_CALENDAR_ID`: Luma Calendar ID
+- `GITHUB_TOKEN`: GitHub PAT for authenticating and fetching data from private repositories.
 
 4. **Run the development server**
    ```bash
@@ -107,5 +111,9 @@ src/
 - `bun build` / `npm run build`: Build production bundle
 - `bun start` / `npm run start`: Start production server
 - `bun lint` / `npm run lint`: Run ESLint
+
+## License
+
+This project is released under the [MIT License](LICENSE). See the [license page](https://bitcoindeepa.com/license) on the website for details.
 
 Built with ❤️ by Bitcoin දීප Team

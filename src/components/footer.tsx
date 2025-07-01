@@ -231,7 +231,7 @@ const SecondaryButton = ({
   return (
     <motion.a
       href={href}
-      className="flex items-center justify-center w-full h-8 rounded-lg bg-zinc-800 text-zinc-300 hover:text-white hover:bg-zinc-700 transition-all duration-300 text-[11px] leading-tight sm:text-sm px-1.5 sm:px-3"
+      className="flex items-center justify-center w-full h-8 rounded-lg bg-zinc-800 text-zinc-300 hover:text-white hover:bg-zinc-700 transition-all duration-300 text-xs leading-tight sm:text-sm px-1.5 sm:px-3"
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
     >
