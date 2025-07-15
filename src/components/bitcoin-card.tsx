@@ -108,14 +108,14 @@ const ViewMoreDialog: React.FC = () => {
               Lightning Network Bolt Card
             </h3>
             <p className="text-gray-300 mb-6">
-              The <BrandName /> Card is more than just a card - it's your gateway
-              to the future of payments. With embedded LNURLW technology, you
-              can make instant Bitcoin payments with just a tap.
+              The <BrandName /> Card is more than just a card - it's your
+              gateway to the future of payments. With embedded LNURLW
+              technology, you can make instant Bitcoin payments with just a tap.
             </p>
             <div className="flex justify-center mb-4">
               <div className="relative w-[280px] h-[175px] md:w-[400px] md:h-[250px] rounded-xl overflow-hidden">
                 <Image
-                  src="/images/card-front.png"
+                  src="/images/bdfcard.png"
                   alt="Bitcoin Deepa Card Front"
                   width={400}
                   height={250}
@@ -289,7 +289,7 @@ export default function BitcoinCard() {
                   }}
                 >
                   <Image
-                    src="/images/card-front.png"
+                    src="/images/bdfcard.png"
                     alt="Bitcoin Deepa Card Front"
                     width={640}
                     height={400}
@@ -314,7 +314,7 @@ export default function BitcoinCard() {
                   }}
                 >
                   <Image
-                    src="/images/card-back.png"
+                    src="/images/bdbcard.png"
                     alt="Bitcoin Deepa Card Back"
                     width={640}
                     height={400}

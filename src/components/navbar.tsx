@@ -100,16 +100,19 @@ export default function Navbar() {
           <div className="flex items-center justify-between h-16 px-6">
             <Link href="/" className="flex items-center">
               <Image
-                src="/images/bitcoindeepa-h-logo.svg"
+                src="/images/brand/DeepaLogo_WnO.png"
                 alt={brand}
                 width={160}
                 height={32}
-                className="h-8 w-auto"
+                className="h-9 w-auto"
               />
             </Link>
 
             {/* Desktop Navigation - Absolutely positioned and centered */}
-            <nav className="hidden md:flex items-center absolute left-0 right-0 mx-auto" style={{ width: "fit-content", margin: "0 auto" }}>
+            <nav
+              className="hidden md:flex items-center absolute left-0 right-0 mx-auto"
+              style={{ width: "fit-content", margin: "0 auto" }}
+            >
               {/* Hover Highlight */}
               <div
                 className="absolute h-[30px] transition-all duration-300 ease-out bg-white/10 rounded-[6px] flex items-center"

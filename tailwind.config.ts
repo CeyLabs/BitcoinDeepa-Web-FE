@@ -33,7 +33,7 @@ const config: Config = {
           foreground: "hsl(var(--primary-foreground))",
         },
         bitcoin: {
-          DEFAULT: "#f90",
+          DEFAULT: "#f7901a",
           light: "#ffb84d",
           dark: "#e68a00",
         },
@@ -87,7 +87,7 @@ const config: Config = {
         "shimmer-text": "shimmer-text 2s infinite linear",
       },
       backgroundImage: {
-        "bitcoin-gradient": "linear-gradient(to right, #f90, #ffb84d)",
+        "bitcoin-gradient": "linear-gradient(to right, #f90, #f89319)",
       },
     },
   },
