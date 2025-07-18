@@ -156,7 +156,7 @@ export default function Navbar() {
                 <PriceTicker className="min-w-[165px]" />
               </div>
               <Link
-                href="https://t.me/bitcoindeepa"
+                href="https://t.me/+OoVmewRlUHg1MTA1"
                 className="px-5 py-2 text-sm font-medium text-white bg-bitcoin hover:bg-bitcoin-dark transition-colors rounded-full flex items-center whitespace-nowrap"
               >
                 Join the Community
@@ -276,7 +276,7 @@ export default function Navbar() {
                             Connect with our active community
                           </p>
                           <Link
-                            href="https://t.me/bitcoindeepa"
+                            href="https://t.me/+OoVmewRlUHg1MTA1"
                             className="text-bitcoin text-sm font-medium mt-2 inline-flex items-center"
                           >
                             Join now →
@@ -403,7 +403,7 @@ export default function Navbar() {
                               </div>
                             </Link>
                             <Link
-                              href="https://t.me/bitcoindeepa"
+                              href="https://t.me/+OoVmewRlUHg1MTA1"
                               className="block p-3 rounded-lg bg-zinc-700/50 text-white hover:bg-bitcoin hover:text-white transition-colors"
                             >
                               <div className="font-medium">
@@ -471,7 +471,7 @@ export default function Navbar() {
                               <TwitterIcon className="w-6 h-6" />
                             </Link>
                             <Link
-                              href="https://t.me/bitcoindeepa"
+                              href="https://t.me/+OoVmewRlUHg1MTA1"
                               className="text-white hover:text-bitcoin transition-colors"
                               target="_blank"
                               rel="noopener noreferrer"
@@ -500,7 +500,7 @@ export default function Navbar() {
                   </div>
                   {/* Join Button */}
                   <Link
-                    href="https://t.me/bitcoindeepa"
+                    href="https://t.me/+OoVmewRlUHg1MTA1"
                     className="mt-4 px-5 py-3 text-center font-medium text-white bg-bitcoin hover:bg-bitcoin-dark transition-colors rounded-lg flex items-center justify-center"
                   >
                     Join the community
