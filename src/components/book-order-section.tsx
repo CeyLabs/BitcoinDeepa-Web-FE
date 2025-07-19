@@ -17,7 +17,11 @@ export default function BookOrderSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
 
-  const bookPrice = 1300.0;
+  const originalPrice = 1600;
+  const salePrice = 1300;
+  const discountPercentage = Math.floor(
+    ((originalPrice - salePrice) / originalPrice) * 100
+  );
 
   const paymentUrl = "https://payhere.lk/pay/of811f041";
 
@@ -204,14 +208,19 @@ export default function BookOrderSection() {
               <div className="flex items-center justify-between mb-4 md:mb-6">
                 <div>
                   <div className="text-xs md:text-sm text-gray-400">Price</div>
-                  <div className="text-xl md:text-2xl font-bold text-bitcoin">
-                    රු. {bookPrice.toLocaleString()}
+                  <div className="flex items-center space-x-3">
+                    <div className="text-xl md:text-2xl font-bold text-bitcoin">
+                      රු. {salePrice.toLocaleString()}
+                    </div>
+                    <div className="text-sm md:text-base text-gray-500 line-through">
+                      රු. {originalPrice.toLocaleString()}
+                    </div>
                   </div>
-                  <div className="text-xs md:text-sm text-gray-500">
-                    Pay Now in LKR
+                  <div className="text-xs md:text-sm text-green-500 font-medium">
+                    {discountPercentage}% Off
                   </div>
                 </div>
-                <div className="flex items-center bg-bitcoin/10 rounded-lg px-2 md:px-3 py-1">
+                <div className="flex items-center bg-bitcoin/10 rounded-lg px-2 md:px-3 py-1 animate-pulse">
                   <Clock className="h-3 w-3 md:h-4 md:w-4 text-bitcoin mr-1 md:mr-2" />
                   <span className="text-xs md:text-sm text-bitcoin font-medium">
                     Limited time offer
