@@ -6,6 +6,7 @@ import Faq from "@/src/components/faq";
 import JoinCommunity from "@/src/components/join-community";
 import Events from "../components/events";
 import BlogSection from "../components/blog-section";
+import BookOrderSection from "../components/book-order-section";
 
 export default function Home() {
   return (
@@ -23,6 +24,7 @@ export default function Home() {
         <div className="pt-28">
           <Hero />
           <Features />
+          <BookOrderSection />
           <Community />
           <BitcoinCard />
 
