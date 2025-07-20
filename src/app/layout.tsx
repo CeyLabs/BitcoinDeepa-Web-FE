@@ -31,6 +31,27 @@ export const metadata: Metadata = {
     "Bitcoin Resources",
     "Bitcoin Wallets",
   ],
+  openGraph: {
+    title: "The Bullish Case for Bitcoin - Sinhala Edition",
+    description: "Book is live! Order the Sinhala translation of The Bullish Case for Bitcoin.",
+    url: "https://www.bitcoindeepa.com/#book-order",
+    siteName: "Bitcoin Deepa",
+    images: [
+      {
+        url: "https://www.bitcoindeepa.com/images/book-mockup-preview.png",
+        width: 1200,
+        height: 630,
+        alt: "The Bullish Case for Bitcoin - Sinhala Edition",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "The Bullish Case for Bitcoin - Sinhala Edition",
+    description: "Book is live! Order the Sinhala translation of The Bullish Case for Bitcoin.",
+    images: ["https://www.bitcoindeepa.com/images/book-mockup-preview.png"],
+  },
 };
 
 export default function RootLayout({
