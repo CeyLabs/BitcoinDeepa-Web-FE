@@ -72,7 +72,7 @@ const Footer = () => {
         <div className="container mx-auto px-6 relative z-10 py-12">
           <div className="flex gap-3 mb-8 justify-center">
             <SocialButton
-              href="https://t.me/bitcoindeepa"
+              href="https://t.me/+OoVmewRlUHg1MTA1"
               icon="telegram"
               small
             />
