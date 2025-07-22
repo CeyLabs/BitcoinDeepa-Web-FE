@@ -72,7 +72,7 @@ export default function Community() {
               ))}
             </ul>
             <Link
-              href="https://t.me/bitcoindeepa"
+              href="https://t.me/+OoVmewRlUHg1MTA1"
               target="_blank"
               rel="noopener noreferrer"
             >

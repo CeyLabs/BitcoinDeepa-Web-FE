@@ -45,7 +45,7 @@ export default function Hero() {
             </p>
             <div className="flex flex-row gap-4 justify-center lg:justify-start max-w-[95%] mx-auto lg:mx-0 lg:max-w-none">
               <Link
-                href="https://lu.ma/BitcoinDeepa"
+                href="https://t.me/+OoVmewRlUHg1MTA1"
                 target="_blank"
                 rel="noopener noreferrer"
               >
