@@ -141,7 +141,7 @@ export default function JoinCommunity() {
               className="relative"
             >
               <Link
-                href="https://lu.ma/BitcoinDeepa"
+                href="https://t.me/+OoVmewRlUHg1MTA1"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center bg-bitcoin hover:bg-bitcoin-dark text-black hover:text-white font-bold py-3 px-6 rounded-full text-base md:text-lg transition-colors duration-200 shadow-lg"
