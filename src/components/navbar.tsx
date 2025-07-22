@@ -100,7 +100,7 @@ export default function Navbar() {
           <div className="flex items-center justify-between h-16 px-6">
             <Link href="/" className="flex items-center">
               <Image
-                src="/images/brand/DeepaLogo_WnO.png"
+                src="/images/brand/DeepaLogo_WnO.svg"
                 alt={brand}
                 width={160}
                 height={32}
