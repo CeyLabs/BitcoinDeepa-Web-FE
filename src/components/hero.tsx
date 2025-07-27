@@ -4,6 +4,7 @@ import { Button } from "@/src/components/ui/button";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { fbEvent } from "@/src/lib/facebook-pixel";
 
 export default function Hero() {
   return (
@@ -48,6 +49,7 @@ export default function Hero() {
                 href="https://t.me/+OoVmewRlUHg1MTA1"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => fbEvent('Lead')}
               >
                 <Button className="bg-bitcoin hover:bg-bitcoin-dark text-white font-medium">
                   Join Community
