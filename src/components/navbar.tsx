@@ -4,6 +4,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Rocket, ChevronDown } from "lucide-react";
+import { fbEvent } from "@/src/lib/facebook-pixel";
 import PriceTicker from "./price-ticker";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -278,6 +279,7 @@ export default function Navbar() {
                           <Link
                             href="https://t.me/+OoVmewRlUHg1MTA1"
                             className="text-bitcoin text-sm font-medium mt-2 inline-flex items-center"
+                            onClick={() => fbEvent('Lead')}
                           >
                             Join now →
                           </Link>
@@ -405,6 +407,7 @@ export default function Navbar() {
                             <Link
                               href="https://t.me/+OoVmewRlUHg1MTA1"
                               className="block p-3 rounded-lg bg-zinc-700/50 text-white hover:bg-bitcoin hover:text-white transition-colors"
+                              onClick={() => fbEvent('Lead')}
                             >
                               <div className="font-medium">
                                 Join Our Telegram
@@ -502,6 +505,7 @@ export default function Navbar() {
                   <Link
                     href="https://t.me/+OoVmewRlUHg1MTA1"
                     className="mt-4 px-5 py-3 text-center font-medium text-white bg-bitcoin hover:bg-bitcoin-dark transition-colors rounded-lg flex items-center justify-center"
+                    onClick={() => fbEvent('Lead')}
                   >
                     Join the community
                     <Rocket className="ml-2 h-4 w-4" />
