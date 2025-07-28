@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { Bitcoin, ExternalLink } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { fbEvent } from "@/src/lib/facebook-pixel";
 import { BitcoinIcon1, BitcoinIcon2, LightningIcon } from "./icons";
 import { BrandName } from "./brand-provider";
 
@@ -144,6 +145,7 @@ export default function JoinCommunity() {
                 href="https://t.me/+OoVmewRlUHg1MTA1"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => fbEvent('Lead')}
                 className="inline-flex items-center justify-center bg-bitcoin hover:bg-bitcoin-dark text-black hover:text-white font-bold py-3 px-6 rounded-full text-base md:text-lg transition-colors duration-200 shadow-lg"
               >
                 Join Our Community

@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import { fbEvent } from "@/src/lib/facebook-pixel";
 import Image from "next/image";
 import { motion, useInView } from "framer-motion";
 import {
@@ -26,6 +27,7 @@ export default function BookOrderSection() {
   const paymentUrl = "https://payhere.lk/pay/of811f041";
 
   const handleOrderNow = () => {
+    fbEvent('Purchase', { value: salePrice, currency: 'LKR' });
     window.open(paymentUrl, "_blank", "noopener,noreferrer");
   };
 

@@ -7,6 +7,7 @@ import Navbar from "@/src/components/navbar";
 import Footer from "@/src/components/footer";
 import LenisProvider from "@/src/components/lenis-provider";
 import { BrandProvider } from "@/src/components/brand-provider";
+import FacebookPixel from "@/src/components/facebook-pixel";
 
 const exo2 = Exo_2({
   subsets: ["latin"],
@@ -64,6 +65,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${exo2.className} antialiased`}>
+        <FacebookPixel />
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
