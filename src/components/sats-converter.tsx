@@ -1,11 +1,9 @@
 "use client";
 
 import type React from "react";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { Alert, AlertDescription } from "../components/ui/alert";
-import { useSatsConverter } from "../hooks/use-sats-converter";
-
+import { useSatsConverterSync } from "../hooks/use-sats-converter-sync";
 
 import { ConverterInput } from "./sats-converter/converter-input";
 import { ResultDisplay } from "./sats-converter/result-display";
@@ -13,18 +11,28 @@ import { InfoSection } from "./sats-converter/info-section";
 
 export default function SatsConverter() {
   const [inputValue, setInputValue] = useState("10000");
+  const [formattedInputValue, setFormattedInputValue] = useState("10,000");
   const sectionRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
 
-  const { sats, setSats, result, isUpdating, error } = useSatsConverter(10000);
+  const { sats, setSats, result } = useSatsConverterSync(10000);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(/[^0-9]/g, ""); // Only allow numbers
-    setInputValue(value);
-    setSats(Number.parseInt(value) || 0);
+    // Remove all non-numeric characters to get the raw number
+    const rawValue = e.target.value.replace(/[^0-9]/g, ""); // Only allow numbers
+    
+    // Store the raw value
+    setInputValue(rawValue);
+    
+    // Format with thousand separators for display
+    const numberValue = Number.parseInt(rawValue) || 0;
+    setFormattedInputValue(numberValue.toLocaleString("en-US"));
+    
+    // Update sats for conversion
+    setSats(numberValue);
   };
 
-  // Memoized formatting functions
+  // Simple formatting functions
   const formatNumber = (num: number, decimals = 2): string => {
     if (num === 0) return "0.00";
     if (num < 0.000001) return num.toExponential(2);
@@ -50,11 +58,6 @@ export default function SatsConverter() {
     });
   };
 
-  // Initialize input value on mount
-  useEffect(() => {
-    setInputValue("10000");
-  }, []);
-
   return (
     <section
       ref={sectionRef}
@@ -72,7 +75,7 @@ export default function SatsConverter() {
         >
           <h2 className="text-3xl sm:text-2xl md:text-4xl font-bold mb-4">
             <span className="text-white">Instant </span>
-            <span className="text-bitcoin">Satoshi</span>
+            <span className="text-bitcoin">satoshi</span>
             <span className="text-white"> to USD/LKR Converter</span>
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto">
@@ -88,21 +91,15 @@ export default function SatsConverter() {
             className="space-y-6"
           >
             {/* Input Field */}
-            <ConverterInput value={inputValue} onChange={handleInputChange} />
+            <ConverterInput 
+              value={inputValue} 
+              formattedValue={formattedInputValue}
+              onChange={handleInputChange} 
+            />
 
-            {/* Error State */}
-            {error && (
-              <Alert className="border-red-500/20 bg-red-500/10">
-                <AlertDescription className="text-red-400">
-                  {error}
-                </AlertDescription>
-              </Alert>
-            )}
-
-            {/* Results Section */}
+            {/* Results Section - No loading states, instant updates */}
             <ResultDisplay
               result={result}
-              isUpdating={isUpdating}
               isInView={isInView}
               formatNumber={formatNumber}
               formatBTC={formatBTC}

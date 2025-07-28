@@ -4,30 +4,22 @@ import { memo } from "react";
 import { Card } from "../../components/ui/card";
 import Image from "next/image";
 
-// Memoized result card component to prevent unnecessary re-renders
+// Result card component with loading state support
 export const ResultCard = memo(
   ({
     value,
     icon,
     iconAlt,
     currency,
-    isUpdating,
   }: {
-    value: string;
+    value: string | React.ReactNode;
     icon: string;
     iconAlt: string;
     currency: string;
-    isUpdating: boolean;
   }) => (
     <Card className="p-6 bg-zinc-900/50 backdrop-blur-sm border-bitcoin/10 transition-colors">
       <div className="flex items-center justify-between">
-        <div
-          className={`text-2xl md:text-3xl font-bold text-white transition-opacity duration-200 ${
-            isUpdating ? "opacity-60" : "opacity-100"
-          }`}
-        >
-          {value}
-        </div>
+        <div className="text-2xl md:text-3xl font-bold text-white">{value}</div>
         <div className="flex items-center space-x-2 text-gray-400">
           <Image
             src={icon || "/placeholder.svg"}
@@ -45,18 +37,12 @@ export const ResultCard = memo(
 
 ResultCard.displayName = "ResultCard";
 
-// Memoized LKR card component
+// LKR card component with loading state support
 export const LKRCard = memo(
-  ({ value, isUpdating }: { value: string; isUpdating: boolean }) => (
+  ({ value }: { value: string | React.ReactNode }) => (
     <Card className="p-6 bg-zinc-900/50 backdrop-blur-sm border-bitcoin/10 transition-colors">
       <div className="flex items-center justify-between">
-        <div
-          className={`text-2xl md:text-3xl font-bold text-white transition-opacity duration-200 ${
-            isUpdating ? "opacity-60" : "opacity-100"
-          }`}
-        >
-          {value}
-        </div>
+        <div className="text-2xl md:text-3xl font-bold text-white">{value}</div>
         <div className="flex items-center space-x-2 text-gray-400">
           <Image
             src="/images/icons/s_lkr.webp"

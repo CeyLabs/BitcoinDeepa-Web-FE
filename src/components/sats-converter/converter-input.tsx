@@ -8,18 +8,19 @@ import type React from "react";
 interface ConverterInputProps {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  formattedValue?: string;
 }
 
-export function ConverterInput({ value, onChange }: ConverterInputProps) {
+export function ConverterInput({ value, onChange, formattedValue }: ConverterInputProps) {
   return (
     <Card className="p-6 bg-zinc-900/50 backdrop-blur-sm border-bitcoin/10 transition-colors group focus-within:border-bitcoin/50">
       <div className="flex items-center space-x-4">
         <div className="flex-1">
           <Input
             type="text"
-            value={value}
+            value={formattedValue || value}
             onChange={onChange}
-            placeholder="Enter satoshi amount"
+            placeholder="0"
             className="text-2xl md:text-3xl font-bold bg-transparent border-none text-white placeholder:text-gray-500 focus-visible:ring-0 focus-visible:ring-offset-0 focus:outline-none p-0 h-auto shadow-none"
           />
         </div>

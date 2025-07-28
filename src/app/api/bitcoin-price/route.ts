@@ -1,20 +1,33 @@
-import { getBitcoinPrice } from "@/src/lib/coingecko"
-import { NextResponse } from "next/server"
+import { NextResponse } from 'next/server';
+import { API_CONFIG } from '@/src/lib/ceyloncash-fx';
 
-
+/**
+ * API proxy handler to avoid CORS issues with client-side requests
+ */
 export async function GET() {
   try {
-    const price = await getBitcoinPrice()
-
-    return NextResponse.json(price, {
+    const response = await fetch(API_CONFIG.DIRECT_API_URL, {
+      method: 'GET',
       headers: {
-        "Cache-Control": "public, s-maxage=30, stale-while-revalidate=60",
-        "Content-Type": "application/json",
+        'Accept': 'application/json',
       },
-    })
-  } catch (error) {
-    console.error("Bitcoin price API error:", error)
+      next: { revalidate: Math.floor(API_CONFIG.CACHE_DURATION / 1000) }
+    });
 
-    return NextResponse.json({ error: "Failed to fetch Bitcoin price" }, { status: 500 })
+    if (!response.ok) {
+      throw new Error(`API error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return NextResponse.json(data);
+  } catch (error) {
+    console.error('Error proxying API request:', error);
+    return NextResponse.json(
+      {
+        error: 'Failed to fetch data',
+        message: error instanceof Error ? error.message : 'Unknown error'
+      },
+      { status: 500 }
+    );
   }
 }

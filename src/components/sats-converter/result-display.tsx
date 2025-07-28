@@ -5,15 +5,16 @@ import { motion } from "framer-motion";
 import { LKRCard, ResultCard } from "./result-cards";
 
 interface ConversionResult {
+  sats: number;
   usd: number;
   btc: number;
   lkr: number;
-  lastUpdated: string;
+  isLoading?: boolean;
+  hasError?: boolean;
 }
 
 interface ResultDisplayProps {
   result: ConversionResult | null;
-  isUpdating: boolean;
   isInView: boolean;
   formatNumber: (num: number, decimals?: number) => string;
   formatBTC: (num: number) => string;
@@ -22,7 +23,6 @@ interface ResultDisplayProps {
 
 function ResultDisplayComponent({
   result,
-  isUpdating,
   isInView,
   formatNumber,
   formatBTC,
@@ -37,41 +37,54 @@ function ResultDisplayComponent({
     >
       {/* USD */}
       <ResultCard
-        value={result ? `$${formatNumber(result.usd)}` : "$0.00"}
+        value={
+          result?.isLoading || result?.hasError ? (
+            <span className="bg-gradient-to-r from-gray-500 via-white to-gray-500 bg-[length:200%_100%] animate-shimmer-text bg-clip-text text-transparent">
+              0.00
+            </span>
+          ) : result && result.sats > 0 ? (
+            formatNumber(result.usd)
+          ) : (
+            "0"
+          )
+        }
         icon="/images/icons/s_usd.webp"
         iconAlt="USD"
         currency="USD"
-        isUpdating={isUpdating}
       />
 
       {/* BTC */}
       <ResultCard
-        value={result ? formatBTC(result.btc) : "0.0000"}
+        value={
+          result?.isLoading || result?.hasError ? (
+            <span className="bg-gradient-to-r from-gray-500 via-white to-gray-500 bg-[length:200%_100%] animate-shimmer-text bg-clip-text text-transparent">
+              0.0000
+            </span>
+          ) : result && result.sats > 0 ? (
+            formatBTC(result.btc)
+          ) : (
+            "0"
+          )
+        }
         icon="/images/icons/s_btc.webp"
         iconAlt="Bitcoin"
         currency="BTC"
-        isUpdating={isUpdating}
       />
 
       {/* LKR */}
       <LKRCard
-        value={result ? `රු${formatLKR(result.lkr)}` : "රු0.00"}
-        isUpdating={isUpdating}
+        value={
+          result?.isLoading || result?.hasError ? (
+            <span className="bg-gradient-to-r from-gray-500 via-white to-gray-500 bg-[length:200%_100%] animate-shimmer-text bg-clip-text text-transparent">
+              0.00
+            </span>
+          ) : result && result.sats > 0 ? (
+            formatLKR(result.lkr)
+          ) : (
+            "0"
+          )
+        }
       />
-
-      {/* Last Updated */}
-      <div className="text-center text-sm text-gray-500">
-        {result ? (
-          <>
-            Last updated: {new Date(result.lastUpdated).toLocaleTimeString()}
-            {isUpdating && (
-              <span className="ml-2 text-bitcoin">• Updating...</span>
-            )}
-          </>
-        ) : (
-          <span>Loading rates...</span>
-        )}
-      </div>
     </motion.div>
   );
 }
