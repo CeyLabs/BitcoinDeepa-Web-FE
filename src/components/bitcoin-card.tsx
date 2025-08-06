@@ -20,7 +20,7 @@ import { Dialog, DialogContent, DialogTrigger, DialogTitle } from "./ui/dialog";
 const CARD_FEATURES = [
   "LNURLW withdrawal embedded into a Secure NFC card",
   "Tapping your card authorizes a one-time withdrawal payment",
-  "Works with any merchant's Lightning point of sale device",
+  "Works with any merchant&apos;s Lightning point of sale device",
   "Contactless Lightning Network Bolt Card technology",
   "Join with us for a revolutionized future",
 ];
@@ -108,7 +108,7 @@ const ViewMoreDialog: React.FC = () => {
               Lightning Network Bolt Card
             </h3>
             <p className="text-gray-300 mb-6">
-              The <BrandName /> Card is more than just a card - it's your
+              The <BrandName /> Card is more than just a card - it&apos;s your
               gateway to the future of payments. With embedded LNURLW
               technology, you can make instant Bitcoin payments with just a tap.
             </p>
