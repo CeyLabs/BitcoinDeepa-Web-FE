@@ -79,11 +79,11 @@ export default function Hero() {
                   <div className="absolute inset-0 rounded-full bg-bitcoin-gradient animate-pulse"></div>
                   <div className="absolute inset-2 rounded-full bg-black flex items-center justify-center">
                     <Image
-                      src="/images/bitcoindeepa-logo.png"
+                      src="/images/brand/Yaka.png"
                       alt="Bitcoin Deepa Logo (Bitcoin දීප)"
                       width={180}
                       height={180}
-                      className="size-40 md:size-52"
+                      className="size-40 md:size-52 object-contain"
                     />
                   </div>
                 </div>

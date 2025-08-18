@@ -101,16 +101,16 @@ export default function Navbar() {
           <div className="flex items-center justify-between h-16 px-6">
             <Link href="/" className="flex items-center">
               <Image
-                src="/images/bitcoindeepa-h-logo.svg"
+                src="/images/brand/DeepaLogo_WnO.svg"
                 alt={brand}
                 width={160}
                 height={32}
-                className="h-8 w-auto"
+                className="h-9 w-auto"
               />
             </Link>
 
             {/* Desktop Navigation - Absolutely positioned and centered */}
-            <nav className="hidden md:flex items-center absolute left-0 right-0 mx-auto" style={{ width: "fit-content", margin: "0 auto" }}>
+            <nav className="hidden md:flex items-center absolute left-0 right-0 mx-auto w-fit m-auto">
               {/* Hover Highlight */}
               <div
                 className="absolute h-[30px] transition-all duration-300 ease-out bg-white/10 rounded-[6px] flex items-center"
@@ -279,7 +279,7 @@ export default function Navbar() {
                           <Link
                             href="https://t.me/+OoVmewRlUHg1MTA1"
                             className="text-bitcoin text-sm font-medium mt-2 inline-flex items-center"
-                            onClick={() => fbEvent('Lead')}
+                            onClick={() => fbEvent("Lead")}
                           >
                             Join now →
                           </Link>
@@ -407,7 +407,7 @@ export default function Navbar() {
                             <Link
                               href="https://t.me/+OoVmewRlUHg1MTA1"
                               className="block p-3 rounded-lg bg-zinc-700/50 text-white hover:bg-bitcoin hover:text-white transition-colors"
-                              onClick={() => fbEvent('Lead')}
+                              onClick={() => fbEvent("Lead")}
                             >
                               <div className="font-medium">
                                 Join Our Telegram
@@ -505,7 +505,7 @@ export default function Navbar() {
                   <Link
                     href="https://t.me/+OoVmewRlUHg1MTA1"
                     className="mt-4 px-5 py-3 text-center font-medium text-white bg-bitcoin hover:bg-bitcoin-dark transition-colors rounded-lg flex items-center justify-center"
-                    onClick={() => fbEvent('Lead')}
+                    onClick={() => fbEvent("Lead")}
                   >
                     Join the community
                     <Rocket className="ml-2 h-4 w-4" />
