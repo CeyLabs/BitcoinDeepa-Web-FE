@@ -6,9 +6,9 @@ declare module "lucide-react" {
   export const X: LucideIcon
   export const Star: LucideIcon
   export const ChevronDown: LucideIcon
-  export const BitcoinIcon: LucideIcon
   export const ChevronUp: LucideIcon
   export const ChevronRight: LucideIcon
+  export const ChevronLeftt: LucideIcon
   export const ExternalLink: LucideIcon
   export const BookOpen: LucideIcon
   export const Users: LucideIcon
@@ -24,13 +24,9 @@ declare module "lucide-react" {
   export const ArrowLeft: LucideIcon
   export const Clock: LucideIcon
   export const MapPin: LucideIcon
-  export const ExternalLink: LucideIcon
   export const Calendar: LucideIcon
+  export const Info: LucideIcon
   export const Award: LucideIcon
-  export const ExternalLink: LucideIcon
-  export const BookOpen: LucideIcon
-  export const Globe: LucideIcon
-  export const Clock: LucideIcon
   export const ShoppingCart: LucideIcon
   export const Quote: LucideIcon
 }
