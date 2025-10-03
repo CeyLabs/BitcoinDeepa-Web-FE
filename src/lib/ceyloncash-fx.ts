@@ -30,5 +30,6 @@ export const API_CONFIG = {
 // Currency descriptions
 export const CURRENCY_DESCRIPTIONS = {
   SATS: "SATOSHI",
-  BTC: "BITCOIN"
+  BTC: "BITCOIN",
+  USD: "US DOLLARS",
 }

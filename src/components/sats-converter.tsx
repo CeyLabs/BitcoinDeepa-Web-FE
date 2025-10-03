@@ -1,62 +1,191 @@
 "use client";
 
 import type React from "react";
-import { useState, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { useSatsConverterSync } from "../hooks/use-sats-converter-sync";
 
 import { ConverterInput } from "./sats-converter/converter-input";
-import { ResultDisplay } from "./sats-converter/result-display";
 import { InfoSection } from "./sats-converter/info-section";
 
+type FieldKey = "sats" | "usd" | "btc" | "lkr";
+
+const sanitizeIntegerInput = (value: string) => value.replace(/[^0-9]/g, "");
+
+const sanitizeDecimalInput = (value: string) => {
+  const cleaned = value.replace(/[^0-9.]/g, "");
+  if (!cleaned) {
+    return "";
+  }
+
+  const [integerPart, ...decimalParts] = cleaned.split(".");
+  if (decimalParts.length === 0) {
+    return integerPart;
+  }
+
+  const decimals = decimalParts.join("").replace(/\./g, "");
+  if (decimals.length === 0) {
+    return `${integerPart}.`;
+  }
+
+  return `${integerPart}.${decimals}`;
+};
+
+const formatSatsValue = (value: number) => {
+  if (!Number.isFinite(value) || value <= 0) {
+    return "0";
+  }
+
+  return Math.round(value).toLocaleString("en-US");
+};
+
+const formatTwoDecimals = (value: number) => {
+  if (!Number.isFinite(value) || value === 0) {
+    return "0.00";
+  }
+
+  if (Math.abs(value) < 0.000001) {
+    return value.toExponential(2);
+  }
+
+  return value.toLocaleString("en-US", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+};
+
+const formatBtcValue = (value: number) => {
+  if (!Number.isFinite(value) || value === 0) {
+    return "0.0000";
+  }
+
+  return value.toLocaleString("en-US", {
+    minimumFractionDigits: 4,
+    maximumFractionDigits: 8,
+  });
+};
+
 export default function SatsConverter() {
-  const [inputValue, setInputValue] = useState("10000");
-  const [formattedInputValue, setFormattedInputValue] = useState("10,000");
   const sectionRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
 
-  const { sats, setSats, result } = useSatsConverterSync(10000);
+  const initialSats = 10000;
+  const { setSats, setFromUsd, setFromLkr, setFromBtc, result, isReady } =
+    useSatsConverterSync(initialSats);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // Remove all non-numeric characters to get the raw number
-    const rawValue = e.target.value.replace(/[^0-9]/g, ""); // Only allow numbers
-    
-    // Store the raw value
-    setInputValue(rawValue);
-    
-    // Format with thousand separators for display
-    const numberValue = Number.parseInt(rawValue) || 0;
-    setFormattedInputValue(numberValue.toLocaleString("en-US"));
-    
-    // Update sats for conversion
-    setSats(numberValue);
+  const [activeField, setActiveField] = useState<FieldKey | null>(null);
+  const [inputs, setInputs] = useState(() => ({
+    sats: formatSatsValue(initialSats),
+    usd: "0.00",
+    btc: "0.0000",
+    lkr: "0.00",
+  }));
+
+  useEffect(() => {
+    if (!result) {
+      return;
+    }
+
+    setInputs((prev) => ({
+      sats: activeField === "sats" ? prev.sats : formatSatsValue(result.sats),
+      usd: activeField === "usd" ? prev.usd : formatTwoDecimals(result.usd),
+      btc: activeField === "btc" ? prev.btc : formatBtcValue(result.btc),
+      lkr: activeField === "lkr" ? prev.lkr : formatTwoDecimals(result.lkr),
+    }));
+  }, [result, activeField]);
+
+  const handleFieldFocus = (field: FieldKey) => () => {
+    setActiveField(field);
+    setInputs((prev) => ({
+      ...prev,
+      [field]:
+        field === "sats"
+          ? sanitizeIntegerInput(prev[field])
+          : sanitizeDecimalInput(prev[field]),
+    }));
   };
 
-  // Simple formatting functions
-  const formatNumber = (num: number, decimals = 2): string => {
-    if (num === 0) return "0.00";
-    if (num < 0.000001) return num.toExponential(2);
-    return num.toLocaleString("en-US", {
-      minimumFractionDigits: decimals,
-      maximumFractionDigits: decimals,
-    });
+  const handleFieldBlur = (field: FieldKey) => () => {
+    setActiveField(null);
+
+    setInputs((prev) => ({
+      ...prev,
+      [field]: (() => {
+        if (!result) {
+          return prev[field];
+        }
+
+        switch (field) {
+          case "sats":
+            return formatSatsValue(result.sats);
+          case "usd":
+            return formatTwoDecimals(result.usd);
+          case "btc":
+            return formatBtcValue(result.btc);
+          case "lkr":
+            return formatTwoDecimals(result.lkr);
+          default:
+            return prev[field];
+        }
+      })(),
+    }));
   };
 
-  const formatBTC = (num: number): string => {
-    if (num === 0) return "0.0000";
-    return num.toLocaleString("en-US", {
-      minimumFractionDigits: 4,
-      maximumFractionDigits: 8,
-    });
+  const handleSatsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const sanitized = sanitizeIntegerInput(event.target.value);
+    setInputs((prev) => ({
+      ...prev,
+      sats: sanitized,
+    }));
+
+    const numericValue = sanitized === "" ? 0 : Number.parseInt(sanitized, 10);
+    setSats(numericValue);
   };
 
-  const formatLKR = (num: number): string => {
-    if (num === 0) return "0.00";
-    return num.toLocaleString("en-US", {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    });
+  const handleUsdChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const sanitized = sanitizeDecimalInput(event.target.value);
+    setInputs((prev) => ({
+      ...prev,
+      usd: sanitized,
+    }));
+
+    const numericValue =
+      sanitized === "" || sanitized === "." ? 0 : Number.parseFloat(sanitized);
+    if (Number.isFinite(numericValue)) {
+      setFromUsd(numericValue);
+    }
   };
+
+  const handleBtcChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const sanitized = sanitizeDecimalInput(event.target.value);
+    setInputs((prev) => ({
+      ...prev,
+      btc: sanitized,
+    }));
+
+    const numericValue =
+      sanitized === "" || sanitized === "." ? 0 : Number.parseFloat(sanitized);
+    if (Number.isFinite(numericValue)) {
+      setFromBtc(numericValue);
+    }
+  };
+
+  const handleLkrChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const sanitized = sanitizeDecimalInput(event.target.value);
+    setInputs((prev) => ({
+      ...prev,
+      lkr: sanitized,
+    }));
+
+    const numericValue =
+      sanitized === "" || sanitized === "." ? 0 : Number.parseFloat(sanitized);
+    if (Number.isFinite(numericValue)) {
+      setFromLkr(numericValue);
+    }
+  };
+
+  const secondaryFieldsDisabled =
+    !isReady || result.isLoading || result.hasError;
 
   return (
     <section
@@ -74,9 +203,9 @@ export default function SatsConverter() {
           className="text-center mb-16"
         >
           <h2 className="text-3xl sm:text-2xl md:text-4xl font-bold mb-4">
-            <span className="text-white">Instant </span>
-            <span className="text-bitcoin">satoshi</span>
-            <span className="text-white"> to USD/LKR Converter</span>
+            <span className="text-bitcoin">Sats to </span>
+            <span className="text-white">LKR</span>
+            <span className="text-white"> Converter</span>
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto">
             Calculate satoshis to USD & LKR with real-time rates
@@ -90,20 +219,60 @@ export default function SatsConverter() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="space-y-6"
           >
-            {/* Input Field */}
-            <ConverterInput 
-              value={inputValue} 
-              formattedValue={formattedInputValue}
-              onChange={handleInputChange} 
+            <ConverterInput
+              value={inputs.sats}
+              onChange={handleSatsChange}
+              onFocus={handleFieldFocus("sats")}
+              onBlur={handleFieldBlur("sats")}
+              unit="SATS"
+              iconSrc="/images/icons/s_sats.webp"
+              iconAlt="Satoshi"
+              inputMode="numeric"
             />
 
-            {/* Results Section - No loading states, instant updates */}
-            <ResultDisplay
-              result={result}
-              isInView={isInView}
-              formatNumber={formatNumber}
-              formatBTC={formatBTC}
-              formatLKR={formatLKR}
+            <ConverterInput
+              value={inputs.usd}
+              onChange={handleUsdChange}
+              onFocus={handleFieldFocus("usd")}
+              onBlur={handleFieldBlur("usd")}
+              unit="USD"
+              iconSrc="/images/icons/s_usd.webp"
+              iconAlt="USD"
+              inputMode="decimal"
+              placeholder={
+                secondaryFieldsDisabled ? "Loading rates..." : "0.00"
+              }
+              disabled={secondaryFieldsDisabled}
+            />
+
+            <ConverterInput
+              value={inputs.btc}
+              onChange={handleBtcChange}
+              onFocus={handleFieldFocus("btc")}
+              onBlur={handleFieldBlur("btc")}
+              unit="BTC"
+              iconSrc="/images/icons/s_btc.webp"
+              iconAlt="Bitcoin"
+              inputMode="decimal"
+              placeholder={
+                secondaryFieldsDisabled ? "Loading rates..." : "0.0000"
+              }
+              disabled={secondaryFieldsDisabled}
+            />
+
+            <ConverterInput
+              value={inputs.lkr}
+              onChange={handleLkrChange}
+              onFocus={handleFieldFocus("lkr")}
+              onBlur={handleFieldBlur("lkr")}
+              unit="LKR"
+              iconSrc="/images/icons/s_lkr.webp"
+              iconAlt="LKR"
+              inputMode="decimal"
+              placeholder={
+                secondaryFieldsDisabled ? "Loading rates..." : "0.00"
+              }
+              disabled={secondaryFieldsDisabled}
             />
 
             {/* Info Section */}

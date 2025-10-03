@@ -34,7 +34,7 @@ export function InfoSection({ isInView }: InfoSectionProps) {
               <Popover>
                 <PopoverTrigger asChild>
                   <span className="text-bitcoin cursor-pointer hover:underline">
-                    Ceylon Cash FX API
+                    Ceylon Cash
                   </span>
                 </PopoverTrigger>
                 <PopoverContent className="bg-zinc-900 border-bitcoin/10 p-3 w-auto">
