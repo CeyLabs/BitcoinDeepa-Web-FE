@@ -38,7 +38,7 @@ const navItems = [
   { label: "FAQ", href: "#faq" },
   {
     label: "Resources",
-    href: "https://blog.bitcoindeepa.com/resources/",
+    dropdown: "resources",
   },
 ];
 
@@ -289,7 +289,7 @@ export default function Navbar() {
                   )}
 
                   {activeDropdown === "resources" && (
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-6">
                       <div className="bg-bitcoin rounded-xl overflow-hidden">
                         <div className="p-6">
                           <h3 className="text-white font-semibold mb-1">
@@ -307,6 +307,7 @@ export default function Navbar() {
                         </div>
                       </div>
 
+                      {/* Developer Resources - Temporarily hidden
                       <div className="bg-zinc-800/50 rounded-xl overflow-hidden">
                         <div className="p-6">
                           <div className="flex items-center mb-2">
@@ -328,7 +329,9 @@ export default function Navbar() {
                           </Link>
                         </div>
                       </div>
+                      */}
 
+                      {/* Whitepapers & Research - Temporarily hidden
                       <div className="bg-zinc-800/50 rounded-xl overflow-hidden">
                         <div className="p-6">
                           <div className="flex items-center mb-2">
@@ -347,6 +350,33 @@ export default function Navbar() {
                             className="text-bitcoin text-sm font-medium mt-2 inline-flex items-center"
                           >
                             Read papers →
+                          </Link>
+                        </div>
+                      </div>
+                      */}
+                      
+                      <div className="bg-zinc-800/50 rounded-xl overflow-hidden">
+                        <div className="p-6">
+                          <div className="flex items-center mb-2">
+                            <div className="w-10 h-10 rounded-full bg-zinc-700 flex items-center justify-center mr-3">
+                              <svg className="text-bitcoin w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                <path d="M15 8H12.5C11.12 8 10 9.12 10 10.5C10 11.88 11.12 13 12.5 13H13.5C14.88 13 16 14.12 16 15.5C16 16.88 14.88 18 13.5 18H10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                <path d="M12 6V8M12 18V20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                              </svg>
+                            </div>
+                            <h3 className="text-white font-semibold">
+                              Satoshi Converter
+                            </h3>
+                          </div>
+                          <p className="text-gray-400 text-sm font-light">
+                            Convert between satoshis, BTC, USD, and LKR
+                          </p>
+                          <Link
+                            href="/satoshi-to-usd-and-lkr-converter"
+                            className="text-bitcoin text-sm font-medium mt-2 inline-flex items-center"
+                          >
+                            Open converter →
                           </Link>
                         </div>
                       </div>
@@ -434,12 +464,80 @@ export default function Navbar() {
 
                   {/* Resources Section */}
                   <div className="bg-zinc-800/50 rounded-lg overflow-hidden">
-                    <Link
-                      href="https://blog.bitcoindeepa.com/resources/"
-                      className="w-full px-4 py-3 flex items-center text-white font-medium hover:bg-zinc-700/50 transition-colors"
+                    <button
+                      className="w-full px-4 py-3 flex justify-between items-center"
+                      onClick={() => toggleMobileSection("resources")}
                     >
-                      RESOURCES
-                    </Link>
+                      <span className="text-white font-medium">RESOURCES</span>
+                      <ChevronDown
+                        className={`w-5 h-5 text-zinc-500 transition-transform duration-200 ${
+                          activeMobileSection === "resources" ? "rotate-180" : ""
+                        }`}
+                      />
+                    </button>
+                    <AnimatePresence>
+                      {activeMobileSection === "resources" && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.2 }}
+                          className="overflow-hidden bg-zinc-800/50"
+                        >
+                          <div className="p-4 space-y-3">
+                            <Link
+                              href="https://blog.bitcoindeepa.com/resources/"
+                              className="block p-3 rounded-lg bg-zinc-700/50 text-white hover:bg-bitcoin hover:text-white transition-colors"
+                            >
+                              <div className="font-medium">
+                                Learning Hub
+                              </div>
+                              <div className="text-sm text-zinc-400">
+                                Educational resources for all levels
+                              </div>
+                            </Link>
+                            {/* Developer Resources - Temporarily hidden
+                            <Link
+                              href="#dev"
+                              className="block p-3 rounded-lg bg-zinc-700/50 text-white hover:bg-bitcoin hover:text-white transition-colors"
+                            >
+                              <div className="font-medium">
+                                Developer Resources
+                              </div>
+                              <div className="text-sm text-zinc-400">
+                                Build on Bitcoin and Lightning
+                              </div>
+                            </Link>
+                            */}
+                            
+                            {/* Whitepapers & Research - Temporarily hidden
+                            <Link
+                              href="#research"
+                              className="block p-3 rounded-lg bg-zinc-700/50 text-white hover:bg-bitcoin hover:text-white transition-colors"
+                            >
+                              <div className="font-medium">
+                                Whitepapers & Research
+                              </div>
+                              <div className="text-sm text-zinc-400">
+                                Deep dive into Bitcoin technology
+                              </div>
+                            </Link>
+                            */}
+                            <Link
+                              href="/satoshi-to-usd-and-lkr-converter"
+                              className="block p-3 rounded-lg bg-zinc-700/50 text-white hover:bg-bitcoin hover:text-white transition-colors"
+                            >
+                              <div className="font-medium">
+                                Satoshi Converter
+                              </div>
+                              <div className="text-sm text-zinc-400">
+                                Convert between satoshis, BTC, USD, and LKR
+                              </div>
+                            </Link>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
 
                   {/* Socials Section */}
