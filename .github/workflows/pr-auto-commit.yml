@@ -6,6 +6,9 @@ on:
       - synchronize
       - opened
   issue_comment:
+  push:
+    branches:
+      - main
 permissions:
   contents: write
 jobs:
@@ -13,11 +16,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout PR branch
+      - name: Checkout branch
         uses: actions/checkout@v3
         with:
-          ref: ${{ github.event.pull_request.head.ref }}
-          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.ref || github.ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name || github.repository }}
 
       - name: Set up Git with the target user info
         env:
@@ -33,9 +36,9 @@ jobs:
           git add timestamp.txt
           git commit -m "Vercel Magic 🪄 - Update timestamp.txt with latest date"
 
-      - name: Push as CMNisal
+      - name: Push changes
         env:
           GITHUB_TOKEN: ${{ secrets.USER_PAT }} # The PAT of the target user
-          PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
+          TARGET_REF: ${{ github.event.pull_request.head.ref || github.ref_name }}
         run: |
-          git push --force-with-lease origin HEAD:$PR_HEAD_REF
+          git push --force-with-lease origin HEAD:$TARGET_REF
