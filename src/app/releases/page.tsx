@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import { Calendar, ExternalLink } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { Calendar, ExternalLink, AlignLeft, List } from "lucide-react";
 import {
   Download,
   Github,
@@ -11,7 +11,7 @@ import {
 } from "@/src/components/icons";
 import Link from "next/link";
 import { Button } from "@/src/components/ui/button";
-import { Tabs, TabsList, TabsTrigger } from "@/src/components/ui/tabs";
+import { Tabs, TabsList, TabsTrigger } from "@/src/components/ui/motion-tabs";
 import type { GitHubRelease } from "@/src/types/github";
 import { formatDate, parseMarkdown } from "@/src/lib/github-utils";
 
@@ -58,39 +58,9 @@ export default function ReleasesPage() {
     tma: null,
   });
 
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [hoverStyle, setHoverStyle] = useState({});
-  const tabRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [viewStyle, setViewStyle] = useState<"full" | "compact">("full");
 
   const repoKeys = Object.keys(REPOSITORIES) as RepoKey[];
-
-  // Update hover indicator position (only when activeIndex changes)
-  useEffect(() => {
-    const currentElement = tabRefs.current[activeIndex];
-
-    if (currentElement) {
-      const { offsetLeft, offsetWidth } = currentElement;
-      setHoverStyle({
-        left: `${offsetLeft}px`,
-        width: `${offsetWidth}px`,
-      });
-    }
-  }, [activeIndex]);
-
-  // Update active index when repo changes with quick smooth transitions
-  useEffect(() => {
-    const newIndex = repoKeys.indexOf(activeRepo);
-    setActiveIndex(newIndex);
-
-    // Apply quick smooth transition effect on content change
-    const contentElements = document.querySelectorAll(".transition-opacity");
-    contentElements.forEach((el) => {
-      (el as HTMLElement).style.opacity = "0";
-      setTimeout(() => {
-        (el as HTMLElement).style.opacity = "1";
-      }, 20); // Much faster fade-in
-    });
-  }, [activeRepo, repoKeys]);
 
   // Fetch releases for a specific repository using your existing API structure
   const fetchReleasesForRepo = async (repoKey: RepoKey) => {
@@ -103,7 +73,7 @@ export default function ReleasesPage() {
 
       if (!response.ok) {
         throw new Error(
-          `Failed to fetch releases for ${REPOSITORIES[repoKey].displayName}`
+          `Failed to fetch releases for ${REPOSITORIES[repoKey].displayName}`,
         );
       }
 
@@ -116,7 +86,7 @@ export default function ReleasesPage() {
     } catch (err) {
       console.error(
         `Error fetching releases for ${REPOSITORIES[repoKey].displayName}:`,
-        err
+        err,
       );
       setError((prev) => ({
         ...prev,
@@ -129,24 +99,21 @@ export default function ReleasesPage() {
 
   // Load releases for active repository
   useEffect(() => {
-    if (releases[activeRepo].length === 0) {
+    // Only fetch if we don't have releases yet
+    if (releases[activeRepo].length === 0 && !loading[activeRepo]) {
       fetchReleasesForRepo(activeRepo);
     }
   }, [activeRepo]);
 
   // Load initial repositories on mount
   useEffect(() => {
-    // Fetch the initial repository (web)
-    fetchReleasesForRepo("web");
-
     // Pre-fetch the TMA repository as it's newly updated
+    // (The active repo "web" will be fetched by the other useEffect)
     fetchReleasesForRepo("tma");
   }, []);
 
   const handleTabChange = (repoKey: RepoKey) => {
     setActiveRepo(repoKey);
-    const index = repoKeys.indexOf(repoKey);
-    setActiveIndex(index);
   };
 
   const handleRetry = () => {
@@ -182,56 +149,63 @@ export default function ReleasesPage() {
                     across all Bitcoin දීප projects.
                   </p>
 
-                  {/* Compact Repository Tabs using ShadcnUI with magnetic effect */}
-                  <div className="flex justify-center mb-8">
-                    <Tabs
-                      value={activeRepo}
-                      onValueChange={(value) => {
-                        // Quick fade out
-                        const contentElements = document.querySelectorAll(
-                          ".transition-opacity"
-                        );
-                        contentElements.forEach((el) => {
-                          (el as HTMLElement).style.opacity = "0";
-                        });
-
-                        // Update state almost instantly
-                        setTimeout(() => {
-                          const repoKey = value as RepoKey;
-                          setActiveRepo(repoKey);
-                        }, 80); // Faster state update
-                      }}
-                      className="max-w-md w-full"
-                    >
-                      <TabsList className="grid grid-cols-3 bg-zinc-900/60 backdrop-blur-xl rounded-[0.75rem] border border-zinc-800/50 p-1 h-[48px] relative">
-                        {/* Custom Magnetic Highlight */}
-                        <div
-                          className="absolute h-[40px] transition-all duration-300 ease-out bg-white/10 rounded-[0.75rem]"
-                          style={{
-                            ...hoverStyle,
-                            opacity: 1,
-                            top: "4px",
-                          }}
-                        />
-
-                        {repoKeys.map((repoKey, index) => (
-                          <div
-                            key={repoKey}
-                            ref={(el) => {
-                              if (tabRefs.current) tabRefs.current[index] = el;
-                            }}
-                            className="relative"
-                          >
+                  {/* Repository Tabs — same motion-tabs style as Events */}
+                  <div className="flex flex-col items-center gap-4 mb-8">
+                    <div className="w-full max-w-full overflow-x-auto pb-1 flex justify-center">
+                      <Tabs
+                        value={activeRepo}
+                        onValueChange={(v) => handleTabChange(v as RepoKey)}
+                      >
+                        <TabsList
+                          className="bg-zinc-900 border border-bitcoin/20 rounded-xl"
+                          activeClassName="bg-bitcoin rounded-lg"
+                        >
+                          {repoKeys.map((repoKey) => (
                             <TabsTrigger
+                              key={repoKey}
                               value={repoKey}
-                              className="text-xs font-medium rounded-[0.75rem] py-2 transition-colors duration-300 h-[40px] w-full bg-transparent data-[state=active]:bg-transparent data-[state=active]:text-bitcoin data-[state=inactive]:text-white/80 shadow-none data-[state=active]:shadow-none relative z-10"
+                              className="data-[state=active]:text-black text-gray-400 px-4 sm:px-5 rounded-lg whitespace-nowrap"
                             >
-                              {REPOSITORIES[repoKey].name}
+                              <span className="sm:hidden">
+                                {REPOSITORIES[repoKey].name.replace(
+                                  "Bitcoin Deepa ",
+                                  "",
+                                )}
+                              </span>
+                              <span className="hidden sm:inline">
+                                {REPOSITORIES[repoKey].name}
+                              </span>
                             </TabsTrigger>
-                          </div>
-                        ))}
-                      </TabsList>
-                    </Tabs>
+                          ))}
+                        </TabsList>
+                      </Tabs>
+                    </div>
+
+                    {/* View Style Toggle */}
+                    <div className="flex items-center gap-1 bg-zinc-900/80 border border-zinc-800 rounded-lg p-1">
+                      <button
+                        onClick={() => setViewStyle("full")}
+                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-all ${
+                          viewStyle === "full"
+                            ? "bg-bitcoin text-black"
+                            : "text-gray-400 hover:text-white"
+                        }`}
+                      >
+                        <AlignLeft className="h-3.5 w-3.5" />
+                        Full Notes
+                      </button>
+                      <button
+                        onClick={() => setViewStyle("compact")}
+                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-all ${
+                          viewStyle === "compact"
+                            ? "bg-bitcoin text-black"
+                            : "text-gray-400 hover:text-white"
+                        }`}
+                      >
+                        <List className="h-3.5 w-3.5" />
+                        Compact
+                      </button>
+                    </div>
                   </div>
 
                   {/* Current Repository Info */}
@@ -305,58 +279,94 @@ export default function ReleasesPage() {
                         className="bg-zinc-900/50 backdrop-blur-sm border border-zinc-800 rounded-[0.75rem] p-6 md:p-8 hover:border-bitcoin/30 transition-all"
                       >
                         {/* Release Header */}
-                        <div className="flex items-start justify-between mb-6">
+                        <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-6">
                           <div className="flex-1">
-                            <h2 className="text-2xl font-bold text-bitcoin mb-2">
-                              {release.name || release.tag_name}
-                            </h2>
-                            <div className="flex flex-wrap items-center gap-4 text-sm text-gray-400">
-                              <div className="flex items-center gap-1">
-                                <Calendar className="h-4 w-4" />
-                                <span>{formatDate(release.published_at)}</span>
+                            <div className="flex items-center gap-3 mb-2">
+                              <h2 className="text-2xl font-bold text-white tracking-tight">
+                                {release.name || release.tag_name}
+                              </h2>
+                              <span className="px-2.5 py-0.5 rounded-full bg-bitcoin/10 text-bitcoin text-xs font-mono font-medium border border-bitcoin/20">
+                                {release.tag_name}
+                              </span>
+                            </div>
+                            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-zinc-400 font-medium">
+                              <div className="flex items-center gap-1.5">
+                                <Calendar className="h-4 w-4 text-zinc-500" />
+                                <time dateTime={release.published_at}>
+                                  {formatDate(release.published_at)}
+                                </time>
                               </div>
-                              <Link
-                                href={release.html_url}
-                                target="_blank"
-                                className="text-bitcoin hover:text-bitcoin-light flex items-center gap-1"
-                              >
-                                <span>View on GitHub</span>
-                                <ExternalLink className="h-4 w-4" />
-                              </Link>
+                              <div className="w-1 h-1 rounded-full bg-zinc-700 hidden md:block" />
+                              <div className="flex items-center gap-1.5">
+                                <User className="h-4 w-4 text-zinc-500" />
+                                <span>{release.author.login}</span>
+                              </div>
                             </div>
                           </div>
+                          <Link
+                            href={release.html_url}
+                            target="_blank"
+                            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-zinc-800/50 hover:bg-zinc-800 text-sm font-medium text-zinc-300 hover:text-white transition-colors border border-zinc-700/50 hover:border-zinc-600 shrink-0"
+                          >
+                            <Github className="h-4 w-4" />
+                            <span>View Release</span>
+                            <ExternalLink className="h-3 w-3 text-zinc-500" />
+                          </Link>
                         </div>
                         {/* Release Notes */}
-                        {release.body && (
+                        {release.body && viewStyle === "full" && (
                           <div
-                            className="mb-6 prose prose-invert max-w-none"
+                            className="mb-2 prose prose-invert prose-sm md:prose-base max-w-none 
+                              prose-a:text-bitcoin hover:prose-a:text-bitcoin-light prose-a:no-underline hover:prose-a:underline
+                              prose-headings:text-zinc-100 prose-headings:font-semibold prose-headings:tracking-tight
+                              prose-h2:text-xl prose-h2:mt-8 prose-h2:mb-4 prose-h2:pb-2 prose-h2:border-b prose-h2:border-zinc-800/50
+                              prose-h3:text-lg prose-h3:mt-6 prose-h3:mb-3
+                              prose-strong:text-zinc-200 prose-strong:font-semibold
+                              prose-ul:my-4 prose-ul:list-none prose-ul:pl-0
+                              prose-li:relative prose-li:pl-5 prose-li:my-1.5 prose-li:text-zinc-300
+                              prose-li:before:absolute prose-li:before:left-0 prose-li:before:top-[0.6em] prose-li:before:h-1.5 prose-li:before:w-1.5 prose-li:before:rounded-full prose-li:before:bg-zinc-700
+                              prose-p:text-zinc-300 prose-p:leading-relaxed prose-p:my-4
+                              prose-code:text-bitcoin prose-code:bg-bitcoin/10 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:font-mono prose-code:text-[0.85em] prose-code:before:content-none prose-code:after:content-none
+                              prose-pre:bg-zinc-900/80 prose-pre:border prose-pre:border-zinc-800/50 prose-pre:rounded-xl
+                              prose-blockquote:border-l-2 prose-blockquote:border-bitcoin/50 prose-blockquote:bg-bitcoin/5 prose-blockquote:px-4 prose-blockquote:py-1 prose-blockquote:rounded-r-lg prose-blockquote:text-zinc-400 prose-blockquote:not-italic"
                             dangerouslySetInnerHTML={{
                               __html: parseMarkdown(release.body),
                             }}
                           />
                         )}
+                        {release.body && viewStyle === "compact" && (
+                          <p className="mb-2 text-sm text-zinc-400 line-clamp-3 leading-relaxed">
+                            {release.body.replace(/[#*`>\[\]()]/g, "").trim()}
+                          </p>
+                        )}
                         {/* Downloads */}
                         {release.assets.length > 0 && (
-                          <div className="border-t border-zinc-800 pt-4 mt-6">
-                            <h4 className="text-sm font-medium text-bitcoin mb-4">
-                              Downloads
+                          <div className="border-t border-zinc-800/50 pt-6 mt-8">
+                            <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-500 mb-4 flex items-center gap-2">
+                              <Download className="h-3.5 w-3.5" />
+                              Assets & Downloads
                             </h4>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                               {release.assets.map((asset) => (
                                 <Link
                                   key={asset.id}
                                   href={asset.browser_download_url}
-                                  className="flex items-center justify-between p-3 bg-zinc-800/50 rounded-lg hover:bg-zinc-800 transition-colors"
+                                  className="group flex flex-col p-4 bg-zinc-900/40 rounded-xl border border-zinc-800/50 hover:border-bitcoin/30 hover:bg-zinc-800/50 transition-all duration-200"
                                 >
-                                  <div className="flex items-center gap-2">
-                                    <Download className="h-4 w-4 text-bitcoin" />
-                                    <span className="text-sm text-gray-300 truncate">
+                                  <div className="flex items-start justify-between mb-2">
+                                    <span className="text-sm font-medium text-zinc-200 group-hover:text-white truncate pr-4">
                                       {asset.name}
                                     </span>
+                                    <Download className="h-4 w-4 text-zinc-600 group-hover:text-bitcoin shrink-0 transition-colors" />
                                   </div>
-                                  <span className="text-xs text-gray-500">
-                                    {asset.download_count} downloads
-                                  </span>
+                                  <div className="flex items-center justify-between mt-auto">
+                                    <span className="text-xs font-mono text-zinc-500">
+                                      {(asset.size / 1024 / 1024).toFixed(2)} MB
+                                    </span>
+                                    <span className="text-xs font-medium text-zinc-500 bg-zinc-800/50 px-2 py-0.5 rounded-md">
+                                      {asset.download_count} DLs
+                                    </span>
+                                  </div>
                                 </Link>
                               ))}
                             </div>

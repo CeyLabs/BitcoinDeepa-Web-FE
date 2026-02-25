@@ -49,7 +49,7 @@ export default function Hero() {
                 href="https://t.me/+OoVmewRlUHg1MTA1"
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={() => fbEvent('Lead')}
+                onClick={() => fbEvent("Lead")}
               >
                 <Button className="bg-bitcoin hover:bg-bitcoin-dark text-white font-medium">
                   Join Community
@@ -84,6 +84,8 @@ export default function Hero() {
                       width={180}
                       height={180}
                       className="size-40 md:size-52"
+                      priority
+                      fetchPriority="high"
                     />
                   </div>
                 </div>
