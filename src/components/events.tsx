@@ -3,15 +3,26 @@
 import type React from "react";
 import { useState, useEffect, useRef } from "react";
 import {
-  ArrowRight,
   ArrowLeft,
+  ArrowRight,
   Clock,
   MapPin,
-  ExternalLink,
   Calendar,
 } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { BrandName } from "./brand-provider";
+import {
+  MinimalCard,
+  MinimalCardImage,
+  MinimalCardTitle,
+  MinimalCardDescription,
+} from "@/src/components/ui/minimal-card";
+import {
+  Tabs,
+  TabsList,
+  TabsTrigger,
+} from "@/src/components/ui/motion-tabs";
+import { Skeleton } from "@/src/components/ui/skeleton";
 
 interface EventData {
   id: string;
@@ -46,12 +57,14 @@ function getDisplayLocation(
   return event.location || "Location TBA";
 }
 
+type Tab = "future" | "past";
+
 export default function EventsSection() {
+  const [activeTab, setActiveTab] = useState<Tab>("future");
   const [events, setEvents] = useState<EventData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(0);
-  const [hoveredMapId, setHoveredMapId] = useState<string | null>(null);
   const carouselRef = useRef<HTMLDivElement>(null);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
@@ -60,9 +73,10 @@ export default function EventsSection() {
     async function fetchEvents() {
       try {
         setLoading(true);
+        setError(null);
 
         const response = await fetch(
-          `https://ceylabs.io/api/luma-events/v3/?calendar=${process.env.NEXT_PUBLIC_LUMA_CALENDAR_ID}`,
+          `https://ceylabs.io/api/luma-events/v3/?calendar=${process.env.NEXT_PUBLIC_LUMA_CALENDAR_ID}&type=${activeTab}`,
           {
             headers: {
               Authorization: `Bearer ${process.env.NEXT_PUBLIC_UUID}`,
@@ -101,7 +115,13 @@ export default function EventsSection() {
     }
 
     fetchEvents();
-  }, []);
+  }, [activeTab]);
+
+  const handleTabChange = (tab: Tab) => {
+    if (tab === activeTab) return;
+    setActiveTab(tab);
+    setCurrentPage(0);
+  };
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -167,62 +187,66 @@ export default function EventsSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="flex flex-col items-center justify-between mb-12 md:flex-row"
+          className="text-center mb-12"
         >
-          <div className="text-center md:text-left mb-6 md:mb-0">
-            <h2 className="text-3xl md:text-4xl font-bold mb-3">
-              <span className="text-white">Upcoming</span>
-              <span className="text-bitcoin ml-2">Meetups</span>
-            </h2>
-            <p className="text-gray-400 max-w-md">
-              Be part of the <BrandName /> community join our events, share
-              ideas, and vibe with the community across Sri Lanka.
-            </p>
+          <h2 className="text-3xl md:text-4xl font-bold mb-3">
+            <span className="text-white">
+              {activeTab === "future" ? "Upcoming" : "Past"}
+            </span>
+            <span className="text-bitcoin ml-2">Meetups</span>
+          </h2>
+          <p className="text-gray-400 max-w-2xl mx-auto">
+            Be part of the <BrandName /> community join our events, share
+            ideas, and vibe with the community across Sri Lanka.
+          </p>
+          <div className="flex justify-center mt-4">
+            <Tabs
+              value={activeTab}
+              onValueChange={(v) => handleTabChange(v as Tab)}
+            >
+              <TabsList
+                className="bg-zinc-900 border border-bitcoin/20 rounded-xl"
+                activeClassName="bg-bitcoin rounded-lg"
+              >
+                <TabsTrigger
+                  value="future"
+                  className="data-[state=active]:text-black text-gray-400 px-5 rounded-lg"
+                >
+                  Upcoming
+                </TabsTrigger>
+                <TabsTrigger
+                  value="past"
+                  className="data-[state=active]:text-black text-gray-400 px-5 rounded-lg"
+                >
+                  Past
+                </TabsTrigger>
+              </TabsList>
+            </Tabs>
           </div>
-
-          {events.length > 3 && (
-            <div className="flex items-center space-x-3">
-              <button
-                onClick={prevSlide}
-                disabled={currentPage === 0}
-                className="border border-bitcoin/20 text-bitcoin hover:bg-bitcoin/10 hover:border-bitcoin disabled:opacity-30 h-10 w-10 rounded-full flex items-center justify-center transition-colors"
-              >
-                <ArrowLeft className="h-5 w-5" />
-                <span className="sr-only">Previous page</span>
-              </button>
-              <div className="text-sm text-gray-400">
-                {currentPage + 1} / {totalPages}
-              </div>
-              <button
-                onClick={nextSlide}
-                disabled={currentPage >= totalPages - 1}
-                className="border border-bitcoin/20 text-bitcoin hover:bg-bitcoin/10 hover:border-bitcoin disabled:opacity-30 h-10 w-10 rounded-full flex items-center justify-center transition-colors"
-              >
-                <ArrowRight className="h-5 w-5" />
-                <span className="sr-only">Next page</span>
-              </button>
-            </div>
-          )}
+{/* top pagination removed — unified below cards */}
         </motion.div>
 
         {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {Array.from({
-              length: events.length
-                ? events.slice(currentPage * 3, currentPage * 3 + 3).length
-                : 3,
-            }).map((_, i) => (
+            {Array.from({ length: 3 }).map((_, i) => (
+              /* mirrors MinimalCard: rounded-[24px] p-2 wrapper → image → title → description → button */
               <div
                 key={i}
-                className="animate-pulse flex flex-col h-full bg-zinc-900/50 backdrop-blur-sm border border-bitcoin/10 rounded-xl overflow-hidden"
+                className="rounded-[24px] bg-neutral-800 p-2 dark:shadow-[0_1px_0_0_rgba(255,255,255,0.03)_inset,0_0_0_1px_rgba(255,255,255,0.03)_inset,0_0_0_1px_rgba(0,0,0,0.1),0_2px_2px_0_rgba(0,0,0,0.1),0_4px_4px_0_rgba(0,0,0,0.1),0_8px_8px_0_rgba(0,0,0,0.1)]"
               >
-                <div className="w-full aspect-[1/1] bg-zinc-800" />
-                <div className="p-5 space-y-4">
-                  <div className="h-4 bg-zinc-700 rounded w-3/4" />
-                  <div className="h-3 bg-zinc-700 rounded w-1/2" />
-                  <div className="h-3 bg-zinc-700 rounded w-1/3" />
-                  <div className="h-8 bg-bitcoin/50 rounded mt-4" />
-                </div>
+                {/* image placeholder — matches MinimalCardImage rounded-[20px] mb-6 */}
+                <Skeleton className="aspect-[4/3] w-full rounded-[20px] mb-6 bg-zinc-700" />
+
+                {/* title — matches MinimalCardTitle mt-2 px-1 text-lg */}
+                <Skeleton className="h-5 w-3/4 rounded-md mx-1 mb-2 bg-zinc-700" />
+                <Skeleton className="h-5 w-1/2 rounded-md mx-1 mb-4 bg-zinc-700" />
+
+                {/* description rows — matches MinimalCardDescription px-1 text-sm */}
+                <Skeleton className="h-3.5 w-2/3 rounded-md mx-1 mb-2 bg-zinc-700/70" />
+                <Skeleton className="h-3.5 w-1/2 rounded-md mx-1 mb-4 bg-zinc-700/70" />
+
+                {/* button — matches px-1 pb-2 h-10 rounded-xl */}
+                <Skeleton className="h-10 w-full rounded-xl mx-0 mb-1 bg-zinc-700/50" />
               </div>
             ))}
           </div>
@@ -257,10 +281,14 @@ export default function EventsSection() {
               <Calendar className="h-8 w-8 text-bitcoin" />
             </div>
             <h3 className="text-2xl font-medium text-white mb-3">
-              No Upcoming Events happening at the moment.
+              {activeTab === "future"
+                ? "No Upcoming Events happening at the moment."
+                : "No past events found."}
             </h3>
             <p className="text-gray-400 max-w-md mx-auto mb-6">
-              Check back later for new events.
+              {activeTab === "future"
+                ? "Check back later for new events."
+                : "Past meetups will appear here."}
             </p>
             {/* <a
               href="https://t.me/bitcoindeepa"
@@ -279,15 +307,7 @@ export default function EventsSection() {
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
           >
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={currentPage}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.3 }}
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-              >
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {events
                   .slice()
                   .sort(
@@ -297,109 +317,106 @@ export default function EventsSection() {
                   )
                   .slice(currentPage * 3, currentPage * 3 + 3)
                   .map((event) => (
-                    <motion.div
-                      key={event.id}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="flex flex-col h-full bg-zinc-900/50 backdrop-blur-sm border border-bitcoin/10 hover:border-bitcoin/30 transition-all duration-300 rounded-xl overflow-hidden"
-                    >
-                      <div className="relative w-full aspect-[1/1] overflow-hidden">
-                        {event.image_url ? (
-                          <img
+                    <div key={event.id}>
+                      <MinimalCard className="w-full h-full flex flex-col">
+                        <div className="relative">
+                          <MinimalCardImage
                             src={event.image_url || "/placeholder.svg"}
                             alt={event.title}
-                            className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                            className="!h-auto aspect-[4/3]"
                           />
-                        ) : (
-                          <div className="flex items-center justify-center h-full bg-gradient-to-br from-zinc-800 to-zinc-900">
-                            <Calendar className="h-16 w-16 text-bitcoin/20" />
+                          <div className="absolute top-3 left-3 bg-bitcoin text-black text-xs font-semibold px-3 py-1 rounded-md shadow-[0_0_12px_rgba(255,153,0,0.5)]">
+                            {formatDate(event.start_time)}
                           </div>
-                        )}
-
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] to-transparent"></div>
-
-                        <div className="absolute top-3 left-3 bg-bitcoin text-black text-sm font-medium px-3 py-1 rounded-md shadow-[0_0_15px_rgba(255,153,0,0.5)] backdrop-blur-[1px]">
-                          {formatDate(event.start_time)}
                         </div>
-                      </div>
 
-                      <div className="p-5 flex flex-col flex-grow">
-                        <h3 className="text-white text-xl font-bold mb-4 line-clamp-2 min-h-[3.5rem]">
+                        <MinimalCardTitle className="line-clamp-2 min-h-[3rem]">
                           {event.title}
-                        </h3>
+                        </MinimalCardTitle>
 
-                        <div className="space-y-2 text-sm text-gray-400 mb-4">
-                          <div className="flex items-center">
-                            <Clock className="w-4 h-4 mr-2 text-bitcoin" />
-                            <span>
-                              {formatTimeRange(
-                                event.start_time,
-                                event.end_time
-                              )}
-                            </span>
-                          </div>
-
-                          <div
-                            className="relative mb-4"
-                            onMouseEnter={() => setHoveredMapId(event.id)}
-                            onMouseLeave={() => setHoveredMapId(null)}
-                          >
+                        <MinimalCardDescription>
+                          <span className="flex items-center gap-1.5 mb-1">
+                            <Clock className="w-3.5 h-3.5 text-bitcoin shrink-0" />
+                            {formatTimeRange(event.start_time, event.end_time)}
+                          </span>
+                          <span className="flex items-start gap-1.5">
+                            <MapPin className="w-3.5 h-3.5 text-bitcoin shrink-0 mt-0.5" />
                             <a
-                              href={getGoogleMapsUrl(
-                                event.latitude,
-                                event.longitude
-                              )}
+                              href={getGoogleMapsUrl(event.latitude, event.longitude)}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="flex items-start gap-2 group"
+                              className="hover:text-bitcoin transition-colors"
                             >
-                              <MapPin className="w-4 h-4 min-w-[1rem] text-bitcoin group-hover:text-bitcoin-light transition-colors mt-0.5" />
-                              <span className="group-hover:text-bitcoin-light transition-colors break-words whitespace-pre-line relative z-20">
-                                {getDisplayLocation(event, "short")}
-                                <span className="absolute z-50 top-full left-0 mt-2 bg-zinc-900 text-white text-xs font-medium px-3 py-2 rounded shadow-lg opacity-0 hover:opacity-100 group-hover:opacity-100 transition-opacity w-max max-w-[300px] hidden md:block pointer-events-none">
-                                  {getDisplayLocation(event, "full")}
-                                </span>
-                              </span>
+                              {getDisplayLocation(event, "short")}
                             </a>
-                            {hoveredMapId === event.id && (
-                              <div className="absolute -top-8 right-0 bg-bitcoin text-black text-xs font-medium px-2 py-1 rounded whitespace-nowrap flex items-center z-50 pointer-events-none">
-                                Take me there
-                                <ExternalLink className="w-3 h-3 ml-1" />
-                                <div className="absolute -bottom-1 left-3 w-2 h-2 bg-bitcoin rotate-45"></div>
-                              </div>
-                            )}
-                          </div>
-                        </div>
+                          </span>
+                        </MinimalCardDescription>
 
-                        <a
-                          href={event.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="mt-2 inline-flex items-center justify-center rounded-md text-sm font-medium bg-bitcoin hover:bg-bitcoin-dark text-black h-10 px-5 py-2 w-full transition-colors"
-                        >
-                          Register Now
-                        </a>
-                      </div>
-                    </motion.div>
+                        <div className="px-1 pb-2 mt-auto">
+                          <a
+                            href={event.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center justify-center rounded-full text-sm font-semibold bg-bitcoin text-black hover:bg-bitcoin/85 h-10 px-5 w-full transition-all duration-200"
+                          >
+                            {activeTab === "future" ? "Register Now" : "View Event"}
+                          </a>
+                        </div>
+                      </MinimalCard>
+                    </div>
                   ))}
-              </motion.div>
-            </AnimatePresence>
+              </div>
 
             {events.length > 3 && (
-              <div className="flex justify-center mt-8 space-x-2">
-                {Array.from({ length: totalPages }).map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentPage(index)}
-                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                      currentPage === index
-                        ? "bg-bitcoin w-6"
-                        : "bg-zinc-700 hover:bg-zinc-600"
-                    }`}
-                    aria-label={`Go to slide ${index + 1}`}
-                  />
-                ))}
+              <div className="flex items-center justify-center mt-8">
+                <motion.div layout className="flex items-center">
+                  <motion.div
+                    layout
+                    className="relative flex items-center justify-between overflow-hidden rounded-full bg-zinc-900/80 border border-zinc-800"
+                    style={{ borderRadius: 9999 }}
+                    transition={{ type: "spring", bounce: 0.16, duration: 0.5 }}
+                  >
+                    {/* Prev button */}
+                    <motion.button
+                      layout
+                      onClick={prevSlide}
+                      disabled={currentPage === 0}
+                      className="h-10 w-10 flex items-center justify-center rounded-full text-gray-400 hover:text-bitcoin disabled:opacity-30 disabled:hover:text-gray-400 transition-colors shrink-0"
+                    >
+                      <ArrowLeft className="h-4 w-4" />
+                    </motion.button>
+
+                    {/* Dot indicators */}
+                    <motion.div layout className="flex items-center gap-2 px-1">
+                      {Array.from({ length: totalPages }).map((_, index) => (
+                        <motion.button
+                          key={index}
+                          layout
+                          onClick={() => setCurrentPage(index)}
+                          className="rounded-full transition-colors"
+                          animate={{
+                            width: currentPage === index ? 24 : 8,
+                            height: 8,
+                            backgroundColor: currentPage === index ? "var(--color-bitcoin, #f7931a)" : "rgba(113,113,122,0.5)",
+                          }}
+                          whileHover={{ backgroundColor: currentPage === index ? "var(--color-bitcoin, #f7931a)" : "rgba(113,113,122,0.8)" }}
+                          transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                          aria-label={`Go to page ${index + 1}`}
+                        />
+                      ))}
+                    </motion.div>
+
+                    {/* Next button */}
+                    <motion.button
+                      layout
+                      onClick={nextSlide}
+                      disabled={currentPage >= totalPages - 1}
+                      className="h-10 w-10 flex items-center justify-center rounded-full text-gray-400 hover:text-bitcoin disabled:opacity-30 disabled:hover:text-gray-400 transition-colors shrink-0"
+                    >
+                      <ArrowRight className="h-4 w-4" />
+                    </motion.button>
+                  </motion.div>
+                </motion.div>
               </div>
             )}
           </div>

@@ -94,9 +94,9 @@ const Footer = () => {
               label="About"
               small
             />
-            <NavLink href="#events" label="Events" small />
+            <NavLink href="/#events" label="Events" small />
             <NavLink href="/releases" label="Release Notes" small />
-            <NavLink href="#faq" label="FAQ" small />
+            <NavLink href="/#faq" label="FAQ" small />
             <NavLink href="/license" label="License" small />
           </div>
 
@@ -113,7 +113,7 @@ const Footer = () => {
                 small
               />
               <SecondaryButton
-                href="https://blog.bitcoindeepa.com/community"
+                href="https://t.me/BitcoinDeepa"
                 label="Community"
                 small
               />
@@ -207,13 +207,21 @@ const NavLink = ({
   label: string;
   small?: boolean;
 }) => {
+  const className = `text-zinc-300 hover:text-white transition-colors ${
+    small ? "text-sm" : "text-[14px]"
+  }`;
+  const isHashLink = href.startsWith("#") || href.startsWith("/#");
+
+  // Render hash links with plain anchors so SSR and client markup stay identical.
+  if (isHashLink) {
+    return (
+      <a href={href} className={className}>
+        {label}
+      </a>
+    );
+  }
   return (
-    <Link
-      href={href}
-      className={`text-zinc-300 hover:text-white transition-colors ${
-        small ? "text-sm" : "text-[14px]"
-      }`}
-    >
+    <Link href={href} className={className}>
       {label}
     </Link>
   );

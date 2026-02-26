@@ -1,7 +1,5 @@
-"use client";
-
-import Script from 'next/script';
-import { FB_PIXEL_ID } from '@/src/lib/facebook-pixel';
+import Script from "next/script";
+import { FB_PIXEL_ID } from "@/src/lib/facebook-pixel";
 
 export default function FacebookPixel() {
   return (
@@ -24,7 +22,7 @@ export default function FacebookPixel() {
         <img
           height="1"
           width="1"
-          style={{ display: 'none' }}
+          style={{ display: "none" }}
           src={`https://www.facebook.com/tr?id=${FB_PIXEL_ID}&ev=PageView&noscript=1`}
         />
       </noscript>

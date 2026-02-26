@@ -11,8 +11,9 @@ import FacebookPixel from "@/src/components/facebook-pixel";
 
 const exo2 = Exo_2({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["400", "600", "700"],
   variable: "--font-exo2",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
