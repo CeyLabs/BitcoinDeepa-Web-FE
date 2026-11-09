@@ -32,8 +32,9 @@ export default function Terms() {
                   <p className="text-gray-300 mb-4 text-justify">
                     Welcome to <BrandName />. These Terms of Service explain the
                     rules for using our website, joining our community and
-                    taking part in the things we do, like events and book
-                    orders. By using our website, you agree to these terms. If
+                    taking part in the things we do, like events, book orders
+                    and buying or selling Bitcoin through BitcoinDeepaBot. By
+                    using our website, you agree to these terms. If
                     you don&apos;t agree with them, please don&apos;t use the
                     site.
                   </p>
@@ -210,9 +211,9 @@ export default function Terms() {
                       <span className="font-semibold text-bitcoin">
                         Payments:
                       </span>{" "}
-                      payments are processed securely by a third-party payment
-                      provider (PayHere). We don&apos;t see or store your full
-                      card details.
+                      payments are processed securely through internet payment
+                      gateways (IPGs). We don&apos;t see or store your full card
+                      details.
                     </li>
                     <li>
                       <span className="font-semibold text-bitcoin">
@@ -251,15 +252,113 @@ export default function Terms() {
 
                 <section className="bg-zinc-900/50 backdrop-blur-sm border border-zinc-800 rounded-xl p-6 md:p-8">
                   <h2 className="text-2xl font-bold text-white mb-4">
-                    Donations
+                    Buying and Selling Bitcoin with BitcoinDeepaBot
                   </h2>
-                  <p className="text-gray-300 text-justify">
-                    <BrandName /> is community-driven, and many of our events
-                    are supported by donations. Donations are completely
-                    voluntary and are non-refundable, unless a refund is
-                    required by law. Thank you to everyone who supports the
-                    community.
-                    {/* TODO: review - confirm how donations are currently accepted (Lightning, bank transfer, etc.) */}
+                  <p className="text-gray-300 mb-4 text-justify">
+                    You can buy and sell Bitcoin (BTC) with Sri Lankan Rupees
+                    through BitcoinDeepaBot, our Telegram bot and mini app at{" "}
+                    <a
+                      href="https://t.me/bitcoindeepabot"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-bitcoin hover:underline"
+                    >
+                      t.me/bitcoindeepabot
+                    </a>
+                    . When you use it to buy or sell:
+                  </p>
+                  <ul className="list-disc pl-6 text-gray-300 space-y-2 text-justify">
+                    <li>
+                      <span className="font-semibold text-bitcoin">
+                        Identity verification:
+                      </span>{" "}
+                      you&apos;ll need to complete identity verification (KYC)
+                      before you can buy or sell. We may ask for more
+                      information, or limit or decline a transaction, when we
+                      need to for legal or compliance reasons.
+                      {/* TODO: review - confirm KYC requirements, minimum age and who is eligible (Sri Lankan residents only?) */}
+                    </li>
+                    <li>
+                      <span className="font-semibold text-bitcoin">
+                        Prices and fees:
+                      </span>{" "}
+                      prices are shown in LKR and follow the market, so they
+                      change all the time. The price and any fees are shown
+                      before you confirm, and a quote is only valid for a short
+                      time.
+                      {/* TODO: review - confirm pricing source, fee structure, quote validity and any minimum or maximum amounts */}
+                    </li>
+                    <li>
+                      <span className="font-semibold text-bitcoin">
+                        Payments and payouts:
+                      </span>{" "}
+                      LKR payments for buying Bitcoin are processed through
+                      internet payment gateways (IPGs). When you sell, we send the LKR amount to the
+                      payout method you provide.
+                      {/* TODO: review - confirm how sell payouts are made (bank transfer?) and how long they take */}
+                    </li>
+                    <li>
+                      <span className="font-semibold text-bitcoin">
+                        No card payments:
+                      </span>{" "}
+                      in line with{" "}
+                      <a
+                        href="https://www.cbsl.gov.lk/en/news/public-awareness-on-risks-in-investing-in-virtual-currencies-in-sri-lanka"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-bitcoin hover:underline"
+                      >
+                        Central Bank of Sri Lanka guidance
+                      </a>{" "}
+                      on virtual currencies, debit and credit cards can&apos;t
+                      be used to buy Bitcoin. Please use one of the non-card
+                      payment options shown in the bot.
+                      {/* TODO: review - list the accepted non-card payment methods (bank transfer, etc.) */}
+                    </li>
+                    <li>
+                      <span className="font-semibold text-bitcoin">
+                        Trades are final:
+                      </span>{" "}
+                      once a buy or sell is confirmed, it can&apos;t be cancelled
+                      or reversed. We don&apos;t offer refunds because the
+                      price of Bitcoin went up or down after your trade. If a
+                      trade can&apos;t be completed, any refund is made to your
+                      bank account only, as explained in our{" "}
+                      <Link
+                        href="/return-policy"
+                        className="text-bitcoin hover:underline"
+                      >
+                        Return Policy
+                      </Link>
+                      .
+                    </li>
+                    <li>
+                      <span className="font-semibold text-bitcoin">
+                        Your bot wallet:
+                      </span>{" "}
+                      Bitcoin you buy is added to your BitcoinDeepaBot wallet.
+                      Anyone with access to your Telegram account may be able
+                      to use your wallet, so keep your Telegram account secure
+                      and turn on two-step verification. For larger amounts,
+                      consider moving your Bitcoin to a wallet where you hold
+                      the keys yourself.
+                      {/* TODO: review - confirm custody arrangement (LNbits) and withdrawal options */}
+                    </li>
+                    <li>
+                      <span className="font-semibold text-bitcoin">
+                        Fair use:
+                      </span>{" "}
+                      use only your own money and accounts, and don&apos;t use
+                      the bot for fraud, money laundering or anything illegal.
+                      We may suspend or close accounts that break these rules,
+                      and we may report suspicious activity to the authorities
+                      where the law requires it.
+                    </li>
+                  </ul>
+                  <p className="text-gray-300 mt-4 text-justify">
+                    Choosing to buy or sell Bitcoin is your own decision. Please
+                    read the Educational Purpose Only and Understanding Bitcoin
+                    Risks sections above before you trade.
                   </p>
                 </section>
 
@@ -274,12 +373,13 @@ export default function Terms() {
                   <ul className="list-disc pl-6 text-gray-300 space-y-2 text-justify">
                     <li>Our Telegram community and channels</li>
                     <li>
-                      BitcoinDeepaBot, our Telegram Lightning wallet and tip bot
-                      {/* TODO: review - confirm whether the bot holds user funds (custodial) and whether it needs its own terms */}
+                      BitcoinDeepaBot, our Telegram Lightning wallet and tip
+                      bot, and the wallet provider it runs on
+                      {/* TODO: review - confirm whether the bot needs its own separate terms */}
                     </li>
                     <li>Luma, for event listings and registrations</li>
                     <li>Our blog and other educational resources</li>
-                    <li>Payment processors such as PayHere</li>
+                    <li>Internet payment gateways (IPGs) and other payment processors</li>
                     <li>Other external websites we link to</li>
                   </ul>
                   <p className="text-gray-300 mt-4 text-justify">

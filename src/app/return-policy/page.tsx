@@ -37,7 +37,8 @@ export default function ReturnPolicy() {
                     This Return Policy explains what to do if something goes
                     wrong with a purchase, such as the Sinhala edition of
                     &quot;The Bullish Case for Bitcoin&quot; (බිට්කොයින්
-                    පෙළහර).
+                    පෙළහර), or when you buy or sell Bitcoin through
+                    BitcoinDeepaBot.
                   </p>
                   <p className="text-gray-300 text-justify">
                     This policy is part of our{" "}
@@ -130,27 +131,69 @@ export default function ReturnPolicy() {
 
                 <section className="bg-zinc-900/50 backdrop-blur-sm border border-zinc-800 rounded-xl p-6 md:p-8">
                   <h2 className="text-2xl font-bold text-white mb-4">
-                    How Refunds Work
+                    Buying and Selling Bitcoin with BitcoinDeepaBot
                   </h2>
-                  <p className="text-gray-300 mb-2 text-justify">
-                    Approved refunds are sent back to your original payment
-                    method through our payment provider (PayHere). We&apos;ll
-                    confirm with you once a refund has been processed.
-                  </p>
-                  <p className="text-gray-300 text-justify">
-                    How long it takes for the money to show in your account
-                    depends on your bank or card provider.
-                    {/* TODO: review - confirm refund processing time and whether delivery charges are refunded */}
+                  <ul className="list-disc pl-6 text-gray-300 space-y-2 text-justify">
+                    <li>
+                      <span className="font-semibold text-bitcoin">
+                        Completed trades are final:
+                      </span>{" "}
+                      once Bitcoin has been added to your BitcoinDeepaBot wallet,
+                      or the LKR amount for a sale has been paid out, the trade
+                      can&apos;t be cancelled, returned or refunded. This
+                      includes when the price of Bitcoin changes after your
+                      trade.
+                    </li>
+                    <li>
+                      <span className="font-semibold text-bitcoin">
+                        Trades that don&apos;t go through:
+                      </span>{" "}
+                      if you&apos;ve paid but your trade couldn&apos;t be
+                      completed, for example because of a payment problem,
+                      failed verification or a technical error, we&apos;ll
+                      refund the LKR amount you paid.
+                    </li>
+                    <li>
+                      <span className="font-semibold text-bitcoin">
+                        Refunds go to your bank account only:
+                      </span>{" "}
+                      all refunds for Bitcoin trades are made by bank transfer
+                      to a bank account in your own name. We don&apos;t refund
+                      in Bitcoin, in cash, or to anyone else&apos;s account. We
+                      may ask you to confirm your bank details and identity
+                      before we send a refund.
+                      {/* TODO: review - confirm Sri Lankan bank accounts only, account-name matching rule and refund processing time */}
+                    </li>
+                    <li>
+                      <span className="font-semibold text-bitcoin">
+                        Mistakes when sending Bitcoin:
+                      </span>{" "}
+                      Bitcoin or Lightning payments sent to the wrong address
+                      or invoice can&apos;t be reversed, and we can&apos;t
+                      refund them.
+                    </li>
+                  </ul>
+                  <p className="text-gray-300 mt-4 text-justify">
+                    To ask about a trade, contact us with your Telegram username
+                    and the details of the transaction.
                   </p>
                 </section>
 
                 <section className="bg-zinc-900/50 backdrop-blur-sm border border-zinc-800 rounded-xl p-6 md:p-8">
                   <h2 className="text-2xl font-bold text-white mb-4">
-                    Donations
+                    How Refunds Work
                   </h2>
+                  <p className="text-gray-300 mb-2 text-justify">
+                    For book orders, approved refunds are sent back to your
+                    original payment method through the internet payment
+                    gateway (IPG). For Bitcoin trades, refunds are made to your bank
+                    account only, as explained above. We&apos;ll confirm with
+                    you once a refund has been processed.
+                  </p>
                   <p className="text-gray-300 text-justify">
-                    Donations to <BrandName /> are voluntary and are
-                    non-refundable, unless a refund is required by law.
+                    How long it takes for the money to show in your account
+                    depends on your bank or card provider.
+                    {/* TODO: review - confirm refund processing time and whether delivery charges are refunded */}
                   </p>
                 </section>
 
