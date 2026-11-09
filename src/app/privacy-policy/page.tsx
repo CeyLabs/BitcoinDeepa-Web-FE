@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { BrandName } from "@/src/components/brand-provider";
 
 export const metadata: Metadata = {
@@ -177,7 +178,11 @@ export default function Privacy() {
                   <p className="text-gray-300 mb-2 text-justify">
                     If you have any questions, concerns, or requests regarding
                     our Privacy Policy or the handling of your personal
-                    information, please contact us:
+                    information, please contact us. You can also read our{" "}
+                    <Link href="/terms" className="text-bitcoin hover:underline">
+                      Terms of Service
+                    </Link>
+                    .
                   </p>
                   <div className="bg-zinc-800/50 p-4 rounded-lg inline-block">
                     <p className="text-gray-300">
