@@ -60,7 +60,7 @@ const Footer = () => {
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <div className="absolute right-0 bottom-0 w-[260px] h-[260px] opacity-[0.1]">
             <Image
-              src="/images/bitcoindeepa-logo.svg"
+              src="/images/brand/Yaka.png"
               alt="Bitcoin Deepa Logo (Bitcoin දීප)"
               width={260}
               height={260}
