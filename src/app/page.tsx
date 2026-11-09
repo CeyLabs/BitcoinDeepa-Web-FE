@@ -5,7 +5,8 @@ import BitcoinCard from "@/src/components/bitcoin-card";
 import Faq from "@/src/components/faq";
 import JoinCommunity from "@/src/components/join-community";
 import Events from "../components/events";
-import BlogSection from "../components/blog-section";
+// TODO: Uncomment BlogSection once blog is fixed
+// import BlogSection from "../components/blog-section";
 import BookOrderSection from "../components/book-order-section";
 
 export default function Home() {
@@ -29,7 +30,8 @@ export default function Home() {
           <BitcoinCard />
 
           <Events />
-          <BlogSection />
+          {/* TODO: Re-enable once blog is fixed */}
+          {/* <BlogSection /> */}
           <Faq />
           <JoinCommunity />
         </div>

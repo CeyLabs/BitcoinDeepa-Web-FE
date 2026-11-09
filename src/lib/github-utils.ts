@@ -195,21 +195,21 @@ export function parseMarkdown(text: string): string {
   return processedText
     .replace(
       /^### (.*$)/gim,
-      '<h3 class="text-lg font-semibold text-bitcoin mb-2">$1</h3>'
+      '<h3>$1</h3>'
     )
     .replace(
       /^## (.*$)/gim,
-      '<h2 class="text-xl font-bold text-bitcoin mb-3">$1</h2>'
+      '<h2>$1</h2>'
     )
     .replace(
       /^# (.*$)/gim,
-      '<h1 class="text-2xl font-bold text-bitcoin mb-4">$1</h1>'
+      '<h1>$1</h1>'
     )
-    .replace(/^\* (.*$)/gim, '<li class="text-gray-300 ml-4">• $1</li>')
-    .replace(/\*\*(.*?)\*\*/g, '<strong class="text-white">$1</strong>')
+    .replace(/^\* (.*$)/gim, '<li>$1</li>')
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
     .replace(
       /`(.*?)`/g,
-      '<code class="bg-zinc-800 px-2 py-1 rounded text-bitcoin text-sm">$1</code>'
+      '<code>$1</code>'
     )
     // Handle Markdown links: [text](url) - only those not already in HTML tags
     .replace(
@@ -239,7 +239,7 @@ export function parseMarkdown(text: string): string {
     .map((line) => {
       // Skip lines that already have HTML tags
       if (line.trim().startsWith('<')) return line;
-      return line.trim() ? `<p class="text-gray-300 mb-2">${line}</p>` : '';
+      return line.trim() ? `<p>${line}</p>` : '';
     })
     .join('');
 }

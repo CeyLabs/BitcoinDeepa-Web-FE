@@ -18,5 +18,6 @@ export interface GitHubRelease {
     name: string;
     download_count: number;
     browser_download_url: string;
+    size: number;
   }>;
 }

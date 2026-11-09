@@ -24,7 +24,7 @@ export default function Community() {
                 alt="Bitcoin Deepa Community (Bitcoin දීප)"
                 fill
                 className="object-cover opacity-75"
-                priority
+                loading="lazy"
               />
 
               {/* Decorative elements */}

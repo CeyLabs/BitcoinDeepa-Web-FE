@@ -43,10 +43,8 @@ export default function PriceTicker({
         }
       }
 
-      // Cache is expired or doesn't exist, fetch fresh data
-      const res = await fetch(
-        "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=lkr"
-      );
+      // Cache is expired or doesn't exist, fetch fresh data via internal proxy
+      const res = await fetch("/api/bitcoin-price/btc");
 
       if (!res.ok) {
         throw new Error(`API responded with status: ${res.status}`);
@@ -54,8 +52,8 @@ export default function PriceTicker({
 
       const data = await res.json();
 
-      if (data?.bitcoin?.lkr) {
-        const currentPrice = data.bitcoin.lkr;
+      if (data?.avg_rate_lkr) {
+        const currentPrice = data.avg_rate_lkr;
 
         // Update state and cache the new price
         setPrice(currentPrice);
@@ -64,7 +62,7 @@ export default function PriceTicker({
           JSON.stringify({
             price: currentPrice,
             lastUpdated: Date.now(),
-          })
+          }),
         );
       } else {
         throw new Error("Invalid API response format");
@@ -94,7 +92,7 @@ export default function PriceTicker({
     <div
       className={cn(
         "bg-white/10 text-white text-sm font-exo2 px-4 py-2 rounded-full flex items-center justify-center",
-        className
+        className,
       )}
     >
       {isLoading ? (
