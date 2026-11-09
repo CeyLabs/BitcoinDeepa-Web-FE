@@ -32,6 +32,14 @@ const nextConfig = {
   experimental: {
     webpackBuildWorker: true,
   },
+  async redirects() {
+    return [
+      { source: '/terms-of-service', destination: '/terms', permanent: true },
+      { source: '/terms-and-conditions', destination: '/terms', permanent: true },
+      { source: '/refund-policy', destination: '/return-policy', permanent: true },
+      { source: '/returns', destination: '/return-policy', permanent: true },
+    ];
+  },
   async headers() {
     return [
       {

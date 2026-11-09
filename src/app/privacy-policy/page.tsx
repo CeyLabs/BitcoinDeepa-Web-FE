@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { BrandName } from "@/src/components/brand-provider";
 
 export const metadata: Metadata = {
@@ -22,7 +23,7 @@ export default function Privacy() {
                   <span className="text-white">Privacy</span>
                   <span className="text-bitcoin ml-2">Policy</span>
                 </h1>
-                <p className="text-gray-400">Last updated: Jun 05, 2025</p>
+                <p className="text-gray-400">Last updated: Nov 09, 2026</p>
               </div>
 
               <div className="space-y-10">
@@ -48,14 +49,28 @@ export default function Privacy() {
                       </span>{" "}
                       such as your name, email address, and phone number,
                       provided voluntarily by you during registration, event
-                      sign-up, or community participation.
+                      sign-up, or community participation. This information is
+                      collected through the third-party services we use, such as
+                      Luma for events and Telegram for our community and
+                      BitcoinDeepaBot. Our website itself doesn&apos;t ask you
+                      for these details directly.
+                    </li>
+                    <li>
+                      <span className="font-semibold text-bitcoin">
+                        Identity verification (KYC) information:
+                      </span>{" "}
+                      if you buy or sell Bitcoin through BitcoinDeepaBot, we
+                      collect the details needed to verify your identity, such
+                      as your name and identity document details. This is done
+                      through a third-party verification provider.
+                      {/* TODO: review - list exactly what KYC collects (ID type, selfie, date of birth, address?), name the provider if required, and state how long KYC data is kept */}
                     </li>
                     <li>
                       <span className="font-semibold text-bitcoin">
                         Payment and billing information:
                       </span>{" "}
-                      if you make purchases or donations, payment details are
-                      securely handled by trusted third-party processors.
+                      if you make purchases, payment details are securely
+                      handled by internet payment gateways (IPGs).
                     </li>
                     <li>
                       <span className="font-semibold text-bitcoin">
@@ -76,6 +91,11 @@ export default function Privacy() {
                     <li>
                       To process and fulfill your event registrations or
                       purchases.
+                    </li>
+                    <li>
+                      To verify your identity before you buy or sell Bitcoin
+                      through BitcoinDeepaBot, and to meet our legal and
+                      compliance requirements.
                     </li>
                     <li>
                       To communicate with you, provide support, and respond to
@@ -107,7 +127,8 @@ export default function Privacy() {
                       </span>{" "}
                       We may share your information with third-party providers
                       who assist us in operating our website, processing
-                      payments, and delivering services. These providers are
+                      payments, verifying your identity, and delivering
+                      services. These providers are
                       contractually obligated to handle your data securely and
                       confidentially.
                     </li>
@@ -177,7 +198,11 @@ export default function Privacy() {
                   <p className="text-gray-300 mb-2 text-justify">
                     If you have any questions, concerns, or requests regarding
                     our Privacy Policy or the handling of your personal
-                    information, please contact us:
+                    information, please contact us. You can also read our{" "}
+                    <Link href="/terms" className="text-bitcoin hover:underline">
+                      Terms of Service
+                    </Link>
+                    .
                   </p>
                   <div className="bg-zinc-800/50 p-4 rounded-lg inline-block">
                     <p className="text-gray-300">

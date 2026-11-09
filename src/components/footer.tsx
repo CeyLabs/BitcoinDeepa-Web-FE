@@ -107,6 +107,12 @@ const Footer = () => {
                 label="Privacy Policy"
                 small
               />
+              <SecondaryButton href="/terms" label="Terms" small />
+              <SecondaryButton
+                href="/return-policy"
+                label="Return Policy"
+                small
+              />
               <SecondaryButton
                 href="https://t.me/bitcoindeepabot"
                 label="BitcoinDeepaBot"
@@ -160,7 +166,6 @@ const Footer = () => {
                   </AnimatePresence>
                 </motion.button>
               </div>
-              <div />
             </div>
           </div>
 
