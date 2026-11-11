@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import type { DialogPortalProps } from "@radix-ui/react-dialog"
 import { Drawer as DrawerPrimitive } from "vaul"
 
 import { cn } from "@/src/lib/utils"
@@ -18,7 +19,9 @@ Drawer.displayName = "Drawer"
 
 const DrawerTrigger = DrawerPrimitive.Trigger
 
-const DrawerPortal = DrawerPrimitive.Portal
+// vaul 0.9's Portal typings drop their props under React 19 types; restore
+// them from Radix (vaul's Portal is Radix's Dialog.Portal at runtime).
+const DrawerPortal = DrawerPrimitive.Portal as React.FC<DialogPortalProps>
 
 const DrawerClose = DrawerPrimitive.Close
 
