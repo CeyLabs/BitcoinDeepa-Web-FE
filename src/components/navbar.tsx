@@ -159,7 +159,7 @@ export default function Navbar() {
               </div>
               <Link
                 href="https://t.me/+OoVmewRlUHg1MTA1"
-                className="px-5 py-2 text-sm font-semibold text-black bg-bitcoin hover:bg-bitcoin-dark transition-colors rounded-full flex items-center whitespace-nowrap"
+                className="px-5 py-2 text-sm font-semibold text-black bg-bitcoin hover:bg-bitcoin-dark transition-colors rounded-xl flex items-center whitespace-nowrap"
               >
                 Join the Community
               </Link>
@@ -624,7 +624,7 @@ export default function Navbar() {
                   {/* Join Button */}
                   <Link
                     href="https://t.me/+OoVmewRlUHg1MTA1"
-                    className="mt-4 px-5 py-3 text-center font-semibold text-black bg-bitcoin hover:bg-bitcoin-dark transition-colors rounded-full flex items-center justify-center"
+                    className="mt-4 px-5 py-3 text-center font-semibold text-black bg-bitcoin hover:bg-bitcoin-dark transition-colors rounded-xl flex items-center justify-center"
                     onClick={() => fbEvent("Lead")}
                   >
                     Join the community

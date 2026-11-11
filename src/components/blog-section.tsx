@@ -149,7 +149,7 @@ export default function BlogSection() {
               <div className="flex md:hidden items-center space-x-3">
                 <button
                   onClick={prevSlide}
-                  className="border border-bitcoin/20 text-bitcoin hover:bg-bitcoin/10 hover:border-bitcoin size-10 rounded-full flex items-center justify-center transition-colors"
+                  className="border-[1.5px] border-white text-white hover:border-bitcoin hover:text-bitcoin size-10 rounded-xl flex items-center justify-center transition-colors"
                 >
                   <ArrowLeft className="size-5" />
                   <span className="sr-only">Previous</span>
@@ -159,7 +159,7 @@ export default function BlogSection() {
                 </div>
                 <button
                   onClick={nextSlide}
-                  className="border border-bitcoin/20 text-bitcoin hover:bg-bitcoin/10 hover:border-bitcoin size-10 rounded-full flex items-center justify-center transition-colors"
+                  className="border-[1.5px] border-white text-white hover:border-bitcoin hover:text-bitcoin size-10 rounded-xl flex items-center justify-center transition-colors"
                 >
                   <ArrowRight className="size-5" />
                   <span className="sr-only">Next</span>

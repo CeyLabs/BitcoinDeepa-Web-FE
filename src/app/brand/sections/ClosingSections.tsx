@@ -93,7 +93,7 @@ function PatternPanel({
 }) {
   return (
     <div
-      className={`flex items-end rounded-2xl p-4 ring-1 ring-inset ring-white/10 ${
+      className={`flex items-end rounded-xl p-4 ring-1 ring-inset ring-white/10 ${
         tall ? "min-h-[300px]" : "min-h-[220px]"
       }`}
       style={{ backgroundRepeat: "repeat", ...style }}
@@ -151,7 +151,7 @@ export function VoiceSection() {
         ))}
       </div>
       <div className="mt-8 grid gap-4 md:grid-cols-2">
-        <div className="rounded-2xl border border-[#F8931A]/20 bg-[#F8931A]/[0.06] p-6">
+        <div className="rounded-xl bg-zinc-900 p-6">
           <p className="mb-3 text-xs font-extrabold uppercase tracking-widest text-[#F8931A]">Write</p>
           <ul className="space-y-2 text-zinc-200">
             <li>Send Bitcoin to family in minutes.</li>
@@ -159,7 +159,7 @@ export function VoiceSection() {
             <li>Bitcoin Deepa · Pearl of Satoshi</li>
           </ul>
         </div>
-        <div className="rounded-2xl border border-zinc-800 p-6">
+        <div className="rounded-xl p-6 ring-1 ring-inset ring-zinc-800">
           <p className="mb-3 text-xs font-extrabold uppercase tracking-widest text-zinc-500">Avoid</p>
           <ul className="space-y-2 text-zinc-500 line-through decoration-zinc-700">
             <li>Get rich with crypto!!!</li>
@@ -197,7 +197,7 @@ export function AssetsSection() {
       title="Assets"
       lede="Download the full kit below. Use SVG wherever it is accepted; PNGs are transparent unless noted."
     >
-      <div className="mb-8 grid items-center gap-6 rounded-2xl border border-zinc-800 bg-zinc-900/50 p-6 md:grid-cols-[1fr_auto]">
+      <div className="mb-8 grid items-center gap-6 rounded-xl bg-zinc-900 p-6 md:grid-cols-[1fr_auto]">
         <div>
           <SubHeading>Download the asset kit</SubHeading>
           <Muted>

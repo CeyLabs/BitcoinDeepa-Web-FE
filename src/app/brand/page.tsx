@@ -55,7 +55,7 @@ export default function BrandPage() {
           {/* Masthead */}
           <header
             id="brand-guidelines"
-            className="scroll-mt-28 overflow-hidden rounded-3xl bg-black ring-1 ring-white/10"
+            className="scroll-mt-28 overflow-hidden rounded-xl bg-black ring-1 ring-white/10"
             style={BTC_PATTERN_STYLE}
           >
             <div className="grid items-end gap-10 bg-gradient-to-r from-black via-black/90 to-black/40 px-6 py-12 sm:px-10 md:grid-cols-[1.2fr_1fr] md:py-16 lg:px-14">
@@ -71,7 +71,7 @@ export default function BrandPage() {
                   {["Marketing materials", "Press", "Partners", "Brand assets"].map((tag) => (
                     <span
                       key={tag}
-                      className="flex h-7 items-center rounded-md bg-white/10 px-2.5 text-sm text-zinc-300"
+                      className="flex h-7 items-center rounded-md bg-zinc-800 px-2.5 text-sm text-zinc-300"
                     >
                       {tag}
                     </span>
@@ -138,7 +138,7 @@ export default function BrandPage() {
               <VoiceSection />
               <AssetsSection />
 
-              <div className="space-y-4 rounded-2xl border border-zinc-800 bg-zinc-900/50 p-6">
+              <div className="space-y-4 rounded-xl bg-zinc-900 p-6">
                 <p className="leading-relaxed text-zinc-300">
                   <strong className="text-white">Important:</strong> These graphics are proprietary
                   to CeylonCash and protected under intellectual property laws. Please don&apos;t

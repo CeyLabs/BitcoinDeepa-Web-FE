@@ -39,7 +39,7 @@ export function IdeaSection() {
         {PARTS.map((part) => (
           <div
             key={part.word}
-            className="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-6"
+            className="rounded-xl bg-zinc-900 p-6"
           >
             <div
               className={`mb-3 text-3xl font-bold leading-tight ${part.className}`}

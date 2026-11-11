@@ -123,7 +123,7 @@ export function InfoSection({ isInView }: InfoSectionProps) {
                 </div>
               </div>
               <div className="flex items-center gap-3 text-xs sm:text-sm text-white/60 sm:ml-auto">
-                <span className="hidden sm:inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-3 py-1 font-medium uppercase tracking-[0.25em] group-hover:border-white/35 group-hover:text-white/85 transition-colors">
+                <span className="hidden sm:inline-flex items-center gap-2 rounded-xl border-[1.5px] border-white bg-transparent px-3 py-1 font-medium uppercase tracking-[0.25em] text-white group-hover:border-bitcoin group-hover:text-bitcoin transition-colors">
                   launch
                   <span className="text-sm">↗</span>
                 </span>

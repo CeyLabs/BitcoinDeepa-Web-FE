@@ -205,8 +205,8 @@ export default function EventsSection() {
               onValueChange={(v) => handleTabChange(v as Tab)}
             >
               <TabsList
-                className="bg-zinc-900 border border-bitcoin/20 rounded-full"
-                activeClassName="bg-bitcoin rounded-full"
+                className="bg-zinc-900 border border-bitcoin/20 rounded-xl"
+                activeClassName="bg-bitcoin rounded-lg"
               >
                 <TabsTrigger
                   value="future"
@@ -294,7 +294,7 @@ export default function EventsSection() {
               href="https://t.me/bitcoindeepa"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center rounded-full text-sm font-semibold bg-bitcoin hover:bg-bitcoin-dark text-black h-10 px-5 py-2 transition-colors"
+              className="inline-flex items-center justify-center rounded-xl text-sm font-semibold bg-bitcoin hover:bg-bitcoin-dark text-black h-10 px-5 py-2 transition-colors"
             >
               Join Our Telegram
             </a> */}
@@ -357,7 +357,7 @@ export default function EventsSection() {
                             href={event.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center justify-center rounded-full text-sm font-semibold bg-bitcoin text-black hover:bg-bitcoin/85 h-10 px-5 w-full transition-all duration-200"
+                            className="inline-flex items-center justify-center rounded-xl text-sm font-semibold bg-bitcoin text-black hover:bg-bitcoin-dark h-10 px-5 w-full transition-all duration-200"
                           >
                             {activeTab === "future" ? "Register Now" : "View Event"}
                           </a>

@@ -15,7 +15,7 @@ export function TableOfContents() {
   return (
     <nav
       aria-label="On this page"
-      className="rounded-2xl border border-zinc-800/60 bg-zinc-950/80 p-5 backdrop-blur-sm"
+      className="rounded-xl bg-zinc-900 p-5"
     >
       <div className="mb-3 flex items-center gap-2.5 text-zinc-300">
         <List className="h-4 w-4" />

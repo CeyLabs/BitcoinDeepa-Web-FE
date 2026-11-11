@@ -92,7 +92,7 @@ export function LogoSection() {
         ].map(({ img, label }) => (
           <figure
             key={label}
-            className="flex flex-col items-center gap-2 rounded-2xl bg-white px-5 pb-3 pt-6"
+            className="flex flex-col items-center gap-2 rounded-xl bg-white px-5 pb-3 pt-6"
           >
             <Image
               src={img.src}
@@ -144,7 +144,7 @@ export function LogoSection() {
             ]}
           />
         </div>
-        <div className="grid min-h-[380px] grid-cols-2 overflow-hidden rounded-2xl ring-1 ring-inset ring-white/10">
+        <div className="grid min-h-[380px] grid-cols-2 overflow-hidden rounded-xl ring-1 ring-inset ring-white/10">
           <div className="relative bg-white">
             <Image
               src={IMG.yakaHalfLeft.src}
@@ -256,7 +256,7 @@ export function LogoSection() {
 
       {/* Powered by */}
       <div className="mt-10 grid items-center gap-6 sm:grid-cols-[260px_1fr]">
-        <div className="flex flex-col items-center rounded-2xl bg-[#1D1E1D] p-7">
+        <div className="flex flex-col items-center rounded-xl bg-[#1D1E1D] p-7">
           <span className="mb-0.5 mr-8 self-end text-xs text-white" style={FONT_BODY}>
             Powered By
           </span>
@@ -308,7 +308,7 @@ function Family({
   const img = wide ? "max-h-[54px]" : "max-h-[140px]";
   return (
     <div className="min-w-0">
-      <div className="grid grid-cols-2 overflow-hidden rounded-2xl ring-1 ring-inset ring-white/10">
+      <div className="grid grid-cols-2 overflow-hidden rounded-xl ring-1 ring-inset ring-white/10">
         {[
           { side: left, bg: "bg-white" },
           { side: right, bg: "bg-black" },

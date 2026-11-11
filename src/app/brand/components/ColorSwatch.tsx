@@ -84,7 +84,7 @@ export function ColorSwatch({
   return (
     <div
       className={cn(
-        "flex min-w-0 flex-col overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900/60",
+        "flex min-w-0 flex-col overflow-hidden rounded-xl bg-zinc-900",
         className,
       )}
     >

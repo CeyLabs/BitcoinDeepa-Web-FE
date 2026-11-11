@@ -60,13 +60,13 @@ export function DownloadAsset({
   return (
     <div
       className={cn(
-        "overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900/60 p-2",
+        "overflow-hidden rounded-xl bg-zinc-900 p-2",
         className,
       )}
     >
       <div
         className={cn(
-          "relative flex aspect-[4/3] items-center justify-center overflow-hidden rounded-xl",
+          "relative flex aspect-[4/3] items-center justify-center overflow-hidden rounded-md",
           GROUNDS[ground],
           !fill && "p-8",
           previewClassName,

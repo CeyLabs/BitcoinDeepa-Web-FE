@@ -8,7 +8,7 @@ export function DownloadAllButton({ className }: { className?: string }) {
       href={ZIP_ALL}
       download
       className={cn(
-        "inline-flex items-center gap-2 rounded-full bg-[#F8931A] px-5 py-3 text-sm font-semibold text-black shadow-lg shadow-[#F8931A]/20 transition-all hover:bg-[#ffa53d] hover:shadow-xl",
+        "inline-flex items-center gap-2 rounded-xl bg-[#F8931A] px-5 py-3 text-sm font-semibold text-black shadow-lg shadow-[#F8931A]/20 transition-all hover:bg-[#ffa53d] hover:shadow-xl",
         className,
       )}
     >
@@ -34,7 +34,7 @@ function KitButton({
       href={href}
       download
       className={cn(
-        "inline-flex items-center justify-between gap-3 rounded-full border border-zinc-700 px-5 py-3 text-sm font-semibold text-white transition-colors hover:border-zinc-500 hover:bg-white/5",
+        "inline-flex items-center justify-between gap-3 rounded-xl border-[1.5px] border-white px-5 py-3 text-sm font-semibold text-white transition-colors hover:border-bitcoin hover:text-bitcoin",
         className,
       )}
     >

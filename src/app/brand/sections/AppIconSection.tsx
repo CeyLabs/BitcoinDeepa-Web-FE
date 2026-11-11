@@ -110,7 +110,7 @@ export function AppIconSection() {
 
       {/* Sizes */}
       <SubHeading className="mb-4 mt-12">Sizes</SubHeading>
-      <div className="flex flex-wrap items-end gap-7 rounded-2xl border border-zinc-800 bg-zinc-900/50 p-7">
+      <div className="flex flex-wrap items-end gap-7 rounded-xl bg-zinc-900 p-7">
         {SIZES.map((s) => (
           <figure key={`${s.px}-${s.use}`} className="m-0 flex flex-col items-center gap-2">
             <Image
@@ -204,7 +204,7 @@ function ThemeCard({
   const light = tone === "light";
   return (
     <div
-      className={`grid grid-cols-[auto_1fr] items-center gap-5 rounded-2xl p-5 ${
+      className={`grid grid-cols-[auto_1fr] items-center gap-5 rounded-xl p-5 ${
         light ? "bg-[#f2eee9] text-black" : "bg-black text-white ring-1 ring-inset ring-white/10"
       }`}
     >

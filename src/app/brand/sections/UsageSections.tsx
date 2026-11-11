@@ -35,7 +35,7 @@ export function BackgroundsSection() {
           <Caption title="Black" note="White version" />
         </div>
         <div>
-          <div className="relative h-72 overflow-hidden rounded-2xl bg-[#F8931A]">
+          <div className="relative h-72 overflow-hidden rounded-xl bg-[#F8931A]">
             <Image
               src={IMG.orangeBlack.src}
               alt="Logo on orange, black version"
@@ -115,7 +115,7 @@ export function ClearSpaceSection() {
       }
     >
       <div className="grid items-center gap-8 md:grid-cols-2">
-        <div className="grid place-items-center rounded-2xl bg-white p-10">
+        <div className="grid place-items-center rounded-xl bg-white p-10">
           <div
             className="relative p-9 outline-dashed outline-2 -outline-offset-2 outline-[#F8931A]"
             style={{
@@ -202,7 +202,7 @@ export function MisuseSection() {
         {DONTS.map((d) => (
           <figure key={d.label} className="m-0 min-w-0">
             <div
-              className={`relative grid aspect-square place-items-center overflow-hidden rounded-2xl ${
+              className={`relative grid aspect-square place-items-center overflow-hidden rounded-xl ${
                 d.boxClass ?? "bg-white"
               }`}
               style={d.boxStyle}

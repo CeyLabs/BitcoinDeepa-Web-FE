@@ -111,7 +111,7 @@ export function Tile({
   return (
     <div
       className={cn(
-        "flex items-center justify-center overflow-hidden rounded-2xl p-8",
+        "flex items-center justify-center overflow-hidden rounded-xl p-8",
         GROUND_CLASSES[ground],
         className,
       )}

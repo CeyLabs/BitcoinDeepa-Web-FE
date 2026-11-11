@@ -84,7 +84,7 @@ export function ColourSection() {
         for text.
       </Muted>
       <div
-        className="h-24 rounded-2xl"
+        className="h-24 rounded-xl"
         style={{ background: GRADIENT }}
         role="img"
         aria-label="Gradient from amber to red"

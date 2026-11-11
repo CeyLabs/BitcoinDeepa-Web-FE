@@ -87,7 +87,7 @@ export function TypographySection() {
         {FACES.map((face) => (
           <div
             key={face.name}
-            className="grid items-center gap-6 rounded-2xl border border-zinc-800 bg-zinc-900/50 p-7 md:grid-cols-[1.3fr_1fr]"
+            className="grid items-center gap-6 rounded-xl bg-zinc-900 p-7 md:grid-cols-[1.3fr_1fr]"
           >
             <div
               className="text-[clamp(56px,9vw,104px)] leading-[0.95] text-white [overflow-wrap:anywhere]"
