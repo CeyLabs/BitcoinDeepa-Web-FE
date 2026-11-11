@@ -154,9 +154,6 @@ export function LogoSection() {
               sizes="240px"
               className="absolute left-0 top-[3%] h-[94%] w-auto max-w-[92%] object-contain object-left"
             />
-            <span className="absolute bottom-3 right-3 rounded-full bg-black px-2.5 py-1 text-[11px] font-bold text-white">
-              Left-aligned
-            </span>
           </div>
           <div className="relative bg-black">
             <Image
@@ -167,9 +164,6 @@ export function LogoSection() {
               sizes="240px"
               className="absolute right-0 top-[3%] h-[94%] w-auto max-w-[92%] object-contain object-right"
             />
-            <span className="absolute bottom-3 left-3 rounded-full bg-white px-2.5 py-1 text-[11px] font-bold text-black">
-              Right-aligned
-            </span>
           </div>
         </div>
       </div>

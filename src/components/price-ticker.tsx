@@ -91,7 +91,7 @@ export default function PriceTicker({
   return (
     <div
       className={cn(
-        "bg-zinc-800 text-white text-sm font-sans px-4 py-2 rounded-full flex items-center justify-center",
+        "bg-zinc-800 text-white text-sm font-sans px-4 py-2 rounded-xl flex items-center justify-center",
         className,
       )}
     >

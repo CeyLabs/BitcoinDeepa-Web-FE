@@ -372,8 +372,8 @@ export default function EventsSection() {
                 <motion.div layout className="flex items-center">
                   <motion.div
                     layout
-                    className="relative flex items-center justify-between overflow-hidden rounded-full bg-zinc-900/80 border border-zinc-800"
-                    style={{ borderRadius: 9999 }}
+                    className="relative flex items-center justify-between overflow-hidden rounded-xl bg-zinc-900/80 border border-zinc-800"
+                    style={{ borderRadius: 12 }}
                     transition={{ type: "spring", bounce: 0.16, duration: 0.5 }}
                   >
                     {/* Prev button */}
@@ -381,7 +381,7 @@ export default function EventsSection() {
                       layout
                       onClick={prevSlide}
                       disabled={currentPage === 0}
-                      className="h-10 w-10 flex items-center justify-center rounded-full text-gray-400 hover:text-bitcoin disabled:opacity-30 disabled:hover:text-gray-400 transition-colors shrink-0"
+                      className="h-10 w-10 flex items-center justify-center rounded-lg text-gray-400 hover:text-bitcoin disabled:opacity-30 disabled:hover:text-gray-400 transition-colors shrink-0"
                     >
                       <ArrowLeft className="h-4 w-4" />
                     </motion.button>
@@ -411,7 +411,7 @@ export default function EventsSection() {
                       layout
                       onClick={nextSlide}
                       disabled={currentPage >= totalPages - 1}
-                      className="h-10 w-10 flex items-center justify-center rounded-full text-gray-400 hover:text-bitcoin disabled:opacity-30 disabled:hover:text-gray-400 transition-colors shrink-0"
+                      className="h-10 w-10 flex items-center justify-center rounded-lg text-gray-400 hover:text-bitcoin disabled:opacity-30 disabled:hover:text-gray-400 transition-colors shrink-0"
                     >
                       <ArrowRight className="h-4 w-4" />
                     </motion.button>
