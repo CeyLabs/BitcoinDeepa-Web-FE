@@ -35,7 +35,7 @@ const dropdownTransition = { duration: 0.2, ease: "easeOut" };
 const navItems = [
   { label: "Learn", dropdown: "learn" },
   { label: "Community", dropdown: "community" },
-  { label: "FAQ", href: "#faq" },
+  { label: "FAQ", href: "/#faq" },
   {
     label: "Resources",
     dropdown: "resources",
@@ -103,8 +103,8 @@ export default function Navbar() {
               <Image
                 src="/images/brand/DeepaLogo_WnO.svg"
                 alt={brand}
-                width={160}
-                height={32}
+                width={99}
+                height={36}
                 className="h-9 w-auto"
                 priority
               />
@@ -475,7 +475,13 @@ export default function Navbar() {
 
                   {/* FAQ Section */}
                   <div className="bg-zinc-800/50 rounded-lg overflow-hidden">
-                    <Link href="/#faq">FAQ</Link>
+                    <Link
+                      href="/#faq"
+                      onClick={() => setIsMenuOpen(false)}
+                      className="flex w-full items-center px-4 py-3 font-medium text-white"
+                    >
+                      FAQ
+                    </Link>
                   </div>
 
                   {/* Resources Section */}

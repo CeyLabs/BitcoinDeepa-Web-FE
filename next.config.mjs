@@ -10,6 +10,9 @@ const nextConfig = {
   outputFileTracingRoot: __dirname,
   images: {
     formats: ['image/avif', 'image/webp'],
+    // Cache optimized images for a week. Use this instead of a custom
+    // Cache-Control header on /_next/image, which Next.js doesn't support.
+    minimumCacheTTL: 604800,
     remotePatterns: [
       {
         protocol: 'https',
@@ -56,24 +59,9 @@ const nextConfig = {
           },
         ],
       },
-      {
-        source: '/_next/static/(.*)',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
-          },
-        ],
-      },
-      {
-        source: '/_next/image(.*)',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=604800, stale-while-revalidate=86400',
-          },
-        ],
-      },
+      // No custom Cache-Control for /_next/*: Next.js already serves hashed
+      // static chunks as immutable in production, and forcing it in dev makes
+      // the browser keep stale chunks (hydration mismatches after edits).
     ];
   },
 }

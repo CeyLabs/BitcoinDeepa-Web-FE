@@ -97,6 +97,7 @@ const Footer = () => {
             <NavLink href="/#events" label="Events" small />
             <NavLink href="/releases" label="Release Notes" small />
             <NavLink href="/#faq" label="FAQ" small />
+            <NavLink href="/brand" label="Brand" small />
             <NavLink href="/license" label="License" small />
           </div>
 
