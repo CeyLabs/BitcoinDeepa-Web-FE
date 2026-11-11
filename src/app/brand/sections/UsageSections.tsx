@@ -19,7 +19,7 @@ export function BackgroundsSection() {
             ground="white"
             image={IMG.logoBlack}
             alt="Logo on white"
-            className="h-72"
+            className="aspect-square"
             imgClassName="max-h-[200px]"
           />
           <Caption title="White" note="Black version" />
@@ -29,13 +29,13 @@ export function BackgroundsSection() {
             ground="black"
             image={IMG.logoWhite}
             alt="Logo on black"
-            className="h-72"
+            className="aspect-square"
             imgClassName="max-h-[200px]"
           />
           <Caption title="Black" note="White version" />
         </div>
         <div>
-          <div className="relative h-72 overflow-hidden rounded-xl bg-[#F8931A]">
+          <div className="relative aspect-square overflow-hidden rounded-xl bg-[#F8931A]">
             <Image
               src={IMG.orangeBlack.src}
               alt="Logo on orange, black version"
@@ -56,6 +56,7 @@ export function BackgroundsSection() {
           alt="Bitcoin Deepa logo on orange, black version"
           ground="orange"
           fill
+          previewClassName="aspect-square"
           downloads={[{ format: "PNG", path: IMG.orangeBlack.src }]}
         />
         <DownloadAsset
@@ -65,6 +66,7 @@ export function BackgroundsSection() {
           alt="Bitcoin Deepa logo on orange, white version"
           ground="orange"
           fill
+          previewClassName="aspect-square"
           downloads={[{ format: "PNG", path: IMG.orangeWhite.src }]}
         />
       </div>
