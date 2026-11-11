@@ -29,21 +29,30 @@ export function Chapter({
   children: ReactNode;
 }) {
   return (
-    <section id={id} aria-labelledby={`${id}-title`} className="scroll-mt-28">
-      <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-bitcoin/20 bg-bitcoin/10 py-1 pl-1 pr-3 text-sm">
-        <span className="flex h-6 min-w-6 items-center justify-center rounded-full bg-bitcoin px-1.5 text-xs font-bold tabular-nums text-black">
+    // Chapter label inspired by the brand guidelines page: a big orange number
+    // over a quiet label in a side column on wide screens, inline above the
+    // heading on narrower ones.
+    <section
+      id={id}
+      aria-labelledby={`${id}-title`}
+      className="scroll-mt-28 xl:grid xl:grid-cols-[150px_minmax(0,1fr)] xl:gap-10"
+    >
+      <p className="mb-3 font-display text-sm font-medium text-zinc-400 xl:mb-0 xl:pt-2.5">
+        <span className="mr-2 inline text-lg font-bold tabular-nums text-bitcoin xl:mb-1.5 xl:mr-0 xl:block xl:text-[40px] xl:leading-none">
           {number}
         </span>
-        <span className="font-semibold text-bitcoin">{label}</span>
+        {label}
       </p>
-      <h2
-        id={`${id}-title`}
-        className="mb-4 text-balance text-3xl font-bold text-white md:text-4xl"
-      >
-        {title}
-      </h2>
-      {lede && <p className="mb-8 max-w-3xl text-lg leading-relaxed text-zinc-300">{lede}</p>}
-      {children}
+      <div className="min-w-0">
+        <h2
+          id={`${id}-title`}
+          className="mb-4 text-balance text-[clamp(30px,4vw,42px)] font-bold leading-[1.08] tracking-[-0.01em] text-white"
+        >
+          {title}
+        </h2>
+        {lede && <p className="mb-8 max-w-3xl text-lg leading-relaxed text-zinc-300">{lede}</p>}
+        {children}
+      </div>
     </section>
   );
 }
