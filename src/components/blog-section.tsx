@@ -265,7 +265,7 @@ function BlogPostCard({ post }: { post: GhostPost }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
-      className="flex flex-col h-full bg-[#121212] rounded-xl overflow-hidden border border-zinc-800 hover:border-bitcoin/30 transition-all duration-300 group"
+      className="flex flex-col h-full bg-zinc-900 rounded-xl overflow-hidden border border-zinc-800 hover:border-bitcoin/30 transition-all duration-300 group"
     >
       <Link
         href={post.url}

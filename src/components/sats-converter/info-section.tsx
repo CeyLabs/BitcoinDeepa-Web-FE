@@ -86,7 +86,7 @@ export function InfoSection({ isInView }: InfoSectionProps) {
           className="group block rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bitcoin/60 focus-visible:ring-offset-2 focus-visible:ring-offset-black transition-transform duration-200"
         >
           <Card className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#060606] text-white shadow-[0_18px_55px_-32px_rgba(247,147,26,0.8)] group-hover:shadow-[0_26px_70px_-40px_rgba(247,147,26,0.65)]">
-            <div className="absolute inset-0 bg-gradient-to-r from-[#F7931A]/35 via-transparent to-transparent pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#F8931A]/35 via-transparent to-transparent pointer-events-none" />
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.2),transparent_60%)] pointer-events-none" />
             <div className="absolute right-3 top-1/2 hidden md:block h-20 w-20 -translate-y-1/2 opacity-60 group-hover:opacity-85 transition-opacity">
               <Image

@@ -146,7 +146,7 @@ export default function JoinCommunity() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => fbEvent('Lead')}
-                className="inline-flex items-center justify-center bg-bitcoin hover:bg-bitcoin-dark text-black hover:text-white font-bold py-3 px-6 rounded-full text-base md:text-lg transition-colors duration-200 shadow-lg"
+                className="inline-flex items-center justify-center bg-bitcoin hover:bg-bitcoin-dark text-black font-bold py-3 px-6 rounded-full text-base md:text-lg transition-colors duration-200 shadow-lg"
               >
                 Join Our Community
                 <ExternalLink className="ml-2 h-5 w-5" />

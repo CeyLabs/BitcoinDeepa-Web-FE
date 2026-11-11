@@ -205,8 +205,8 @@ export default function EventsSection() {
               onValueChange={(v) => handleTabChange(v as Tab)}
             >
               <TabsList
-                className="bg-zinc-900 border border-bitcoin/20 rounded-xl"
-                activeClassName="bg-bitcoin rounded-lg"
+                className="bg-zinc-900 border border-bitcoin/20 rounded-full"
+                activeClassName="bg-bitcoin rounded-full"
               >
                 <TabsTrigger
                   value="future"
@@ -294,7 +294,7 @@ export default function EventsSection() {
               href="https://t.me/bitcoindeepa"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center rounded-md text-sm font-medium bg-bitcoin hover:bg-bitcoin-dark text-black h-10 px-5 py-2 transition-colors"
+              className="inline-flex items-center justify-center rounded-full text-sm font-semibold bg-bitcoin hover:bg-bitcoin-dark text-black h-10 px-5 py-2 transition-colors"
             >
               Join Our Telegram
             </a> */}
@@ -397,9 +397,9 @@ export default function EventsSection() {
                           animate={{
                             width: currentPage === index ? 24 : 8,
                             height: 8,
-                            backgroundColor: currentPage === index ? "var(--color-bitcoin, #f7931a)" : "rgba(113,113,122,0.5)",
+                            backgroundColor: currentPage === index ? "var(--color-bitcoin, #F8931A)" : "rgba(113,113,122,0.5)",
                           }}
-                          whileHover={{ backgroundColor: currentPage === index ? "var(--color-bitcoin, #f7931a)" : "rgba(113,113,122,0.8)" }}
+                          whileHover={{ backgroundColor: currentPage === index ? "var(--color-bitcoin, #F8931A)" : "rgba(113,113,122,0.8)" }}
                           transition={{ type: "spring", stiffness: 300, damping: 25 }}
                           aria-label={`Go to page ${index + 1}`}
                         />

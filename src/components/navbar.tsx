@@ -94,7 +94,7 @@ export default function Navbar() {
     <header className="fixed top-0 left-0 right-0 z-50">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 my-4 relative">
         <div
-          className="relative bg-white/10 backdrop-blur-xl rounded-3xl border border-zinc-800/50 shadow-lg overflow-visible"
+          className="relative bg-[#1D1E1D]/85 backdrop-blur-xl rounded-3xl border border-zinc-800/50 shadow-lg overflow-visible"
           onMouseLeave={handleMouseLeave}
         >
           {/* Main Navigation Bar */}
@@ -159,7 +159,7 @@ export default function Navbar() {
               </div>
               <Link
                 href="https://t.me/+OoVmewRlUHg1MTA1"
-                className="px-5 py-2 text-sm font-medium text-white bg-bitcoin hover:bg-bitcoin-dark transition-colors rounded-full flex items-center whitespace-nowrap"
+                className="px-5 py-2 text-sm font-semibold text-black bg-bitcoin hover:bg-bitcoin-dark transition-colors rounded-full flex items-center whitespace-nowrap"
               >
                 Join the Community
               </Link>
@@ -446,7 +446,7 @@ export default function Navbar() {
                           <div className="p-4 space-y-3">
                             <Link
                               href="https://lu.ma/bitcoindeepa"
-                              className="block p-3 rounded-lg bg-zinc-700/50 text-white hover:bg-bitcoin hover:text-white transition-colors"
+                              className="block p-3 rounded-lg bg-zinc-700/50 text-white hover:bg-bitcoin hover:text-black transition-colors"
                             >
                               <div className="font-medium">
                                 Events & Meetups
@@ -457,7 +457,7 @@ export default function Navbar() {
                             </Link>
                             <Link
                               href="https://t.me/+OoVmewRlUHg1MTA1"
-                              className="block p-3 rounded-lg bg-zinc-700/50 text-white hover:bg-bitcoin hover:text-white transition-colors"
+                              className="block p-3 rounded-lg bg-zinc-700/50 text-white hover:bg-bitcoin hover:text-black transition-colors"
                               onClick={() => fbEvent("Lead")}
                             >
                               <div className="font-medium">
@@ -511,7 +511,7 @@ export default function Navbar() {
                           <div className="p-4 space-y-3">
                             <Link
                               href="https://blog.bitcoindeepa.com/resources/"
-                              className="block p-3 rounded-lg bg-zinc-700/50 text-white hover:bg-bitcoin hover:text-white transition-colors"
+                              className="block p-3 rounded-lg bg-zinc-700/50 text-white hover:bg-bitcoin hover:text-black transition-colors"
                             >
                               <div className="font-medium">Learning Hub</div>
                               <div className="text-sm text-zinc-400">
@@ -521,7 +521,7 @@ export default function Navbar() {
                             {/* Developer Resources - Temporarily hidden
                             <Link
                               href="#dev"
-                              className="block p-3 rounded-lg bg-zinc-700/50 text-white hover:bg-bitcoin hover:text-white transition-colors"
+                              className="block p-3 rounded-lg bg-zinc-700/50 text-white hover:bg-bitcoin hover:text-black transition-colors"
                             >
                               <div className="font-medium">
                                 Developer Resources
@@ -535,7 +535,7 @@ export default function Navbar() {
                             {/* Whitepapers & Research - Temporarily hidden
                             <Link
                               href="#research"
-                              className="block p-3 rounded-lg bg-zinc-700/50 text-white hover:bg-bitcoin hover:text-white transition-colors"
+                              className="block p-3 rounded-lg bg-zinc-700/50 text-white hover:bg-bitcoin hover:text-black transition-colors"
                             >
                               <div className="font-medium">
                                 Whitepapers & Research
@@ -547,7 +547,7 @@ export default function Navbar() {
                             */}
                             <Link
                               href="/satoshi-to-usd-and-lkr-converter"
-                              className="block p-3 rounded-lg bg-zinc-700/50 text-white hover:bg-bitcoin hover:text-white transition-colors"
+                              className="block p-3 rounded-lg bg-zinc-700/50 text-white hover:bg-bitcoin hover:text-black transition-colors"
                             >
                               <div className="font-medium">
                                 Satoshi Converter
@@ -624,7 +624,7 @@ export default function Navbar() {
                   {/* Join Button */}
                   <Link
                     href="https://t.me/+OoVmewRlUHg1MTA1"
-                    className="mt-4 px-5 py-3 text-center font-medium text-white bg-bitcoin hover:bg-bitcoin-dark transition-colors rounded-lg flex items-center justify-center"
+                    className="mt-4 px-5 py-3 text-center font-semibold text-black bg-bitcoin hover:bg-bitcoin-dark transition-colors rounded-full flex items-center justify-center"
                     onClick={() => fbEvent("Lead")}
                   >
                     Join the community

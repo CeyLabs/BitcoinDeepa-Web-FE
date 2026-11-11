@@ -158,7 +158,7 @@ export default function ReleasesPage() {
                       >
                         <TabsList
                           className="bg-zinc-900 border border-bitcoin/20 rounded-xl"
-                          activeClassName="bg-bitcoin rounded-lg"
+                          activeClassName="bg-bitcoin rounded-full"
                         >
                           {repoKeys.map((repoKey) => (
                             <TabsTrigger

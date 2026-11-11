@@ -2,6 +2,7 @@ export const KIT = "/assets/brand/kit";
 
 export const ZIP_ALL = "/assets/brand/bitcoindeepa-brand-assets.zip";
 export const ZIP_SVG = "/assets/brand/bitcoindeepa-brand-svg.zip";
+export const ZIP_PNG = "/assets/brand/bitcoindeepa-brand-png.zip";
 
 export const BRAND_ORANGE = "#F8931A";
 

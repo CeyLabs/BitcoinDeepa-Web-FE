@@ -13,7 +13,7 @@ const CURRENT_YEAR = new Date().getFullYear();
 const CONFETTI_CONFIG = {
   particleCount: 30,
   spread: 60,
-  colors: ["#f90", "#ffb84d", "#e68a00"],
+  colors: ["#F8931A", "#ffb84d", "#e68a00"],
   disableForReducedMotion: true,
 };
 
@@ -137,7 +137,7 @@ const Footer = () => {
               <div className="relative">
                 <motion.button
                   ref={heartRef}
-                  className={`flex items-center justify-center w-full h-8 rounded-lg bg-zinc-800 hover:bg-zinc-700 transition-all duration-300 ${
+                  className={`flex items-center justify-center w-full h-8 rounded-full bg-zinc-800 hover:bg-zinc-700 transition-all duration-300 ${
                     heartClicked ? "scale-110" : ""
                   }`}
                   onClick={handleHeartClick}
@@ -193,7 +193,7 @@ const SocialButton = ({
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className={`rounded-xl bg-zinc-800 flex items-center justify-center w-9 h-9`}
+      className={`rounded-full bg-zinc-800 flex items-center justify-center w-9 h-9`}
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
     >
@@ -245,7 +245,7 @@ const SecondaryButton = ({
   return (
     <motion.a
       href={href}
-      className="flex items-center justify-center w-full h-8 rounded-lg bg-zinc-800 text-zinc-300 hover:text-white hover:bg-zinc-700 transition-all duration-300 text-xs leading-tight sm:text-sm px-1.5 sm:px-3"
+      className="flex items-center justify-center w-full h-8 rounded-full bg-zinc-800 text-zinc-300 hover:text-white hover:bg-zinc-700 transition-all duration-300 text-xs leading-tight sm:text-sm px-1.5 sm:px-3"
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
     >

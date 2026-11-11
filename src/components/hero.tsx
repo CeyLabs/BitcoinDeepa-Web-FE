@@ -51,7 +51,7 @@ export default function Hero() {
                 rel="noopener noreferrer"
                 onClick={() => fbEvent("Lead")}
               >
-                <Button className="bg-bitcoin hover:bg-bitcoin-dark text-white font-medium">
+                <Button className="bg-bitcoin hover:bg-bitcoin-dark text-black font-semibold">
                   Join Community
                 </Button>
               </Link>

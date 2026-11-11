@@ -2,26 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Brand dark palette (Bitcoin Deepa brand guidelines v1.0):
+   Genesis Black ground, warm panel #141210, line #2b2723, muted #a39a91,
+   Satoshi Orange #F8931A with black text on it. */
 :root {
-  --background: 0 0% 3.9%;
-  --foreground: 0 0% 98%;
-  --card: 0 0% 3.9%;
-  --card-foreground: 0 0% 98%;
-  --popover: 0 0% 3.9%;
-  --popover-foreground: 0 0% 98%;
-  --primary: 36 100% 50%;
-  --primary-foreground: 0 0% 98%;
-  --secondary: 0 0% 14.9%;
-  --secondary-foreground: 0 0% 98%;
-  --muted: 0 0% 14.9%;
-  --muted-foreground: 0 0% 63.9%;
-  --accent: 0 0% 14.9%;
-  --accent-foreground: 0 0% 98%;
+  --background: 0 0% 0%;
+  --foreground: 0 0% 100%;
+  --card: 30 11% 7%;
+  --card-foreground: 0 0% 100%;
+  --popover: 30 11% 7%;
+  --popover-foreground: 0 0% 100%;
+  --primary: 33 94% 54%;
+  --primary-foreground: 0 0% 0%;
+  --secondary: 30 10% 15%;
+  --secondary-foreground: 0 0% 100%;
+  --muted: 30 10% 15%;
+  --muted-foreground: 30 9% 60%;
+  --accent: 30 10% 15%;
+  --accent-foreground: 0 0% 100%;
   --destructive: 0 100% 50%;
-  --destructive-foreground: 0 0% 98%;
-  --border: 0 0% 14.9%;
-  --input: 0 0% 14.9%;
-  --ring: 36 100% 50%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 30 10% 15%;
+  --input: 30 10% 15%;
+  --ring: 33 94% 54%;
   --radius: 0.5rem;
 }
 
@@ -31,6 +34,20 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+  /* Brand typography: Ubuntu is the primary font (body via font-sans, and
+     headings); Nunito Sans is the secondary font, used for form fields and
+     available anywhere as `font-secondary`. */
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display;
+  }
+  input,
+  textarea,
+  select {
+    @apply font-secondary;
   }
 }
 
@@ -58,11 +75,12 @@
 
 /* Bitcoin gradient */
 .bitcoin-gradient {
-  background: linear-gradient(to right, #f90, #ffb84d);
+  background: linear-gradient(to right, #F8931A, #ffb84d);
 }
 
+/* The flame gradient is never used for text (brand guidelines, Colour). */
 .bitcoin-gradient-text {
-  @apply bg-clip-text text-transparent bg-bitcoin-gradient;
+  @apply text-bitcoin;
 }
 
 /* 3D Card Styles */

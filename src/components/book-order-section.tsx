@@ -233,7 +233,7 @@ export default function BookOrderSection() {
               {/* Order Button */}
               <motion.button
                 onClick={handleOrderNow}
-                className="w-full bg-bitcoin hover:bg-bitcoin-dark text-black font-bold py-3 md:py-4 px-4 md:px-6 rounded-lg transition-colors flex items-center justify-center group mb-3 md:mb-4 text-sm md:text-base"
+                className="w-full bg-bitcoin hover:bg-bitcoin-dark text-black font-bold py-3 md:py-4 px-4 md:px-6 rounded-full transition-colors flex items-center justify-center group mb-3 md:mb-4 text-sm md:text-base"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >

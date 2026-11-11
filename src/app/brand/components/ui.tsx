@@ -2,14 +2,15 @@ import Image from "next/image";
 import type { CSSProperties, ReactNode } from "react";
 import { cn } from "@/src/lib/utils";
 
+// Brand fonts are loaded site-wide in the root layout.
 export const FONT_DISPLAY: CSSProperties = {
-  fontFamily: "var(--font-brand-display), var(--font-brand-si), system-ui, sans-serif",
+  fontFamily: "var(--font-ubuntu), var(--font-noto-sinhala), system-ui, sans-serif",
 };
 export const FONT_BODY: CSSProperties = {
-  fontFamily: "var(--font-brand-body), var(--font-brand-si), system-ui, sans-serif",
+  fontFamily: "var(--font-nunito-sans), var(--font-noto-sinhala), system-ui, sans-serif",
 };
 export const FONT_SI: CSSProperties = {
-  fontFamily: "var(--font-brand-si), var(--font-brand-body), system-ui, sans-serif",
+  fontFamily: "var(--font-noto-sinhala), var(--font-nunito-sans), system-ui, sans-serif",
 };
 
 export function Chapter({

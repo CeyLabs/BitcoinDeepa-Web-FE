@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 import { BTC_PATTERN_STYLE, IMG, KIT } from "../brand-data";
-import { DownloadAllButton, DownloadSvgButton } from "../components/DownloadKit";
+import { DownloadAllButton, DownloadPngButton, DownloadSvgButton } from "../components/DownloadKit";
 import { Chapter, Muted, SubHeading } from "../components/ui";
 
 export function PatternsSection() {
@@ -209,6 +209,7 @@ export function AssetsSection() {
         <div className="flex flex-col gap-2.5">
           <DownloadAllButton className="justify-center" />
           <DownloadSvgButton />
+          <DownloadPngButton />
         </div>
       </div>
 

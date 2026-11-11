@@ -1,32 +1,6 @@
 import type { Metadata } from "next";
-import { Noto_Sans_Sinhala, Nunito_Sans, Ubuntu } from "next/font/google";
 
-// The brand's own typefaces, loaded only on this route for the type specimens.
-const ubuntu = Ubuntu({
-  subsets: ["latin"],
-  weight: ["400", "500", "700"],
-  style: ["normal", "italic"],
-  variable: "--font-brand-display",
-  display: "swap",
-  preload: false,
-});
-
-const nunitoSans = Nunito_Sans({
-  subsets: ["latin"],
-  style: ["normal", "italic"],
-  axes: ["wdth"],
-  variable: "--font-brand-body",
-  display: "swap",
-  preload: false,
-});
-
-const notoSinhala = Noto_Sans_Sinhala({
-  subsets: ["sinhala"],
-  weight: ["400", "700"],
-  variable: "--font-brand-si",
-  display: "swap",
-  preload: false,
-});
+// Brand fonts (Ubuntu, Nunito Sans, Noto Sans Sinhala) come from the root layout.
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://www.bitcoindeepa.com";
 const TITLE = "Brand Guidelines | Bitcoin Deepa";
@@ -72,9 +46,5 @@ export const metadata: Metadata = {
 };
 
 export default function BrandLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <div className={`${ubuntu.variable} ${nunitoSans.variable} ${notoSinhala.variable}`}>
-      {children}
-    </div>
-  );
+  return children;
 }

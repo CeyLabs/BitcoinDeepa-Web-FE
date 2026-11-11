@@ -1,5 +1,23 @@
 import type { Config } from "tailwindcss"
 
+// Warm neutral scale from the Bitcoin Deepa brand guidelines. Anchors:
+// 50 Paper Wallet Cream, 100 light panel, 200 light line, 400 muted text,
+// 700/800 dark line, 900 dark panel. Other steps are interpolated to keep
+// roughly the same lightness as the Tailwind zinc step they replace.
+const BRAND_NEUTRAL = {
+  50: "#fffcfa",
+  100: "#f6f2ed",
+  200: "#e4ddd5",
+  300: "#c9c1b8",
+  400: "#a39a91",
+  500: "#7a7169",
+  600: "#5a524b",
+  700: "#3a3330",
+  800: "#2b2723",
+  900: "#141210",
+  950: "#0a0908",
+}
+
 const config: Config = {
   darkMode: ["class"],
   content: [
@@ -19,21 +37,30 @@ const config: Config = {
     },
     extend: {
       fontFamily: {
-        sans: ["var(--font-exo2)"],
-        exo2: ["var(--font-exo2)"],
+        // Brand typefaces: Ubuntu is the primary site font, Nunito Sans the
+        // secondary one. Noto Sans Sinhala picks up Sinhala glyphs.
+        sans: ["var(--font-ubuntu)", "var(--font-noto-sinhala)", "system-ui", "sans-serif"],
+        display: ["var(--font-ubuntu)", "var(--font-noto-sinhala)", "system-ui", "sans-serif"],
+        secondary: ["var(--font-nunito-sans)", "var(--font-noto-sinhala)", "system-ui", "sans-serif"],
+        sinhala: ["var(--font-noto-sinhala)", "var(--font-ubuntu)", "system-ui", "sans-serif"],
       },
       colors: {
+        // Brand warm neutrals replace Tailwind's cool greys site-wide, so every
+        // existing zinc/gray/neutral class picks up the brand palette.
+        zinc: BRAND_NEUTRAL,
+        gray: BRAND_NEUTRAL,
+        neutral: BRAND_NEUTRAL,
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "#f90",
+          DEFAULT: "#F8931A",
           foreground: "hsl(var(--primary-foreground))",
         },
         bitcoin: {
-          DEFAULT: "#f7901a",
+          DEFAULT: "#F8931A",
           light: "#ffb84d",
           dark: "#e68a00",
         },
@@ -87,7 +114,9 @@ const config: Config = {
         "shimmer-text": "shimmer-text 2s infinite linear",
       },
       backgroundImage: {
-        "bitcoin-gradient": "linear-gradient(to right, #f90, #f89319)",
+        // Yaka flame gradient (brand guidelines, Colour): mask and one hero moment only.
+        "bitcoin-gradient":
+          "linear-gradient(to top right, #F6921E 0%, #F58D1E 21%, #F2801F 44%, #EE6B21 67%, #E94D24 91%, #E74126 100%)",
       },
     },
   },
