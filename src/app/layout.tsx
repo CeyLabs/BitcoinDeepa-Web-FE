@@ -1,6 +1,6 @@
 import type React from "react";
 import type { Metadata } from "next";
-import { Exo_2 } from "next/font/google";
+import { Noto_Sans_Sinhala, Nunito_Sans, Ubuntu } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/src/components/theme-provider";
 import Navbar from "@/src/components/navbar";
@@ -9,10 +9,29 @@ import LenisProvider from "@/src/components/lenis-provider";
 import { BrandProvider } from "@/src/components/brand-provider";
 import FacebookPixel from "@/src/components/facebook-pixel";
 
-const exo2 = Exo_2({
+// Brand typefaces (Bitcoin Deepa brand guidelines v1.0, "Typography"):
+// Ubuntu is the primary site font, Nunito Sans the secondary (`font-secondary`),
+// Noto Sans Sinhala for Sinhala.
+const ubuntu = Ubuntu({
   subsets: ["latin"],
-  weight: ["400", "600", "700"],
-  variable: "--font-exo2",
+  weight: ["400", "500", "700"],
+  style: ["normal", "italic"],
+  variable: "--font-ubuntu",
+  display: "swap",
+});
+
+const nunitoSans = Nunito_Sans({
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+  axes: ["wdth", "opsz"],
+  variable: "--font-nunito-sans",
+  display: "swap",
+});
+
+const notoSinhala = Noto_Sans_Sinhala({
+  subsets: ["sinhala"],
+  weight: ["400", "700"],
+  variable: "--font-noto-sinhala",
   display: "swap",
 });
 
@@ -65,7 +84,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${exo2.className} antialiased`}>
+      <body
+        className={`${ubuntu.variable} ${nunitoSans.variable} ${notoSinhala.variable} font-sans antialiased`}
+      >
         <FacebookPixel />
         <ThemeProvider
           attribute="class"

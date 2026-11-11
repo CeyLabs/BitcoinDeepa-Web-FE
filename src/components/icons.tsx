@@ -119,21 +119,21 @@ export const LightningPattern = () => (
   >
     <path
       d="M30,10 L20,45 L35,45 L15,90"
-      stroke="#f90"
+      stroke="#F8931A"
       strokeWidth="0.5"
       fill="none"
       className="absolute transform scale-150"
     />
     <path
       d="M70,10 L60,45 L75,45 L55,90"
-      stroke="#f90"
+      stroke="#F8931A"
       strokeWidth="0.5"
       fill="none"
       className="absolute transform scale-150 translate-x-20"
     />
     <path
       d="M50,5 L40,40 L55,40 L35,95"
-      stroke="#f90"
+      stroke="#F8931A"
       strokeWidth="0.5"
       fill="none"
       className="absolute transform scale-150 translate-x-10"

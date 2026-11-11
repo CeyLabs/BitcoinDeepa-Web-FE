@@ -222,7 +222,7 @@ export default function ReleasesPage() {
                     <Link href={currentRepo.githubUrl} target="_blank">
                       <Button
                         variant="outline"
-                        className="border-bitcoin text-bitcoin hover:bg-bitcoin/10 bg-transparent"
+                        className="border-[1.5px] border-white bg-transparent text-white hover:border-bitcoin hover:bg-transparent hover:text-bitcoin"
                       >
                         <Github className="h-4 w-4 mr-2" />
                         View on GitHub
@@ -285,7 +285,7 @@ export default function ReleasesPage() {
                               <h2 className="text-2xl font-bold text-white tracking-tight">
                                 {release.name || release.tag_name}
                               </h2>
-                              <span className="px-2.5 py-0.5 rounded-full bg-bitcoin/10 text-bitcoin text-xs font-mono font-medium border border-bitcoin/20">
+                              <span className="px-2.5 py-0.5 rounded-md bg-zinc-800 text-bitcoin text-xs font-mono font-medium">
                                 {release.tag_name}
                               </span>
                             </div>

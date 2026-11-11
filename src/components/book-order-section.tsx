@@ -222,7 +222,7 @@ export default function BookOrderSection() {
                     {discountPercentage}% Off
                   </div>
                 </div>
-                <div className="flex items-center bg-bitcoin/10 rounded-lg px-2 md:px-3 py-1 animate-pulse">
+                <div className="flex items-center bg-zinc-800 rounded-lg px-2 md:px-3 py-1 animate-pulse">
                   <Clock className="h-3 w-3 md:h-4 md:w-4 text-bitcoin mr-1 md:mr-2" />
                   <span className="text-xs md:text-sm text-bitcoin font-medium">
                     Limited time offer
@@ -233,7 +233,7 @@ export default function BookOrderSection() {
               {/* Order Button */}
               <motion.button
                 onClick={handleOrderNow}
-                className="w-full bg-bitcoin hover:bg-bitcoin-dark text-black font-bold py-3 md:py-4 px-4 md:px-6 rounded-lg transition-colors flex items-center justify-center group mb-3 md:mb-4 text-sm md:text-base"
+                className="w-full bg-bitcoin hover:bg-bitcoin-dark text-black font-bold py-3 md:py-4 px-4 md:px-6 rounded-xl transition-colors flex items-center justify-center group mb-3 md:mb-4 text-sm md:text-base"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >

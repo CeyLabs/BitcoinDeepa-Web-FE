@@ -23,6 +23,7 @@ export default function Community() {
                 src="/images/bitcoindeepa-intro.png"
                 alt="Bitcoin Deepa Community (Bitcoin දීප)"
                 fill
+                sizes="(min-width: 1024px) 512px, 100vw"
                 className="object-cover opacity-75"
                 loading="lazy"
               />

@@ -149,7 +149,7 @@ export default function BlogSection() {
               <div className="flex md:hidden items-center space-x-3">
                 <button
                   onClick={prevSlide}
-                  className="border border-bitcoin/20 text-bitcoin hover:bg-bitcoin/10 hover:border-bitcoin size-10 rounded-full flex items-center justify-center transition-colors"
+                  className="border-[1.5px] border-white text-white hover:border-bitcoin hover:text-bitcoin size-10 rounded-xl flex items-center justify-center transition-colors"
                 >
                   <ArrowLeft className="size-5" />
                   <span className="sr-only">Previous</span>
@@ -159,7 +159,7 @@ export default function BlogSection() {
                 </div>
                 <button
                   onClick={nextSlide}
-                  className="border border-bitcoin/20 text-bitcoin hover:bg-bitcoin/10 hover:border-bitcoin size-10 rounded-full flex items-center justify-center transition-colors"
+                  className="border-[1.5px] border-white text-white hover:border-bitcoin hover:text-bitcoin size-10 rounded-xl flex items-center justify-center transition-colors"
                 >
                   <ArrowRight className="size-5" />
                   <span className="sr-only">Next</span>
@@ -265,7 +265,7 @@ function BlogPostCard({ post }: { post: GhostPost }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
-      className="flex flex-col h-full bg-[#121212] rounded-xl overflow-hidden border border-zinc-800 hover:border-bitcoin/30 transition-all duration-300 group"
+      className="flex flex-col h-full bg-zinc-900 rounded-xl overflow-hidden border border-zinc-800 hover:border-bitcoin/30 transition-all duration-300 group"
     >
       <Link
         href={post.url}

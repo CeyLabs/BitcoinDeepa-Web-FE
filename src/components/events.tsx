@@ -294,7 +294,7 @@ export default function EventsSection() {
               href="https://t.me/bitcoindeepa"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center rounded-md text-sm font-medium bg-bitcoin hover:bg-bitcoin-dark text-black h-10 px-5 py-2 transition-colors"
+              className="inline-flex items-center justify-center rounded-xl text-sm font-semibold bg-bitcoin hover:bg-bitcoin-dark text-black h-10 px-5 py-2 transition-colors"
             >
               Join Our Telegram
             </a> */}
@@ -357,7 +357,7 @@ export default function EventsSection() {
                             href={event.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center justify-center rounded-full text-sm font-semibold bg-bitcoin text-black hover:bg-bitcoin/85 h-10 px-5 w-full transition-all duration-200"
+                            className="inline-flex items-center justify-center rounded-xl text-sm font-semibold bg-bitcoin text-black hover:bg-bitcoin-dark h-10 px-5 w-full transition-all duration-200"
                           >
                             {activeTab === "future" ? "Register Now" : "View Event"}
                           </a>
@@ -372,8 +372,8 @@ export default function EventsSection() {
                 <motion.div layout className="flex items-center">
                   <motion.div
                     layout
-                    className="relative flex items-center justify-between overflow-hidden rounded-full bg-zinc-900/80 border border-zinc-800"
-                    style={{ borderRadius: 9999 }}
+                    className="relative flex items-center justify-between overflow-hidden rounded-xl bg-zinc-900/80 border border-zinc-800"
+                    style={{ borderRadius: 12 }}
                     transition={{ type: "spring", bounce: 0.16, duration: 0.5 }}
                   >
                     {/* Prev button */}
@@ -381,7 +381,7 @@ export default function EventsSection() {
                       layout
                       onClick={prevSlide}
                       disabled={currentPage === 0}
-                      className="h-10 w-10 flex items-center justify-center rounded-full text-gray-400 hover:text-bitcoin disabled:opacity-30 disabled:hover:text-gray-400 transition-colors shrink-0"
+                      className="h-10 w-10 flex items-center justify-center rounded-lg text-gray-400 hover:text-bitcoin disabled:opacity-30 disabled:hover:text-gray-400 transition-colors shrink-0"
                     >
                       <ArrowLeft className="h-4 w-4" />
                     </motion.button>
@@ -397,9 +397,9 @@ export default function EventsSection() {
                           animate={{
                             width: currentPage === index ? 24 : 8,
                             height: 8,
-                            backgroundColor: currentPage === index ? "var(--color-bitcoin, #f7931a)" : "rgba(113,113,122,0.5)",
+                            backgroundColor: currentPage === index ? "var(--color-bitcoin, #F8931A)" : "rgba(113,113,122,0.5)",
                           }}
-                          whileHover={{ backgroundColor: currentPage === index ? "var(--color-bitcoin, #f7931a)" : "rgba(113,113,122,0.8)" }}
+                          whileHover={{ backgroundColor: currentPage === index ? "var(--color-bitcoin, #F8931A)" : "rgba(113,113,122,0.8)" }}
                           transition={{ type: "spring", stiffness: 300, damping: 25 }}
                           aria-label={`Go to page ${index + 1}`}
                         />
@@ -411,7 +411,7 @@ export default function EventsSection() {
                       layout
                       onClick={nextSlide}
                       disabled={currentPage >= totalPages - 1}
-                      className="h-10 w-10 flex items-center justify-center rounded-full text-gray-400 hover:text-bitcoin disabled:opacity-30 disabled:hover:text-gray-400 transition-colors shrink-0"
+                      className="h-10 w-10 flex items-center justify-center rounded-lg text-gray-400 hover:text-bitcoin disabled:opacity-30 disabled:hover:text-gray-400 transition-colors shrink-0"
                     >
                       <ArrowRight className="h-4 w-4" />
                     </motion.button>

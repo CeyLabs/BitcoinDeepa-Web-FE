@@ -43,4 +43,6 @@ declare module "lucide-react" {
   export const PanelLeft: LucideIcon
   export const GripVertical: LucideIcon
   export const Dot: LucideIcon
+  export const Copy: LucideIcon
+  export const Download: LucideIcon
 }
