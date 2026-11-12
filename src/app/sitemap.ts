@@ -25,7 +25,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     { url: absoluteUrl("/releases") },
     { url: absoluteUrl("/terms"), lastModified: new Date("2026-11-09") },
-    { url: absoluteUrl("/privacy-policy"), lastModified: new Date("2026-11-09") },
+    { url: absoluteUrl("/privacy-policy"), lastModified: new Date("2026-11-12") },
     { url: absoluteUrl("/return-policy"), lastModified: new Date("2026-11-09") },
     { url: absoluteUrl("/license"), lastModified: new Date("2026-11-12") },
   ];

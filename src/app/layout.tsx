@@ -9,6 +9,7 @@ import LenisProvider from "@/src/components/lenis-provider";
 import { BrandProvider } from "@/src/components/brand-provider";
 import FacebookPixel from "@/src/components/facebook-pixel";
 import { JsonLd } from "@/src/components/seo/json-ld";
+import { CookieConsent } from "@/src/components/cookie-consent";
 import {
   absoluteUrl,
   CONTACT_EMAIL,
@@ -163,6 +164,7 @@ export default function RootLayout({
               <Navbar />
               {children}
               <Footer />
+              <CookieConsent />
             </LenisProvider>
           </BrandProvider>
         </ThemeProvider>

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { BrandName } from "@/src/components/brand-provider";
+import { CookieSettingsButton } from "@/src/components/cookie-consent";
 import { LegalPage, LegalSection } from "@/src/components/legal/legal-page";
 import { pageMetadata } from "@/src/lib/seo";
 
@@ -32,8 +33,8 @@ export default function Privacy() {
     <LegalPage
       title="Privacy Policy"
       tag="Data & Privacy"
-      updated="Nov 09, 2026"
-      updatedIso="2026-11-09"
+      updated="Nov 12, 2026"
+      updatedIso="2026-11-12"
       path="/privacy-policy"
       sections={SECTIONS}
     >
@@ -140,6 +141,14 @@ export default function Privacy() {
           We use cookies and similar technologies to enhance your browsing
           experience, analyze website traffic, and gather information about your
           preferences and interactions with our website.
+        </p>
+        <p>
+          With your consent, we use the Meta Pixel to understand how visitors
+          find us and how our ads perform. It only runs after you choose
+          &quot;Accept&quot; in our cookie banner, and we remember your choice
+          for one year. You can change it at any time:{" "}
+          <CookieSettingsButton className="text-bitcoin underline decoration-bitcoin/40 underline-offset-4 transition-colors hover:decoration-bitcoin" />
+          .
         </p>
         <p>
           You have the option to disable cookies through your browser settings,
