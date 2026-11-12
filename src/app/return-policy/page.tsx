@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/src/lib/seo";
 import Link from "next/link";
 import { BrandName } from "@/src/components/brand-provider";
 
-export const metadata: Metadata = {
-  title: "Return Policy | Bitcoin Deepa",
+export const metadata: Metadata = pageMetadata({
+  title: "Return Policy",
   description:
-    "Return and Refund Policy for Bitcoin Deepa - Sri Lankan Bitcoin Community",
-};
+    "How returns, replacements and refunds work for Bitcoin Deepa orders, including the Sinhala edition of The Bullish Case for Bitcoin and BitcoinDeepaBot trades.",
+  path: "/return-policy",
+});
 
 // TODO: review - every time window and refund rule on this page needs sign-off
 // before going live. No specific day counts are stated until confirmed.
