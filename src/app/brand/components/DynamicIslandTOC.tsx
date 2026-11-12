@@ -131,7 +131,7 @@ export function DynamicIslandTOC() {
     <>
       <div
         className={cn(
-          "fixed inset-0 z-40 bg-black/20 backdrop-blur-[8px] transition-opacity duration-300 lg:hidden",
+          "fixed inset-0 z-40 bg-black/20 backdrop-blur-sm transition-opacity duration-300 lg:hidden",
           isExpanded ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0",
         )}
         onClick={() => setIsExpanded(false)}
@@ -147,7 +147,7 @@ export function DynamicIslandTOC() {
           aria-expanded={isExpanded}
           aria-controls="brand-island-nav"
           aria-label={`Contents, current section ${activeTitle}, ${progress}% read`}
-          className="relative mx-auto flex w-full cursor-pointer flex-col-reverse overflow-hidden rounded-[22px] border border-white/[0.08] bg-black/70 shadow-2xl shadow-black/40 backdrop-blur-xl"
+          className="relative mx-auto flex w-full cursor-pointer flex-col-reverse overflow-hidden rounded-[22px] border border-white/8 bg-black/70 shadow-2xl shadow-black/40 backdrop-blur-xl"
           style={{
             maxWidth: isExpanded ? "calc(100vw - 2rem)" : 260,
             transition: `max-width 0.5s ${ease}`,

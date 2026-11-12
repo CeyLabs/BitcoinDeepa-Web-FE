@@ -221,7 +221,7 @@ export function LogoSection() {
         <Family
           title="App icon and orange version"
           body="The දීප symbol is the app icon; see the App icon section. The orange-ground files are covered under Backgrounds."
-          left={{ image: IMG.iconLight, alt: "Deepa app icon", imgClassName: "max-h-[110px] rounded-[22px] shadow" }}
+          left={{ image: IMG.iconLight, alt: "Deepa app icon", imgClassName: "max-h-[110px] rounded-[22px] shadow-sm" }}
           right={{ image: IMG.orangeWhite, alt: "Logo on orange, white version", imgClassName: "max-h-[130px] rounded-lg" }}
         />
         <Family

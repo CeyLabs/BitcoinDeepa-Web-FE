@@ -66,7 +66,7 @@ export function DownloadAsset({
     >
       <div
         className={cn(
-          "relative flex aspect-[4/3] items-center justify-center overflow-hidden rounded-md",
+          "relative flex aspect-4/3 items-center justify-center overflow-hidden rounded-md",
           GROUNDS[ground],
           !fill && "p-8",
           previewClassName,

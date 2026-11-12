@@ -12,9 +12,9 @@ export default function LicensePage() {
   const currentYear = new Date().getFullYear();
   return (
     <div className="relative overflow-hidden bg-black">
-      <div className="fixed inset-0 z-0 bg-gradient-to-b from-zinc-950 via-black to-zinc-950 pointer-events-none"></div>
+      <div className="fixed inset-0 z-0 bg-linear-to-b from-zinc-950 via-black to-zinc-950 pointer-events-none"></div>
       <div className="fixed inset-0 z-0 opacity-30 pointer-events-none">
-        <div className="absolute top-[20%] left-1/2 -translate-x-1/2 w-full h-[600px] bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-bitcoin/20 via-transparent to-transparent"></div>
+        <div className="absolute top-[20%] left-1/2 -translate-x-1/2 w-full h-[600px] bg-radial-[ellipse_at_center] from-bitcoin/20 via-transparent to-transparent"></div>
       </div>
       <div className="relative z-10">
         <main className="pt-32 pb-20">
@@ -27,7 +27,7 @@ export default function LicensePage() {
                 </h1>
               </div>
               <div className="space-y-10">
-                <section className="bg-zinc-900/50 backdrop-blur-sm border border-zinc-800 rounded-xl p-6 md:p-8">
+                <section className="bg-zinc-900/50 backdrop-blur-xs border border-zinc-800 rounded-xl p-6 md:p-8">
                   <p className="text-gray-300 text-justify">
                     BitcoinDeepa is an open source community initiative. The
                     website's source code is released under the MIT License. You

@@ -99,7 +99,7 @@ export default function PriceTicker({
         <span className="font-medium whitespace-nowrap flex items-center">
           1 BTC ≈ රු.{" "}
           <span className="ml-1 relative">
-            <span className="bg-gradient-to-r from-gray-500 via-white to-gray-500 bg-[length:200%_100%] animate-shimmer-text bg-clip-text text-transparent">
+            <span className="bg-linear-to-r from-gray-500 via-white to-gray-500 bg-size-[200%_100%] animate-shimmer-text bg-clip-text text-transparent">
               00,000,000
             </span>
           </span>

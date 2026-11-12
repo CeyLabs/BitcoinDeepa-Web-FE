@@ -34,7 +34,7 @@ export function AppIconSection() {
         <div
           aria-label="Home screen preview"
           role="img"
-          className="mx-auto w-full max-w-[320px] rounded-[36px] bg-gradient-to-br from-[#3a3330] to-[#1d1e1d] px-5 pb-10 pt-8 shadow-[inset_0_0_0_6px_#111]"
+          className="mx-auto w-full max-w-[320px] rounded-[36px] bg-linear-to-br from-[#3a3330] to-[#1d1e1d] px-5 pb-10 pt-8 shadow-[inset_0_0_0_6px_#111]"
         >
           <div className="grid grid-cols-4 gap-x-3 gap-y-5">
             {HOME_APPS.map((app, i) =>
@@ -172,7 +172,7 @@ export function AppIconSection() {
               alt="Yaka mask at 32 pixels"
               width={64}
               height={79}
-              className="h-auto w-8 rounded-md bg-white outline outline-2 outline-offset-2 outline-[#c8102e]"
+              className="h-auto w-8 rounded-md bg-white outline-solid outline-2 outline-offset-2 outline-[#c8102e]"
             />
             <Image
               src={IMG.iconSmallLight.src}
@@ -214,14 +214,14 @@ function ThemeCard({
           alt={`${title} app icon`}
           width={160}
           height={160}
-          className={`h-20 w-20 rounded-[18px] ${light ? "shadow" : "ring-1 ring-[#3a3a3a]"}`}
+          className={`h-20 w-20 rounded-[18px] ${light ? "shadow-sm" : "ring-1 ring-[#3a3a3a]"}`}
         />
         <Image
           src={small.src}
           alt={`${title} small icon`}
           width={72}
           height={72}
-          className={`h-9 w-9 rounded-lg ${light ? "shadow" : "ring-1 ring-[#3a3a3a]"}`}
+          className={`h-9 w-9 rounded-lg ${light ? "shadow-sm" : "ring-1 ring-[#3a3a3a]"}`}
         />
       </div>
       <div>

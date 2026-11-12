@@ -90,7 +90,7 @@ export function TypographySection() {
             className="grid items-center gap-6 rounded-xl bg-zinc-900 p-7 md:grid-cols-[1.3fr_1fr]"
           >
             <div
-              className="text-[clamp(56px,9vw,104px)] leading-[0.95] text-white [overflow-wrap:anywhere]"
+              className="text-[clamp(56px,9vw,104px)] leading-[0.95] text-white wrap-anywhere"
               style={face.sampleStyle}
               aria-hidden="true"
             >
@@ -125,7 +125,7 @@ export function TypographySection() {
                 {row.spec}
               </span>
             </div>
-            <div className="min-w-0 text-white [overflow-wrap:anywhere]" style={row.style}>
+            <div className="min-w-0 text-white wrap-anywhere" style={row.style}>
               {row.text}
             </div>
           </div>

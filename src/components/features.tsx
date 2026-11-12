@@ -46,7 +46,7 @@ const features = [
 export default function Features() {
   return (
     <section id="features" className="py-16 md:py-24 relative">
-      {/* <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-orange-500/10 via-transparent to-transparent pointer-events-none"></div> */}
+      {/* <div className="absolute inset-0 bg-radial-[ellipse_at_top] from-orange-500/10 via-transparent to-transparent pointer-events-none"></div> */}
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -72,7 +72,7 @@ export default function Features() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-zinc-900/50 backdrop-blur-sm border border-bitcoin/10 rounded-xl p-6 hover:border-bitcoin/30 transition-all duration-300"
+              className="bg-zinc-900/50 backdrop-blur-xs border border-bitcoin/10 rounded-xl p-6 hover:border-bitcoin/30 transition-all duration-300"
             >
               <div className="mb-4">{feature.icon}</div>
               <h3 className="text-xl font-bold mb-2 text-white">

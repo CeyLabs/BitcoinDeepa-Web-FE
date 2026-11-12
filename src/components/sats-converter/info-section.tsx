@@ -23,9 +23,9 @@ export function InfoSection({ isInView }: InfoSectionProps) {
       className="mt-12"
     >
       <div className="space-y-4">
-        <Card className="p-6 bg-zinc-900/30 backdrop-blur-sm border-bitcoin/10 transition-colors">
+        <Card className="p-6 bg-zinc-900/30 backdrop-blur-xs border-bitcoin/10 transition-colors">
           <div className="flex items-start space-x-3">
-            <div className="w-8 h-8 bg-bitcoin/20 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+            <div className="w-8 h-8 bg-bitcoin/20 rounded-full flex items-center justify-center shrink-0 mt-1">
               <Info className="h-4 w-4 text-bitcoin" />
             </div>
             <div className="text-gray-300 leading-relaxed text-xs">
@@ -83,10 +83,10 @@ export function InfoSection({ isInView }: InfoSectionProps) {
           href="https://t.me/bitcoindeepabot"
           target="_blank"
           rel="noopener noreferrer"
-          className="group block rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bitcoin/60 focus-visible:ring-offset-2 focus-visible:ring-offset-black transition-transform duration-200"
+          className="group block rounded-2xl focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-bitcoin/60 focus-visible:ring-offset-2 focus-visible:ring-offset-black transition-transform duration-200"
         >
           <Card className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#060606] text-white shadow-[0_18px_55px_-32px_rgba(247,147,26,0.8)] group-hover:shadow-[0_26px_70px_-40px_rgba(247,147,26,0.65)]">
-            <div className="absolute inset-0 bg-gradient-to-r from-[#F8931A]/35 via-transparent to-transparent pointer-events-none" />
+            <div className="absolute inset-0 bg-linear-to-r from-[#F8931A]/35 via-transparent to-transparent pointer-events-none" />
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.2),transparent_60%)] pointer-events-none" />
             <div className="absolute right-3 top-1/2 hidden md:block h-20 w-20 -translate-y-1/2 opacity-60 group-hover:opacity-85 transition-opacity">
               <Image
@@ -99,7 +99,7 @@ export function InfoSection({ isInView }: InfoSectionProps) {
             </div>
             <div className="relative flex flex-col gap-4 px-4 py-4 sm:flex-row sm:items-center sm:gap-6 sm:px-6 sm:py-5">
               <div className="flex items-center gap-3 min-w-0">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-white/15 bg-white/5 backdrop-blur-sm">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-white/15 bg-white/5 backdrop-blur-xs">
                   <Image
                     src="/assets/BDLogo_White.svg"
                     alt="Bitcoin Deepa"

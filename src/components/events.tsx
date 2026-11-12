@@ -180,7 +180,7 @@ export default function EventsSection() {
 
   return (
     <section id="events" className="py-16 md:py-24 relative overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-bitcoin/5 via-transparent to-transparent pointer-events-none"></div>
+      <div className="absolute inset-0 bg-radial-[ellipse_at_top] from-bitcoin/5 via-transparent to-transparent pointer-events-none"></div>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -235,7 +235,7 @@ export default function EventsSection() {
                 className="rounded-[24px] bg-neutral-800 p-2 dark:shadow-[0_1px_0_0_rgba(255,255,255,0.03)_inset,0_0_0_1px_rgba(255,255,255,0.03)_inset,0_0_0_1px_rgba(0,0,0,0.1),0_2px_2px_0_rgba(0,0,0,0.1),0_4px_4px_0_rgba(0,0,0,0.1),0_8px_8px_0_rgba(0,0,0,0.1)]"
               >
                 {/* image placeholder — matches MinimalCardImage rounded-[20px] mb-6 */}
-                <Skeleton className="aspect-[4/3] w-full rounded-[20px] mb-6 bg-zinc-700" />
+                <Skeleton className="aspect-4/3 w-full rounded-[20px] mb-6 bg-zinc-700" />
 
                 {/* title — matches MinimalCardTitle mt-2 px-1 text-lg */}
                 <Skeleton className="h-5 w-3/4 rounded-md mx-1 mb-2 bg-zinc-700" />
@@ -251,7 +251,7 @@ export default function EventsSection() {
             ))}
           </div>
         ) : error ? (
-          <div className="bg-zinc-900/50 backdrop-blur-sm border border-red-500/20 rounded-xl p-8 text-center">
+          <div className="bg-zinc-900/50 backdrop-blur-xs border border-red-500/20 rounded-xl p-8 text-center">
             <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-red-500/10 mb-4">
               <svg
                 width="24"
@@ -276,7 +276,7 @@ export default function EventsSection() {
             <p className="text-gray-400">{error}</p>
           </div>
         ) : events.length === 0 ? (
-          <div className="bg-zinc-900/50 backdrop-blur-sm border border-bitcoin/10 rounded-xl p-8 text-center">
+          <div className="bg-zinc-900/50 backdrop-blur-xs border border-bitcoin/10 rounded-xl p-8 text-center">
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-bitcoin/10 mb-4">
               <Calendar className="h-8 w-8 text-bitcoin" />
             </div>
@@ -323,14 +323,14 @@ export default function EventsSection() {
                           <MinimalCardImage
                             src={event.image_url || "/placeholder.svg"}
                             alt={event.title}
-                            className="!h-auto aspect-[4/3]"
+                            className="h-auto! aspect-4/3"
                           />
                           <div className="absolute top-3 left-3 bg-bitcoin text-black text-xs font-semibold px-3 py-1 rounded-md shadow-[0_0_12px_rgba(255,153,0,0.5)]">
                             {formatDate(event.start_time)}
                           </div>
                         </div>
 
-                        <MinimalCardTitle className="line-clamp-2 min-h-[3rem]">
+                        <MinimalCardTitle className="line-clamp-2 min-h-12">
                           {event.title}
                         </MinimalCardTitle>
 

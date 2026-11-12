@@ -127,9 +127,9 @@ export default function ReleasesPage() {
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-black">
-      <div className="fixed inset-0 z-0 bg-gradient-to-b from-zinc-950 via-black to-zinc-950 pointer-events-none"></div>
+      <div className="fixed inset-0 z-0 bg-linear-to-b from-zinc-950 via-black to-zinc-950 pointer-events-none"></div>
       <div className="fixed inset-0 z-0 opacity-30 pointer-events-none">
-        <div className="absolute top-[20%] left-1/2 -translate-x-1/2 w-full h-[600px] bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-bitcoin/20 via-transparent to-transparent"></div>
+        <div className="absolute top-[20%] left-1/2 -translate-x-1/2 w-full h-[600px] bg-radial-[ellipse_at_center] from-bitcoin/20 via-transparent to-transparent"></div>
       </div>
 
       <div className="relative z-10">
@@ -211,7 +211,7 @@ export default function ReleasesPage() {
                   {/* Current Repository Info */}
                   <div
                     key={activeRepo}
-                    className="bg-zinc-900/30 backdrop-blur-sm border border-zinc-800 rounded-[0.75rem] p-6 mb-8 transition-opacity duration-150"
+                    className="bg-zinc-900/30 backdrop-blur-xs border border-zinc-800 rounded-xl p-6 mb-8 transition-opacity duration-150"
                   >
                     <h2 className="text-xl font-semibold text-bitcoin mb-3">
                       {currentRepo.displayName}
@@ -237,7 +237,7 @@ export default function ReleasesPage() {
                     {[...Array(3)].map((_, i) => (
                       <div
                         key={i}
-                        className="bg-zinc-900/50 backdrop-blur-sm border border-zinc-800 rounded-[0.75rem] p-6 animate-pulse"
+                        className="bg-zinc-900/50 backdrop-blur-xs border border-zinc-800 rounded-xl p-6 animate-pulse"
                       >
                         <div className="h-6 bg-zinc-700 rounded w-1/3 mb-4"></div>
                         <div className="h-4 bg-zinc-700 rounded w-full mb-2"></div>
@@ -250,7 +250,7 @@ export default function ReleasesPage() {
                 {/* Error State */}
                 {currentError && (
                   <div className="text-center py-12">
-                    <div className="bg-zinc-900/50 backdrop-blur-sm border border-red-500/20 rounded-[0.75rem] p-8 max-w-md mx-auto">
+                    <div className="bg-zinc-900/50 backdrop-blur-xs border border-red-500/20 rounded-xl p-8 max-w-md mx-auto">
                       <AlertCircle className="h-12 w-12 text-red-400 mx-auto mb-4" />
                       <h3 className="text-xl font-bold text-white mb-2">
                         Failed to Load Releases
@@ -276,7 +276,7 @@ export default function ReleasesPage() {
                     {currentReleases.map((release, index) => (
                       <div
                         key={release.id}
-                        className="bg-zinc-900/50 backdrop-blur-sm border border-zinc-800 rounded-[0.75rem] p-6 md:p-8 hover:border-bitcoin/30 transition-all"
+                        className="bg-zinc-900/50 backdrop-blur-xs border border-zinc-800 rounded-xl p-6 md:p-8 hover:border-bitcoin/30 transition-all"
                       >
                         {/* Release Header */}
                         <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-6">

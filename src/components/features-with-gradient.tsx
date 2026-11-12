@@ -72,7 +72,7 @@ export default function FeaturesWithGradient() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-zinc-900/50 backdrop-blur-sm border border-bitcoin/10 rounded-xl p-6 hover:border-bitcoin/30 transition-all duration-300"
+              className="bg-zinc-900/50 backdrop-blur-xs border border-bitcoin/10 rounded-xl p-6 hover:border-bitcoin/30 transition-all duration-300"
             >
               <div className="mb-4">{feature.icon}</div>
               <h3 className="text-xl font-bold mb-2 text-white">

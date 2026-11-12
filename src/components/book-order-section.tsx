@@ -38,7 +38,7 @@ export default function BookOrderSection() {
       className="py-16 md:py-24 relative overflow-hidden"
     >
       {/* Background elements */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-bitcoin/5 via-transparent to-transparent pointer-events-none"></div>
+      <div className="absolute inset-0 bg-radial-[ellipse_at_top] from-bitcoin/5 via-transparent to-transparent pointer-events-none"></div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 relative z-10 max-w-7xl">
         {/* Section Header */}
@@ -70,9 +70,9 @@ export default function BookOrderSection() {
           >
             <div className="relative group">
               {/* Frosted glass container with Bitcoin glow */}
-              <div className="relative p-6 md:p-8 rounded-3xl backdrop-blur-xl bg-gradient-to-br from-bitcoin/10 via-bitcoin/5 to-transparent border border-bitcoin/20 shadow-2xl overflow-hidden">
+              <div className="relative p-6 md:p-8 rounded-3xl backdrop-blur-xl bg-linear-to-br from-bitcoin/10 via-bitcoin/5 to-transparent border border-bitcoin/20 shadow-2xl overflow-hidden">
                 {/* Background glow effects */}
-                <div className="absolute inset-0 bg-gradient-to-br from-bitcoin/20 via-bitcoin/10 to-transparent opacity-50"></div>
+                <div className="absolute inset-0 bg-linear-to-br from-bitcoin/20 via-bitcoin/10 to-transparent opacity-50"></div>
                 <div className="absolute -top-20 -right-20 w-40 h-40 bg-bitcoin/30 rounded-full blur-3xl"></div>
                 <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-bitcoin/20 rounded-full blur-3xl"></div>
 
@@ -101,26 +101,26 @@ export default function BookOrderSection() {
 
                 {/* Interactive glow that follows cursor */}
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div className="absolute inset-0 bg-gradient-radial from-bitcoin/30 via-bitcoin/10 to-transparent"></div>
+                  <div className="absolute inset-0 bg-radial from-bitcoin/30 via-bitcoin/10 to-transparent"></div>
                 </div>
               </div>
 
               {/* Floating elements around the container */}
-              <div className="absolute -top-4 -left-4 w-8 h-8 bg-bitcoin/20 rounded-full blur-sm animate-pulse"></div>
-              <div className="absolute -bottom-4 -right-4 w-6 h-6 bg-bitcoin/30 rounded-full blur-sm animate-pulse delay-1000"></div>
-              <div className="absolute top-1/2 -right-6 w-4 h-4 bg-bitcoin/25 rounded-full blur-sm animate-pulse delay-500"></div>
+              <div className="absolute -top-4 -left-4 w-8 h-8 bg-bitcoin/20 rounded-full blur-xs animate-pulse"></div>
+              <div className="absolute -bottom-4 -right-4 w-6 h-6 bg-bitcoin/30 rounded-full blur-xs animate-pulse delay-1000"></div>
+              <div className="absolute top-1/2 -right-6 w-4 h-4 bg-bitcoin/25 rounded-full blur-xs animate-pulse delay-500"></div>
             </div>
 
             {/* Book highlights */}
             <div className="mt-6 md:mt-8 grid grid-cols-3 gap-3 md:gap-4">
-              <div className="text-center p-3 md:p-4 bg-zinc-900/50 backdrop-blur-sm rounded-xl border border-bitcoin/10 hover:border-bitcoin/30 transition-colors">
+              <div className="text-center p-3 md:p-4 bg-zinc-900/50 backdrop-blur-xs rounded-xl border border-bitcoin/10 hover:border-bitcoin/30 transition-colors">
                 <BookOpen className="h-5 w-5 md:h-6 md:w-6 text-bitcoin mx-auto mb-2" />
                 <div className="text-xs md:text-sm text-gray-400">Author</div>
                 <div className="text-xs md:text-base font-bold text-white">
                   Vijay Boyapati
                 </div>
               </div>
-              <div className="text-center p-3 md:p-4 bg-zinc-900/50 backdrop-blur-sm rounded-xl border border-bitcoin/10 hover:border-bitcoin/30 transition-colors">
+              <div className="text-center p-3 md:p-4 bg-zinc-900/50 backdrop-blur-xs rounded-xl border border-bitcoin/10 hover:border-bitcoin/30 transition-colors">
                 <Globe className="h-5 w-5 md:h-6 md:w-6 text-bitcoin mx-auto mb-2" />
                 <div className="text-xs md:text-sm text-gray-400">
                   Translation
@@ -129,7 +129,7 @@ export default function BookOrderSection() {
                   CeylonCash
                 </div>
               </div>
-              <div className="text-center p-3 md:p-4 bg-zinc-900/50 backdrop-blur-sm rounded-xl border border-bitcoin/10 hover:border-bitcoin/30 transition-colors">
+              <div className="text-center p-3 md:p-4 bg-zinc-900/50 backdrop-blur-xs rounded-xl border border-bitcoin/10 hover:border-bitcoin/30 transition-colors">
                 <Award className="h-5 w-5 md:h-6 md:w-6 text-bitcoin mx-auto mb-2" />
                 <div className="text-xs md:text-sm text-gray-400">Edition</div>
                 <div className="text-xs md:text-base font-bold text-white">
@@ -170,9 +170,9 @@ export default function BookOrderSection() {
               className="relative"
             >
               {/* Frosted glass quote container */}
-              <div className="relative p-4 md:p-6 rounded-2xl backdrop-blur-xl bg-gradient-to-br from-zinc-900/80 via-zinc-900/60 to-zinc-900/40 border border-zinc-700/50 shadow-2xl overflow-hidden">
+              <div className="relative p-4 md:p-6 rounded-2xl backdrop-blur-xl bg-linear-to-br from-zinc-900/80 via-zinc-900/60 to-zinc-900/40 border border-zinc-700/50 shadow-2xl overflow-hidden">
                 {/* Background glow effects */}
-                <div className="absolute inset-0 bg-gradient-to-br from-bitcoin/5 via-transparent to-transparent opacity-50"></div>
+                <div className="absolute inset-0 bg-linear-to-br from-bitcoin/5 via-transparent to-transparent opacity-50"></div>
                 <div className="absolute -top-10 -right-10 w-20 h-20 bg-bitcoin/10 rounded-full blur-2xl"></div>
                 <div className="absolute -bottom-10 -left-10 w-20 h-20 bg-bitcoin/5 rounded-full blur-2xl"></div>
 
@@ -206,7 +206,7 @@ export default function BookOrderSection() {
             </motion.div>
 
             {/* Pricing & Order */}
-            <div className="bg-zinc-900/50 backdrop-blur-sm border border-bitcoin/10 rounded-xl p-4 md:p-6">
+            <div className="bg-zinc-900/50 backdrop-blur-xs border border-bitcoin/10 rounded-xl p-4 md:p-6">
               <div className="flex items-center justify-between mb-4 md:mb-6">
                 <div>
                   <div className="text-xs md:text-sm text-gray-400">Price</div>

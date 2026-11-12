@@ -109,7 +109,7 @@ export default function JoinCommunity() {
 
   return (
     <section id="join" className="py-16 md:py-24 relative overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-bitcoin/10 via-transparent to-transparent pointer-events-none"></div>
+      <div className="absolute inset-0 bg-radial-[ellipse_at_center] from-bitcoin/10 via-transparent to-transparent pointer-events-none"></div>
 
       {floatingElements}
 

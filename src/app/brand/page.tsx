@@ -49,18 +49,18 @@ export default function BrandPage() {
       <DynamicIslandTOC />
 
       <div className="relative min-h-screen overflow-x-clip bg-black">
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-[700px] bg-[radial-gradient(ellipse_at_top,_rgba(248,147,26,0.14),_transparent_60%)]" />
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-[700px] bg-[radial-gradient(ellipse_at_top,rgba(248,147,26,0.14),transparent_60%)]" />
 
-        <div className="relative mx-auto max-w-screen-2xl px-4 pb-24 pt-32 sm:px-6 lg:pb-40">
+        <div className="relative mx-auto max-w-(--breakpoint-2xl) px-4 pb-24 pt-32 sm:px-6 lg:pb-40">
           {/* Masthead */}
           <header
             id="brand-guidelines"
             className="scroll-mt-28 overflow-hidden rounded-xl bg-black ring-1 ring-white/10"
             style={BTC_PATTERN_STYLE}
           >
-            <div className="grid items-end gap-10 bg-gradient-to-r from-black via-black/90 to-black/40 px-6 py-12 sm:px-10 md:grid-cols-[1.2fr_1fr] md:py-16 lg:px-14">
+            <div className="grid items-end gap-10 bg-linear-to-r from-black via-black/90 to-black/40 px-6 py-12 sm:px-10 md:grid-cols-[1.2fr_1fr] md:py-16 lg:px-14">
               <div>
-                <h1 className="mb-5 text-balance text-4xl font-bold leading-[1] tracking-tight text-white sm:text-5xl lg:text-6xl">
+                <h1 className="mb-5 text-balance text-4xl font-bold leading-none tracking-tight text-white sm:text-5xl lg:text-6xl">
                   Bitcoin Deepa <em className="text-[#F8931A]">brand guidelines</em>
                 </h1>
                 <p className="max-w-xl text-lg text-zinc-300">

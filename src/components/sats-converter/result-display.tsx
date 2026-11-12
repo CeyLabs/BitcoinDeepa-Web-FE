@@ -39,7 +39,7 @@ function ResultDisplayComponent({
       <ResultCard
         value={
           result?.isLoading || result?.hasError ? (
-            <span className="bg-gradient-to-r from-gray-500 via-white to-gray-500 bg-[length:200%_100%] animate-shimmer-text bg-clip-text text-transparent">
+            <span className="bg-linear-to-r from-gray-500 via-white to-gray-500 bg-size-[200%_100%] animate-shimmer-text bg-clip-text text-transparent">
               0.00
             </span>
           ) : result && result.sats > 0 ? (
@@ -57,7 +57,7 @@ function ResultDisplayComponent({
       <ResultCard
         value={
           result?.isLoading || result?.hasError ? (
-            <span className="bg-gradient-to-r from-gray-500 via-white to-gray-500 bg-[length:200%_100%] animate-shimmer-text bg-clip-text text-transparent">
+            <span className="bg-linear-to-r from-gray-500 via-white to-gray-500 bg-size-[200%_100%] animate-shimmer-text bg-clip-text text-transparent">
               0.0000
             </span>
           ) : result && result.sats > 0 ? (
@@ -75,7 +75,7 @@ function ResultDisplayComponent({
       <LKRCard
         value={
           result?.isLoading || result?.hasError ? (
-            <span className="bg-gradient-to-r from-gray-500 via-white to-gray-500 bg-[length:200%_100%] animate-shimmer-text bg-clip-text text-transparent">
+            <span className="bg-linear-to-r from-gray-500 via-white to-gray-500 bg-size-[200%_100%] animate-shimmer-text bg-clip-text text-transparent">
               0.00
             </span>
           ) : result && result.sats > 0 ? (
