@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { BrandName } from "@/src/components/brand-provider";
-import { CookieSettingsButton } from "@/src/components/cookie-consent";
 import { LegalPage, LegalSection } from "@/src/components/legal/legal-page";
 import { pageMetadata } from "@/src/lib/seo";
 
@@ -143,12 +142,11 @@ export default function Privacy() {
           preferences and interactions with our website.
         </p>
         <p>
-          With your consent, we use the Meta Pixel to understand how visitors
-          find us and how our ads perform. It only runs after you choose
-          &quot;Accept&quot; in our cookie banner, and we remember your choice
-          for one year. You can change it at any time:{" "}
-          <CookieSettingsButton className="text-bitcoin underline decoration-bitcoin/40 underline-offset-4 transition-colors hover:decoration-bitcoin" />
-          .
+          This includes the Meta Pixel, which we use to understand how visitors
+          find us and how our ads perform. It shares information such as the
+          pages you visit, your browser and device details and a Meta cookie
+          with Meta Platforms. You can limit this through your browser&apos;s
+          privacy settings or your Meta ad preferences.
         </p>
         <p>
           You have the option to disable cookies through your browser settings,
