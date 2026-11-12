@@ -2,6 +2,7 @@
   "name": "bitcoindeepa-web",
   "version": "1.0.0",
   "private": true,
+  "packageManager": "pnpm@10.33.0",
   "scripts": {
     "dev": "next dev --webpack",
     "build": "next build",

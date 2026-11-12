@@ -3,14 +3,14 @@ Learn, connect, and grow with Sri Lanka’s Bitcoin community from grassroots me
 
 ## 🛠️ Tech Stack
 
-- **Framework**: [Next.js 15](https://nextjs.org/) with App Router
+- **Framework**: [Next.js 16](https://nextjs.org/) with App Router
 - **Language**: [TypeScript](https://www.typescriptlang.org/)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **Styling**: [Tailwind CSS 4](https://tailwindcss.com/)
 - **UI Components**: [Radix UI](https://www.radix-ui.com/)
 - **Animation**: [Framer Motion](https://www.framer.com/motion/)
-- **Smooth Scrolling**: [Lenis](https://lenis.studiofreight.com/)
+- **Smooth Scrolling**: [Lenis](https://lenis.darkroom.engineering/)
 - **Icons**: [Lucide React](https://lucide.dev/)
-- **Package Manager**: [Bun](https://bun.sh/) / [pnpm](https://pnpm.io/)
+- **Package Manager**: [pnpm](https://pnpm.io/) (the only lockfile is `pnpm-lock.yaml`; don't commit bun/npm lockfiles)
 
 ## 📦 Installation
 
@@ -22,14 +22,8 @@ Learn, connect, and grow with Sri Lanka’s Bitcoin community from grassroots me
 
 2. **Install dependencies**
    ```bash
-   # Using bun (recommended)
-   bun install
-   
-   # Or using pnpm
+   corepack enable   # picks up the pnpm version pinned in package.json
    pnpm install
-   
-   # Or using npm
-   npm install
    ```
 
 3. **Set up environment variables**
@@ -54,14 +48,7 @@ GITHUB_TOKEN=
 
 4. **Run the development server**
    ```bash
-   # Using bun
-   bun dev
-   
-   # Or using pnpm
    pnpm dev
-   
-   # Or using npm
-   npm run dev
    ```
 
 5. **Open your browser**
@@ -107,10 +94,10 @@ src/
 
 ## 🔧 Available Scripts
 
-- `bun dev` / `npm run dev`: Start development server
-- `bun build` / `npm run build`: Build production bundle
-- `bun start` / `npm run start`: Start production server
-- `bun lint` / `npm run lint`: Run ESLint
+- `pnpm dev`: Start development server
+- `pnpm build`: Build production bundle (also type-checks)
+- `pnpm start`: Start production server
+- `pnpm typecheck`: Type-check without building
 
 ## License
 
