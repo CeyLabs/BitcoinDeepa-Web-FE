@@ -147,6 +147,12 @@
   ::file-selector-button {
     border-color: var(--color-border, currentcolor);
   }
+  /* Paint the canvas itself black: otherwise Safari's overscroll bounce and
+     edge-sampling backdrop blurs (footer) show the default white canvas. */
+  html {
+    @apply bg-background;
+    color-scheme: dark;
+  }
   body {
     @apply bg-background text-foreground;
   }
