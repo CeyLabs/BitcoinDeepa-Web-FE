@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef } from "react";
-import { fbEvent } from "@/src/lib/facebook-pixel";
+import { useEffect, useRef } from "react";
+import { fbEvent, lkrValueParams, preloadUsdRate } from "@/src/lib/facebook-pixel";
 import Image from "next/image";
 import { motion, useInView } from "framer-motion";
 import {
@@ -26,8 +26,15 @@ export default function BookOrderSection() {
 
   const paymentUrl = "https://payhere.lk/pay/of811f041";
 
+  // Load the LKR->USD rate once the section is on screen, so the pixel event
+  // can carry a valid USD value without delaying the PayHere tab (which must
+  // open synchronously in the click handler or it gets popup-blocked).
+  useEffect(() => {
+    if (isInView) preloadUsdRate();
+  }, [isInView]);
+
   const handleOrderNow = () => {
-    fbEvent('Purchase', { value: salePrice, currency: 'LKR' });
+    fbEvent("Purchase", lkrValueParams(salePrice));
     window.open(paymentUrl, "_blank", "noopener,noreferrer");
   };
 
