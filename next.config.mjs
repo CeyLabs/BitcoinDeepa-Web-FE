@@ -30,6 +30,11 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'ceylabs.io',
       },
+      {
+        // Ghost (blog.bitcoindeepa.com) serves post images from this CDN.
+        protocol: 'https',
+        hostname: 'digitalpress.fra1.cdn.digitaloceanspaces.com',
+      },
     ],
   },
   experimental: {

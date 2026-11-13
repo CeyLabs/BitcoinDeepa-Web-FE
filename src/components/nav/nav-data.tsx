@@ -3,6 +3,8 @@ import {
   BookIcon,
   CalendarIcon,
   CapIcon,
+  FlagIcon,
+  PeopleIcon,
   RocketIcon,
   SwapIcon,
   SwatchesIcon,
@@ -85,6 +87,18 @@ export const NAV_MENUS: NavMenu[] = [
     label: "Community",
     items: [
       {
+        title: "Community hub",
+        description: "Channels, photos and news",
+        href: "/community",
+        Icon: PeopleIcon,
+      },
+      {
+        title: "About Us",
+        description: "Our story since the first meetup",
+        href: "/about",
+        Icon: FlagIcon,
+      },
+      {
         title: "Events & Meetups",
         description: "Meetups across Sri Lanka",
         href: "https://lu.ma/bitcoindeepa",
@@ -152,4 +166,7 @@ export const NAV_MENUS: NavMenu[] = [
   },
 ];
 
-export const NAV_LINKS = [{ label: "FAQ", href: "/#faq" }];
+export const NAV_LINKS = [
+  { label: "News", href: "/news" },
+  { label: "FAQ", href: "/#faq" },
+];

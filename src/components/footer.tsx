@@ -74,11 +74,12 @@ const Footer = () => {
 
           <div className="flex flex-wrap gap-x-6 gap-y-1 mb-4 justify-center">
             <NavLink
-              href="https://blog.bitcoindeepa.com/about/"
+              href="/about"
               label="About"
               small
             />
             <NavLink href="/#events" label="Events" small />
+            <NavLink href="/news" label="News" small />
             <NavLink href="/releases" label="Release Notes" small />
             <NavLink href="/#faq" label="FAQ" small />
             <NavLink href="/license" label="License" small />
@@ -104,7 +105,7 @@ const Footer = () => {
                 small
               />
               <SecondaryButton
-                href="https://t.me/BitcoinDeepa"
+                href="/community"
                 label="Community"
                 small
               />
