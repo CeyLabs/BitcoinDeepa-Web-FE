@@ -15,11 +15,13 @@
 import { useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import type { KeyboardEvent as ReactKeyboardEvent, PointerEvent as ReactPointerEvent } from "react";
 import Link from "next/link";
+import { getImageProps } from "next/image";
 import { AnimatePresence, motion, type Transition } from "framer-motion";
-import { ArrowUpRight, ChevronDown } from "lucide-react";
+import { ChevronDown } from "lucide-react";
+import { ExternalArrow } from "../icons";
 import { fbEvent } from "@/src/lib/facebook-pixel";
 import { cn } from "@/src/lib/utils";
-import { NAV_LINKS, NAV_MENUS, type NavLinkItem, type NavMenu } from "./nav-data";
+import { NAV_LINKS, NAV_MENUS, type NavFeature, type NavLinkItem, type NavMenu } from "./nav-data";
 
 const MORPH: Transition = { duration: 0.3, ease: [0.4, 0, 0.2, 1] };
 const SLIDE_DISTANCE = 60;
@@ -35,24 +37,25 @@ interface PanelBox {
 
 export function MenuItem({ item, onNavigate }: { item: NavLinkItem; onNavigate: () => void }) {
   const { Icon } = item;
+  // A compact list row: the duotone icon inline (no tile), a title and one
+  // line of caption. Every row is the same height, so panels never jump.
   const content = (
     <>
-      <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-zinc-800 text-bitcoin transition-colors group-hover:bg-bitcoin group-hover:text-black group-focus-visible:bg-bitcoin group-focus-visible:text-black">
-        <Icon className="size-5" />
-      </span>
-      <span className="min-w-0">
-        <span className="flex items-center gap-1 text-[15px] font-medium text-white">
+      <Icon className="size-5 shrink-0 text-bitcoin" />
+      <span className="min-w-0 flex-1">
+        <span className="flex items-center gap-1 text-sm leading-5 font-medium text-white">
           {item.title}
           {item.external && (
-            <ArrowUpRight className="size-3.5 text-zinc-500 transition-colors group-hover:text-bitcoin" />
+            <ExternalArrow className="ml-0.5 shrink-0 text-zinc-500" />
           )}
         </span>
-        <span className="mt-0.5 block text-sm leading-snug text-zinc-400">{item.description}</span>
+        <span className="block truncate text-sm leading-5 text-zinc-400">{item.description}</span>
       </span>
     </>
   );
+  // Radius 6px inside the panel's 6px padding: concentric with its 12px corners.
   const className =
-    "group flex items-start gap-3.5 rounded-lg p-3 outline-none transition-colors hover:bg-zinc-800 focus-visible:bg-zinc-800";
+    "group flex items-center gap-3 rounded-md px-3 py-2.5 outline-none transition-colors hover:bg-zinc-800 focus-visible:bg-zinc-800";
   const onClick = () => {
     if (item.lead) fbEvent("Lead");
     onNavigate();
@@ -68,21 +71,102 @@ export function MenuItem({ item, onNavigate }: { item: NavLinkItem; onNavigate: 
   );
 }
 
-function MenuContent({ menu, onNavigate }: { menu: NavMenu; onNavigate: () => void }) {
-  const twoColumns = menu.items.length > 2;
-  return (
-    <ul className={cn("grid gap-1 p-2", twoColumns ? "w-[600px] grid-cols-2" : "w-[360px] grid-cols-1")}>
-      {menu.items.map((item) => (
-        <li key={item.href}>
-          <MenuItem item={item} onNavigate={onNavigate} />
-        </li>
-      ))}
-    </ul>
+const TILE_SIZES = "208px";
+
+/** next/image's optimised srcset for a tile, shared by the tile and the idle preload. */
+function tileImageProps(feature: NavFeature) {
+  const { src, width, height, alt } = feature.image;
+  return getImageProps({ src, width, height, alt, sizes: TILE_SIZES, quality: 80 }).props;
+}
+
+function FeatureTile({ feature, onNavigate }: { feature: NavFeature; onNavigate: () => void }) {
+  const { alt, ...img } = tileImageProps(feature);
+  const content = (
+    <>
+      <span className="relative block min-h-0 flex-1 overflow-hidden bg-zinc-950">
+        {/* eslint-disable-next-line @next/next/no-img-element -- props come from getImageProps */}
+        <img {...img} alt={alt} className="absolute inset-0 size-full object-cover" />
+        {feature.video && (
+          <video
+            src={feature.video}
+            poster={img.src}
+            autoPlay
+            muted
+            loop
+            playsInline
+            aria-hidden
+            className="absolute inset-0 size-full object-cover motion-reduce:hidden"
+          />
+        )}
+      </span>
+      <span className="block px-3 py-2.5">
+        <span className="flex items-center gap-1 text-sm leading-5 font-medium text-white">
+          {feature.title}
+          {feature.external && (
+            <ExternalArrow className="ml-0.5 shrink-0 text-zinc-500" />
+          )}
+        </span>
+        <span className="block truncate text-sm leading-5 text-zinc-400">{feature.caption}</span>
+      </span>
+    </>
   );
+  // Same 6px radius as the rows: concentric with the panel's 12px corners.
+  const className =
+    "group/tile flex w-[208px] shrink-0 flex-col overflow-hidden rounded-md bg-zinc-800 outline-none transition-colors hover:bg-zinc-700 focus-visible:ring-2 focus-visible:ring-bitcoin";
+  return feature.external ? (
+    <a href={feature.href} target="_blank" rel="noopener noreferrer" className={className} onClick={onNavigate}>
+      {content}
+    </a>
+  ) : (
+    <Link href={feature.href} className={className} onClick={onNavigate}>
+      {content}
+    </Link>
+  );
+}
+
+function MenuContent({ menu, onNavigate }: { menu: NavMenu; onNavigate: () => void }) {
+  // Links in one column, the feature tile beside them. Every panel is the
+  // same width, so switching menus only morphs the height.
+  return (
+    <div className="flex gap-1.5 p-1.5">
+      <ul className="grid w-[284px] content-start gap-0.5">
+        {menu.items.map((item) => (
+          <li key={item.href}>
+            <MenuItem item={item} onNavigate={onNavigate} />
+          </li>
+        ))}
+      </ul>
+      {menu.feature && <FeatureTile feature={menu.feature} onNavigate={onNavigate} />}
+    </div>
+  );
+}
+
+/** Warm the tile images once the page is idle, so a first hover never shows an empty tile. */
+function usePreloadTiles() {
+  useEffect(() => {
+    const preload = () => {
+      for (const menu of NAV_MENUS) {
+        if (!menu.feature) continue;
+        const props = tileImageProps(menu.feature);
+        const img = new window.Image();
+        // sizes before srcset, so the browser picks the same candidate as the tile.
+        img.sizes = props.sizes ?? TILE_SIZES;
+        if (props.srcSet) img.srcset = props.srcSet;
+        img.src = props.src;
+      }
+    };
+    if ("requestIdleCallback" in window) {
+      const id = window.requestIdleCallback(preload, { timeout: 4000 });
+      return () => window.cancelIdleCallback(id);
+    }
+    const id = setTimeout(preload, 2000);
+    return () => clearTimeout(id);
+  }, []);
 }
 
 export function MorphMenu({ boundsRef }: { boundsRef: React.RefObject<HTMLElement | null> }) {
   const panelId = useId();
+  usePreloadTiles();
   const navRef = useRef<HTMLElement>(null);
   const triggerRefs = useRef(new Map<string, HTMLButtonElement>());
   const contentRefs = useRef(new Map<string, HTMLElement>());
@@ -264,7 +348,7 @@ export function MorphMenu({ boundsRef }: { boundsRef: React.RefObject<HTMLElemen
                 onKeyDown={(e) => onTriggerKeyDown(e, menu.id)}
                 onFocus={(e) => showHover(e.currentTarget)}
                 className={cn(
-                  "relative flex h-8 items-center gap-1 rounded-lg px-3.5 text-sm font-medium transition-colors outline-none focus-visible:ring-2 focus-visible:ring-bitcoin",
+                  "relative flex h-8 items-center gap-1 rounded-lg px-3 text-sm font-medium transition-colors outline-none focus-visible:ring-2 focus-visible:ring-bitcoin",
                   isOpen ? "text-white" : "text-zinc-300 hover:text-white",
                 )}
               >
@@ -289,7 +373,7 @@ export function MorphMenu({ boundsRef }: { boundsRef: React.RefObject<HTMLElemen
                 close();
                 showHover(e.currentTarget);
               }}
-              className="relative flex h-8 items-center rounded-lg px-3.5 text-sm font-medium text-zinc-300 transition-colors outline-none hover:text-white focus-visible:ring-2 focus-visible:ring-bitcoin"
+              className="relative flex h-8 items-center rounded-lg px-3 text-sm font-medium text-zinc-300 transition-colors outline-none hover:text-white focus-visible:ring-2 focus-visible:ring-bitcoin"
             >
               {link.label}
             </Link>

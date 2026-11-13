@@ -57,7 +57,7 @@ export default function Hero() {
               </Link>
               <Link href="https://blog.bitcoindeepa.com/about/">
                 <Button
-                  variant="outline"
+                  variant="secondary"
                   className="border-[1.5px] border-white bg-transparent text-white hover:border-bitcoin hover:bg-transparent hover:text-bitcoin font-medium"
                 >
                   Learn More

@@ -32,7 +32,7 @@ export function PatternsSection() {
       <h3 className="mb-4 mt-14 text-2xl font-bold text-white md:text-3xl">
         Secondary pattern: spiky tiles
       </h3>
-      <p className="mb-6 max-w-3xl text-lg leading-relaxed text-zinc-300">
+      <p className="mb-6 max-w-3xl type-lede text-zinc-300">
         The CeylonCash heritage pattern, redrawn for Bitcoin Deepa. Same sequence and the same four
         Lanka colours, but every tile has straight sides and corners that flare out into sharp
         spikes, echoing the points of the Yaka&apos;s crown.
