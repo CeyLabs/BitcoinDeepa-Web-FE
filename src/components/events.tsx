@@ -1,28 +1,10 @@
 "use client";
 
-import type React from "react";
-import { useState, useEffect, useRef } from "react";
-import {
-  ArrowLeft,
-  ArrowRight,
-  Clock,
-  MapPin,
-  Calendar,
-} from "lucide-react";
-import { motion } from "framer-motion";
-import { BrandName } from "./brand-provider";
-import {
-  MinimalCard,
-  MinimalCardImage,
-  MinimalCardTitle,
-  MinimalCardDescription,
-} from "@/src/components/ui/minimal-card";
-import {
-  Tabs,
-  TabsList,
-  TabsTrigger,
-} from "@/src/components/ui/motion-tabs";
-import { Skeleton } from "@/src/components/ui/skeleton";
+import { useCallback, useEffect, useRef, useState } from "react";
+import Image from "next/image";
+import { ArrowLeft, ArrowRight, ArrowUpRight, CalendarDays, Clock, Navigation } from "lucide-react";
+import { cn } from "@/src/lib/utils";
+import { Button } from "./ui/button";
 
 interface EventData {
   id: string;
@@ -43,33 +25,140 @@ interface EventData {
   };
 }
 
-function getDisplayLocation(
-  event: EventData,
-  type: "short" | "full" = "short"
-) {
-  if (event.location_type === "ONLINE") return "Online Event";
-  if (event.geo_address_info) {
-    const { address, city, country, full_address } = event.geo_address_info;
-    if (type === "full" && full_address) return full_address;
-    if (address && city) return `${address}, ${city}`;
-    if (city) return city;
-  }
-  return event.location || "Location TBA";
+type Tab = "future" | "past";
+
+const LUMA_CALENDAR = "https://lu.ma/bitcoindeepa";
+const TZ = "Asia/Colombo";
+
+// The card row starts in line with the page content and bleeds off the right
+// edge. Matches the heading container (max-w-7xl with lg:px-8).
+const ROW_INSET = "max(1rem, calc((100vw - 80rem) / 2 + 2rem))";
+
+/** Map the events API payload (Luma event + calendar) to the fields we render. */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function toEvents(data: any): EventData[] {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return (data || []).map((item: any) => {
+    const event = item.event;
+    return {
+      id: event.api_id,
+      title: event.name,
+      start_time: event.start_at,
+      end_time: event.end_at,
+      location: item.calendar?.geo_city || "N/A",
+      location_type: event.location_type,
+      url: `https://lu.ma/${event.url}`,
+      image_url: event.cover_url,
+      latitude: event.geo_latitude,
+      longitude: event.geo_longitude,
+      geo_address_info: event.geo_address_info,
+    };
+  });
 }
 
-type Tab = "future" | "past";
+/** Upcoming: soonest first. Past: most recent first. */
+function sortEvents(events: EventData[], tab: Tab): EventData[] {
+  const dir = tab === "future" ? 1 : -1;
+  return [...events].sort(
+    (a, b) => dir * (new Date(a.start_time).getTime() - new Date(b.start_time).getTime()),
+  );
+}
+
+function shortLocation(event: EventData) {
+  if (event.location_type === "ONLINE") return "Online";
+  const city = event.geo_address_info?.city;
+  if (city) return city;
+  return event.location && event.location !== "N/A" ? event.location : "Location TBA";
+}
+
+const dateFmt = new Intl.DateTimeFormat("en-US", { weekday: "short", month: "short", day: "numeric", timeZone: TZ });
+const dateYearFmt = new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: TZ });
+const yearFmt = new Intl.DateTimeFormat("en-US", { year: "numeric", timeZone: TZ });
+
+/** "Fri, Nov 20" this year; "Aug 31, 2024" for other years. */
+function formatEventDate(d: Date) {
+  return yearFmt.format(d) === yearFmt.format(new Date()) ? dateFmt.format(d) : dateYearFmt.format(d);
+}
+
+const timeFmt = new Intl.DateTimeFormat("en-US", { hour: "numeric", minute: "2-digit", timeZone: TZ });
+
+function EventCard({ event }: { event: EventData }) {
+  const start = new Date(event.start_time);
+  return (
+    <a
+      href={event.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group block w-[78vw] max-w-[400px] shrink-0 snap-start outline-none sm:w-[360px] lg:w-[400px]"
+    >
+      <div className="relative aspect-square overflow-hidden rounded-xl bg-zinc-900 ring-bitcoin transition-shadow group-focus-visible:ring-2">
+        {event.image_url ? (
+          <Image
+            src={event.image_url}
+            alt=""
+            fill
+            sizes="(min-width: 1024px) 400px, (min-width: 640px) 360px, 78vw"
+            className="object-cover"
+          />
+        ) : (
+          <div className="flex size-full items-center justify-center">
+            <Image src="/assets/brand/kit/04-Yaka-Symbol/Yaka.svg" alt="" width={120} height={148} />
+          </div>
+        )}
+        <span className="absolute top-3 right-3 flex size-10 items-center justify-center rounded-lg bg-bitcoin text-black opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
+          <ArrowUpRight className="size-5" />
+        </span>
+      </div>
+      <h3 className="mt-4 line-clamp-2 text-xl leading-snug font-medium text-white transition-colors group-hover:text-bitcoin">
+        {event.title}
+      </h3>
+      <div className="mt-3 flex flex-wrap gap-2">
+        <span className="flex h-8 items-center gap-1.5 rounded-md bg-zinc-900 px-2.5 text-sm text-zinc-300">
+          <CalendarDays className="size-4 text-zinc-400" />
+          <time dateTime={event.start_time}>{formatEventDate(start)}</time>
+        </span>
+        <span className="flex h-8 items-center gap-1.5 rounded-md bg-zinc-900 px-2.5 text-sm text-zinc-300">
+          <Clock className="size-4 text-zinc-400" />
+          {timeFmt.format(start)}
+        </span>
+        <span className="flex h-8 items-center gap-1.5 rounded-md bg-zinc-900 px-2.5 text-sm text-zinc-300">
+          <Navigation className="size-4 text-zinc-400" />
+          {shortLocation(event)}
+        </span>
+      </div>
+    </a>
+  );
+}
+
+function CardSkeleton() {
+  return (
+    <div className="w-[78vw] max-w-[400px] shrink-0 sm:w-[360px] lg:w-[400px]" aria-hidden>
+      <div className="aspect-square animate-pulse rounded-xl bg-zinc-900" />
+      <div className="mt-4 h-6 w-3/4 animate-pulse rounded-md bg-zinc-900" />
+      <div className="mt-3 flex gap-2">
+        <div className="h-8 w-28 animate-pulse rounded-md bg-zinc-900" />
+        <div className="h-8 w-20 animate-pulse rounded-md bg-zinc-900" />
+      </div>
+    </div>
+  );
+}
 
 export default function EventsSection() {
   const [activeTab, setActiveTab] = useState<Tab>("future");
   const [events, setEvents] = useState<EventData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [currentPage, setCurrentPage] = useState(0);
-  const carouselRef = useRef<HTMLDivElement>(null);
-  const [touchStart, setTouchStart] = useState<number | null>(null);
-  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [canPrev, setCanPrev] = useState(false);
+  const [canNext, setCanNext] = useState(false);
+  const autoSwitched = useRef(false);
+  const [noUpcoming, setNoUpcoming] = useState(false);
 
   useEffect(() => {
+    // A newer tab's request supersedes this one: abort it so a slow response
+    // can't overwrite the list for the tab that's now selected.
+    const controller = new AbortController();
+    let switching = false;
     async function fetchEvents() {
       try {
         setLoading(true);
@@ -81,344 +170,164 @@ export default function EventsSection() {
             headers: {
               Authorization: `Bearer ${process.env.NEXT_PUBLIC_UUID}`,
             },
+            signal: controller.signal,
           }
         );
 
         if (!response.ok) throw new Error("Failed to fetch events");
 
-        const data = await response.json();
+        const transformed = sortEvents(toEvents(await response.json()), activeTab);
+        if (controller.signal.aborted) return;
 
-        const transformed: EventData[] = (data || []).map((item: any) => {
-          const event = item.event;
-          return {
-            id: event.api_id,
-            title: event.name,
-            start_time: event.start_at,
-            end_time: event.end_at,
-            location: item.calendar?.geo_city || "N/A",
-            location_type: event.location_type,
-            url: `https://lu.ma/${event.url}`,
-            image_url: event.cover_url,
-            latitude: event.geo_latitude,
-            longitude: event.geo_longitude,
-            geo_address_info: event.geo_address_info,
-          };
-        });
+        // Nothing scheduled yet: on the first load, show recent meetups
+        // instead of an empty state (the visitor can still switch back).
+        if (activeTab === "future" && transformed.length === 0 && !autoSwitched.current) {
+          autoSwitched.current = true;
+          switching = true; // keep the skeleton up while past events load
+          setNoUpcoming(true);
+          setActiveTab("past");
+          return;
+        }
 
         setEvents(transformed);
       } catch (err) {
+        if (controller.signal.aborted) return;
         console.error("Error fetching events:", err);
         setError("Unable to load events at this time");
       } finally {
-        setLoading(false);
+        if (!switching && !controller.signal.aborted) setLoading(false);
       }
     }
 
     fetchEvents();
+    return () => controller.abort();
   }, [activeTab]);
 
-  const handleTabChange = (tab: Tab) => {
-    if (tab === activeTab) return;
-    setActiveTab(tab);
-    setCurrentPage(0);
+  const updateArrows = useCallback(() => {
+    const el = trackRef.current;
+    if (!el) return;
+    setCanPrev(el.scrollLeft > 4);
+    setCanNext(el.scrollLeft + el.clientWidth < el.scrollWidth - 4);
+  }, []);
+
+  useEffect(() => {
+    const el = trackRef.current;
+    if (!el) return;
+    el.scrollTo({ left: 0 });
+    updateArrows();
+    const ro = new ResizeObserver(updateArrows);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [events, loading, updateArrows]);
+
+  const scrollByCard = (dir: 1 | -1) => {
+    const el = trackRef.current;
+    const card = el?.querySelector<HTMLElement>("a, [aria-hidden]");
+    if (!el || !card) return;
+    el.scrollBy({ left: dir * (card.offsetWidth + 16), behavior: "smooth" });
   };
 
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString("en-US", {
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-    });
-  };
-
-  const formatTimeRange = (start: string, end: string) => {
-    const startTime = new Date(start);
-    const endTime = new Date(end);
-    const options: Intl.DateTimeFormatOptions = {
-      hour: "numeric",
-      minute: "2-digit",
-      hour12: true,
-    };
-    return `${startTime.toLocaleTimeString(
-      "en-US",
-      options
-    )} - ${endTime.toLocaleTimeString("en-US", options)}`;
-  };
-
-  const getGoogleMapsUrl = (lat?: string, lng?: string) => {
-    if (!lat || !lng) return "#";
-    return `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
-  };
-
-  const totalPages = Math.ceil(events.length / 3);
-
-  const nextSlide = () => {
-    if (currentPage < totalPages - 1) setCurrentPage(currentPage + 1);
-  };
-
-  const prevSlide = () => {
-    if (currentPage > 0) setCurrentPage(currentPage - 1);
-  };
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchStart(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
-    const distance = touchStart - touchEnd;
-    if (distance > 50 && currentPage < totalPages - 1) nextSlide();
-    if (distance < -50 && currentPage > 0) prevSlide();
-    setTouchStart(null);
-    setTouchEnd(null);
-  };
+  const iconBtn =
+    "hidden size-11 items-center justify-center rounded-xl border-[1.5px] border-zinc-700 sm:flex text-white transition-colors hover:border-bitcoin hover:text-bitcoin disabled:pointer-events-none disabled:opacity-30";
 
   return (
-    <section id="events" className="py-16 md:py-24 relative overflow-hidden">
-      <div className="absolute inset-0 bg-radial-[ellipse_at_top] from-bitcoin/5 via-transparent to-transparent pointer-events-none"></div>
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-12"
+    <section id="events" aria-labelledby="events-title" className="relative overflow-clip py-20 md:py-28">
+      <div className="mx-auto flex max-w-7xl flex-col gap-8 px-4 sm:px-6 md:flex-row md:items-end md:justify-between lg:px-8">
+        <h2
+          id="events-title"
+          className="type-h2"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-3">
-            <span className="text-white">
-              {activeTab === "future" ? "Upcoming" : "Past"}
-            </span>
-            <span className="text-bitcoin ml-2">Meetups</span>
-          </h2>
-          <p className="text-gray-400 max-w-2xl mx-auto">
-            Be part of the <BrandName /> community join our events, share
-            ideas, and vibe with the community across Sri Lanka.
-          </p>
-          <div className="flex justify-center mt-4">
-            <Tabs
-              value={activeTab}
-              onValueChange={(v) => handleTabChange(v as Tab)}
-            >
-              <TabsList
-                className="bg-zinc-900 border border-bitcoin/20 rounded-xl"
-                activeClassName="bg-bitcoin rounded-lg"
+          <span className="block text-white">Meet the community IRL.</span>
+          <span className="block text-zinc-500">Learn Bitcoin together.</span>
+        </h2>
+
+        <div className="flex flex-wrap items-center gap-3">
+          <div role="tablist" aria-label="Events" className="flex rounded-xl bg-zinc-900 p-1">
+            {(
+              [
+                ["future", "Upcoming"],
+                ["past", "Past"],
+              ] as const
+            ).map(([value, label]) => (
+              <button
+                key={value}
+                type="button"
+                role="tab"
+                aria-selected={activeTab === value}
+                onClick={() => setActiveTab(value)}
+                className={cn(
+                  "h-9 rounded-lg px-4 text-sm font-medium transition-colors",
+                  activeTab === value ? "bg-bitcoin text-black" : "text-zinc-400 hover:text-white",
+                )}
               >
-                <TabsTrigger
-                  value="future"
-                  className="data-[state=active]:text-black text-gray-400 px-5 rounded-lg"
-                >
-                  Upcoming
-                </TabsTrigger>
-                <TabsTrigger
-                  value="past"
-                  className="data-[state=active]:text-black text-gray-400 px-5 rounded-lg"
-                >
-                  Past
-                </TabsTrigger>
-              </TabsList>
-            </Tabs>
-          </div>
-{/* top pagination removed — unified below cards */}
-        </motion.div>
-
-        {loading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {Array.from({ length: 3 }).map((_, i) => (
-              /* mirrors MinimalCard: rounded-[24px] p-2 wrapper → image → title → description → button */
-              <div
-                key={i}
-                className="rounded-[24px] bg-neutral-800 p-2 dark:shadow-[0_1px_0_0_rgba(255,255,255,0.03)_inset,0_0_0_1px_rgba(255,255,255,0.03)_inset,0_0_0_1px_rgba(0,0,0,0.1),0_2px_2px_0_rgba(0,0,0,0.1),0_4px_4px_0_rgba(0,0,0,0.1),0_8px_8px_0_rgba(0,0,0,0.1)]"
-              >
-                {/* image placeholder — matches MinimalCardImage rounded-[20px] mb-6 */}
-                <Skeleton className="aspect-4/3 w-full rounded-[20px] mb-6 bg-zinc-700" />
-
-                {/* title — matches MinimalCardTitle mt-2 px-1 text-lg */}
-                <Skeleton className="h-5 w-3/4 rounded-md mx-1 mb-2 bg-zinc-700" />
-                <Skeleton className="h-5 w-1/2 rounded-md mx-1 mb-4 bg-zinc-700" />
-
-                {/* description rows — matches MinimalCardDescription px-1 text-sm */}
-                <Skeleton className="h-3.5 w-2/3 rounded-md mx-1 mb-2 bg-zinc-700/70" />
-                <Skeleton className="h-3.5 w-1/2 rounded-md mx-1 mb-4 bg-zinc-700/70" />
-
-                {/* button — matches px-1 pb-2 h-10 rounded-xl */}
-                <Skeleton className="h-10 w-full rounded-xl mx-0 mb-1 bg-zinc-700/50" />
-              </div>
+                {label}
+              </button>
             ))}
           </div>
-        ) : error ? (
-          <div className="bg-zinc-900/50 backdrop-blur-xs border border-red-500/20 rounded-xl p-8 text-center">
-            <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-red-500/10 mb-4">
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="text-red-500"
-              >
-                <path
-                  d="M12 8V12M12 16H12.01M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </div>
-            <h3 className="text-xl font-medium text-white mb-2">
-              Unable to Load Events
-            </h3>
-            <p className="text-gray-400">{error}</p>
-          </div>
-        ) : events.length === 0 ? (
-          <div className="bg-zinc-900/50 backdrop-blur-xs border border-bitcoin/10 rounded-xl p-8 text-center">
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-bitcoin/10 mb-4">
-              <Calendar className="h-8 w-8 text-bitcoin" />
-            </div>
-            <h3 className="text-2xl font-medium text-white mb-3">
-              {activeTab === "future"
-                ? "No Upcoming Events happening at the moment."
-                : "No past events found."}
-            </h3>
-            <p className="text-gray-400 max-w-md mx-auto mb-6">
-              {activeTab === "future"
-                ? "Check back later for new events."
-                : "Past meetups will appear here."}
-            </p>
-            {/* <a
-              href="https://t.me/bitcoindeepa"
+          <Button asChild variant="secondary">
+            <a href={LUMA_CALENDAR} target="_blank" rel="noopener noreferrer">
+              View all
+            </a>
+          </Button>
+          <button type="button" aria-label="Previous events" onClick={() => scrollByCard(-1)} disabled={!canPrev} className={iconBtn}>
+            <ArrowLeft className="size-5" />
+          </button>
+          <button type="button" aria-label="Next events" onClick={() => scrollByCard(1)} disabled={!canNext} className={iconBtn}>
+            <ArrowRight className="size-5" />
+          </button>
+        </div>
+      </div>
+
+      <div className="mt-12">
+        {noUpcoming && activeTab === "past" && !error && (
+          <p className="mx-auto mb-6 max-w-7xl px-4 text-zinc-400 sm:px-6 lg:px-8">
+            No upcoming meetups right now, so here are our latest ones.{" "}
+            <a
+              href={LUMA_CALENDAR}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center rounded-xl text-sm font-semibold bg-bitcoin hover:bg-bitcoin-dark text-black h-10 px-5 py-2 transition-colors"
+              className="text-bitcoin underline decoration-bitcoin/40 underline-offset-4 hover:decoration-bitcoin"
             >
-              Join Our Telegram
-            </a> */}
+              Follow the calendar
+            </a>{" "}
+            to hear about the next one.
+          </p>
+        )}
+        {error || (!loading && events.length === 0) ? (
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="flex flex-col items-start gap-4 rounded-xl bg-zinc-900 p-8 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <h3 className="text-xl font-medium text-white">
+                  {error
+                    ? "We couldn't load events right now."
+                    : activeTab === "future"
+                      ? "No upcoming events right now."
+                      : "No past events yet."}
+                </h3>
+                <p className="mt-1 text-zinc-400">
+                  {activeTab === "future"
+                    ? "New meetups are announced on our Luma calendar first."
+                    : "See every past meetup on our Luma calendar."}
+                </p>
+              </div>
+              <Button asChild>
+                <a href={LUMA_CALENDAR} target="_blank" rel="noopener noreferrer">
+                  Open the calendar
+                </a>
+              </Button>
+            </div>
           </div>
         ) : (
           <div
-            ref={carouselRef}
-            className="relative overflow-hidden"
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
+            ref={trackRef}
+            onScroll={updateArrows}
+            aria-busy={loading}
+            className="hide-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2"
+            style={{ paddingInline: ROW_INSET, scrollPaddingInline: ROW_INSET }}
           >
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {events
-                  .slice()
-                  .sort(
-                    (a, b) =>
-                      new Date(a.start_time).getTime() -
-                      new Date(b.start_time).getTime()
-                  )
-                  .slice(currentPage * 3, currentPage * 3 + 3)
-                  .map((event) => (
-                    <div key={event.id}>
-                      <MinimalCard className="w-full h-full flex flex-col">
-                        <div className="relative">
-                          <MinimalCardImage
-                            src={event.image_url || "/placeholder.svg"}
-                            alt={event.title}
-                            className="h-auto! aspect-4/3"
-                          />
-                          <div className="absolute top-3 left-3 bg-bitcoin text-black text-xs font-semibold px-3 py-1 rounded-md shadow-[0_0_12px_rgba(255,153,0,0.5)]">
-                            {formatDate(event.start_time)}
-                          </div>
-                        </div>
-
-                        <MinimalCardTitle className="line-clamp-2 min-h-12">
-                          {event.title}
-                        </MinimalCardTitle>
-
-                        <MinimalCardDescription>
-                          <span className="flex items-center gap-1.5 mb-1">
-                            <Clock className="w-3.5 h-3.5 text-bitcoin shrink-0" />
-                            {formatTimeRange(event.start_time, event.end_time)}
-                          </span>
-                          <span className="flex items-start gap-1.5">
-                            <MapPin className="w-3.5 h-3.5 text-bitcoin shrink-0 mt-0.5" />
-                            <a
-                              href={getGoogleMapsUrl(event.latitude, event.longitude)}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="hover:text-bitcoin transition-colors"
-                            >
-                              {getDisplayLocation(event, "short")}
-                            </a>
-                          </span>
-                        </MinimalCardDescription>
-
-                        <div className="px-1 pb-2 mt-auto">
-                          <a
-                            href={event.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center justify-center rounded-xl text-sm font-semibold bg-bitcoin text-black hover:bg-bitcoin-dark h-10 px-5 w-full transition-all duration-200"
-                          >
-                            {activeTab === "future" ? "Register Now" : "View Event"}
-                          </a>
-                        </div>
-                      </MinimalCard>
-                    </div>
-                  ))}
-              </div>
-
-            {events.length > 3 && (
-              <div className="flex items-center justify-center mt-8">
-                <motion.div layout className="flex items-center">
-                  <motion.div
-                    layout
-                    className="relative flex items-center justify-between overflow-hidden rounded-xl bg-zinc-900/80 border border-zinc-800"
-                    style={{ borderRadius: 12 }}
-                    transition={{ type: "spring", bounce: 0.16, duration: 0.5 }}
-                  >
-                    {/* Prev button */}
-                    <motion.button
-                      layout
-                      onClick={prevSlide}
-                      disabled={currentPage === 0}
-                      className="h-10 w-10 flex items-center justify-center rounded-lg text-gray-400 hover:text-bitcoin disabled:opacity-30 disabled:hover:text-gray-400 transition-colors shrink-0"
-                    >
-                      <ArrowLeft className="h-4 w-4" />
-                    </motion.button>
-
-                    {/* Dot indicators */}
-                    <motion.div layout className="flex items-center gap-2 px-1">
-                      {Array.from({ length: totalPages }).map((_, index) => (
-                        <motion.button
-                          key={index}
-                          layout
-                          onClick={() => setCurrentPage(index)}
-                          className="rounded-full transition-colors"
-                          animate={{
-                            width: currentPage === index ? 24 : 8,
-                            height: 8,
-                            backgroundColor: currentPage === index ? "var(--color-bitcoin, #F8931A)" : "rgba(113,113,122,0.5)",
-                          }}
-                          whileHover={{ backgroundColor: currentPage === index ? "var(--color-bitcoin, #F8931A)" : "rgba(113,113,122,0.8)" }}
-                          transition={{ type: "spring", stiffness: 300, damping: 25 }}
-                          aria-label={`Go to page ${index + 1}`}
-                        />
-                      ))}
-                    </motion.div>
-
-                    {/* Next button */}
-                    <motion.button
-                      layout
-                      onClick={nextSlide}
-                      disabled={currentPage >= totalPages - 1}
-                      className="h-10 w-10 flex items-center justify-center rounded-lg text-gray-400 hover:text-bitcoin disabled:opacity-30 disabled:hover:text-gray-400 transition-colors shrink-0"
-                    >
-                      <ArrowRight className="h-4 w-4" />
-                    </motion.button>
-                  </motion.div>
-                </motion.div>
-              </div>
-            )}
+            {loading
+              ? Array.from({ length: 4 }).map((_, i) => <CardSkeleton key={i} />)
+              : events.map((event) => <EventCard key={event.id} event={event} />)}
           </div>
         )}
       </div>

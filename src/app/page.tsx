@@ -11,7 +11,7 @@ import BookOrderSection from "../components/book-order-section";
 
 export default function Home() {
   return (
-    <div className="relative min-h-screen overflow-hidden bg-black">
+    <div className="relative min-h-screen overflow-clip bg-black">
       {/* Global background gradient */}
       {/* <div className="fixed inset-0 z-0 bg-linear-to-b from-zinc-950 via-black to-zinc-950 pointer-events-none"></div> */}
 
