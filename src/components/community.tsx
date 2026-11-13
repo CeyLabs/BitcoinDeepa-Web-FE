@@ -1,87 +1,54 @@
-"use client";
-
-import { motion } from "framer-motion";
-import { GradientButton } from "./gradient-button";
 import Image from "next/image";
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { BrandName } from "./brand-provider";
+import { CommunityGallery, ICONS_3D } from "./community-gallery";
+import { Button } from "./ui/button";
+
+const WORDS = [
+  { word: "Meet", icon: ICONS_3D.meetup },
+  { word: "Learn", icon: ICONS_3D.book },
+  { word: "Pay", icon: ICONS_3D.lightning },
+  { word: "Shine", icon: ICONS_3D.lamp, accent: true },
+] as const;
+
+/** A 3D icon set into the line of type, sized to the cap height. */
+function InlineIcon({ src }: { src: string }) {
+  return (
+    <span className="mx-[0.12em] inline-flex size-[0.9em] translate-y-[0.08em] items-center justify-center overflow-hidden rounded-[0.18em] bg-black align-baseline ring-1 ring-zinc-800 ring-inset">
+      <Image src={src} alt="" width={512} height={512} sizes="96px" className="size-[88%]" />
+    </span>
+  );
+}
 
 export default function Community() {
   return (
-    <section id="community" className="py-16 md:py-24 relative overflow-hidden">
-      <div className="container mx-auto px-8 sm:px-8 md:px-24 relative z-10">
-        <div className="flex flex-col lg:flex-row items-center gap-12">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="flex-1"
-          >
-            <div className="relative w-full aspect-square max-w-lg mx-auto rounded-2xl overflow-hidden group">
-              <Image
-                src="/images/bitcoindeepa-intro.png"
-                alt="Bitcoin Deepa Community (Bitcoin දීප)"
-                fill
-                sizes="(min-width: 1024px) 512px, 100vw"
-                className="object-cover opacity-75"
-                loading="lazy"
-              />
+    <section id="community" aria-labelledby="community-title" className="relative overflow-clip py-20 md:py-28">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <h2 id="community-title" className="reveal type-display leading-[1.02] text-white">
+          {WORDS.map(({ word, icon, ...rest }) => (
+            <span key={word} className="mr-[0.25em] inline-block whitespace-nowrap">
+              <span className={"accent" in rest ? "text-bitcoin" : undefined}>{word}</span>
+              <InlineIcon src={icon} />
+            </span>
+          ))}
+        </h2>
 
-              {/* Decorative elements */}
-              <div className="absolute inset-0 bg-linear-to-br from-bitcoin/20 to-transparent"></div>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="flex-1"
-          >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              <span className="text-white">Join the</span>
-              <span className="block text-bitcoin mt-2">
-                Bitcoin දීප Revolution
-              </span>
-            </h2>
-            <p className="text-gray-400 mb-6">
-              <BrandName /> is more than just a community - it's a movement to
-              bring financial sovereignty to Sri Lanka through Bitcoin education
-              and adoption.
-            </p>
-            <ul className="space-y-4 mb-8">
-              {[
-                "Regular meetups across Sri Lanka",
-                "Online learning sessions and workshops",
-                "Networking with global Bitcoin experts",
-                "Resources in local languages",
-                "Support for Bitcoin initiatives and startups",
-              ].map((item, index) => (
-                <motion.li
-                  key={index}
-                  initial={{ opacity: 0, x: 20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.3, delay: 0.3 + index * 0.1 }}
-                  className="flex items-center"
-                >
-                  <div className="h-2 w-2 rounded-full bg-bitcoin mr-3"></div>
-                  <span className="text-gray-300">{item}</span>
-                </motion.li>
-              ))}
-            </ul>
-            <Link
-              href="https://t.me/+OoVmewRlUHg1MTA1"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <GradientButton>Join Our Community</GradientButton>
+        <div className="reveal mt-8 flex flex-col gap-6 md:mt-10 md:flex-row md:items-end md:justify-between">
+          <p className="max-w-2xl type-lede text-zinc-400">
+            <BrandName /> is more than a community. It&apos;s a movement bringing financial sovereignty to Sri
+            Lanka through Bitcoin education, meetups across the island and resources in local languages.
+          </p>
+          <Button asChild variant="secondary" className="self-start md:self-auto">
+            <Link href="/community">
+              Explore the community <ArrowRight />
             </Link>
-          </motion.div>
+          </Button>
         </div>
       </div>
+
+      {/* Full-bleed strip: meetup photos, milestones and the 3D icon set. */}
+      <CommunityGallery className="mt-12 md:mt-16" />
     </section>
   );
 }

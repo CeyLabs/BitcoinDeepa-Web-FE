@@ -1,13 +1,17 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, X } from "lucide-react";
-import { BrandName, useBrand } from "./brand-provider";
+import type React from "react";
+import * as Accordion from "@radix-ui/react-accordion";
+import { ChevronDown } from "lucide-react";
+import { useBrand } from "./brand-provider";
+import { TELEGRAM_INVITE } from "./nav/nav-data";
 
-export default function Faq() {
-  const { brand } = useBrand();
-  const faqs = [
+type FaqItem = { question: string; answer: React.ReactNode };
+
+const link = "text-bitcoin underline underline-offset-4 transition-colors hover:text-bitcoin-light";
+
+function getFaqs(brand: string): FaqItem[] {
+  return [
     {
       question: `What is ${brand}?`,
       answer: `${brand} – Pearl of Satoshi is Sri Lanka's leading grassroots Bitcoin-only community. We focus on educating, connecting, and empowering individuals around the philosophy, technology, and use cases of Bitcoin.`,
@@ -31,23 +35,18 @@ export default function Faq() {
       question: "I'm new to Bitcoin. Where should I start?",
       answer: (
         <>
-          Start with these basics: Watch{" "}
+          Start with these basics: watch the{" "}
           <a
             href="https://youtu.be/gS05vIvAW9I?list=PL0wRLuowx3txfNX4NzbRDLja2SSWL0c3g"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-bitcoin hover:underline"
+            className={link}
           >
-            'What is Bitcoin?' series on YouTube
+            &lsquo;What is Bitcoin?&rsquo; series on YouTube
           </a>
           , read{" "}
-          <a
-            href="https://saifedean.com/tbs"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-bitcoin hover:underline"
-          >
-            'The Bitcoin Standard' by Saifedean Ammous
+          <a href="https://saifedean.com/tbs" target="_blank" rel="noopener noreferrer" className={link}>
+            &lsquo;The Bitcoin Standard&rsquo; by Saifedean Ammous
           </a>
           , and attend a local {brand} meetup to ask questions in person.
         </>
@@ -70,8 +69,7 @@ export default function Faq() {
     },
     {
       question: "Are your events open to everyone?",
-      answer:
-        `Yes. ${brand} is inclusive. Whether you're a beginner, developer, business owner, or just curious—we welcome anyone who wants to explore Bitcoin in an open, respectful environment.`,
+      answer: `Yes. ${brand} is inclusive. Whether you're a beginner, developer, business owner, or just curious, we welcome anyone who wants to explore Bitcoin in an open, respectful environment.`,
     },
     {
       question: "Do you collaborate with international Bitcoin organizations?",
@@ -84,76 +82,50 @@ export default function Faq() {
         "We are community-driven. Events are often funded by donations, community sponsorships, or volunteers. We may also work with aligned Bitcoin-only sponsors to maintain neutrality and decentralization.",
     },
   ];
+}
 
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
-
-  const toggleFaq = (index: number) => {
-    setOpenIndex(openIndex === index ? null : index);
-  };
+export default function Faq() {
+  const { brand } = useBrand();
+  const faqs = getFaqs(brand);
 
   return (
-    <section id="faq" className="py-16 md:py-24 relative">
-      <div className="container mx-auto px-4 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-5xl font-bold mb-4">FAQs</h2>
-          <p className="text-gray-400 max-w-2xl mx-auto">
-            Got questions about {brand}? Find quick answers below or reach out to our community for more.
-          </p>
-        </motion.div>
+    <section id="faq" aria-labelledby="faq-title" className="relative px-4 py-20 sm:px-6 md:py-28">
+      {/* Header */}
+      <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
+        <h2 id="faq-title" className="reveal type-h2 text-white">
+          Questions? <span className="text-bitcoin">Answered.</span>
+        </h2>
+        <p className="reveal mt-5 max-w-xl type-lede text-zinc-400">
+          Quick answers about the community, Bitcoin in Sri Lanka, and how to get started.
+        </p>
+      </div>
 
-        <div className="max-w-3xl mx-auto">
-          {faqs.map((faq, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="mb-4"
-            >
-              <div
-                className={`bg-zinc-900/80 backdrop-blur-xs border ${
-                  openIndex === index ? "border-bitcoin/30" : "border-bitcoin/10"
-                } rounded-xl overflow-hidden transition-all duration-300`}
-              >
-                <button
-                  onClick={() => toggleFaq(index)}
-                  className="w-full p-6 text-left flex items-center justify-between"
-                >
-                  <span className="text-lg font-medium text-white">
-                    {faq.question}
-                  </span>
-                  {openIndex === index ? (
-                    <X className="h-5 w-5 text-bitcoin" />
-                  ) : (
-                    <ChevronDown className="h-5 w-5 text-bitcoin" />
-                  )}
-                </button>
-                <AnimatePresence>
-                  {openIndex === index && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="overflow-hidden"
-                    >
-                      <div className="p-6 pt-4 text-gray-400 border-t border-bitcoin/10">
-                        {faq.answer}
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            </motion.div>
+      {/* Questions */}
+      <div className="reveal mx-auto mt-12 w-full max-w-3xl md:mt-16">
+        <Accordion.Root type="single" collapsible defaultValue="item-0" className="flex flex-col gap-1">
+          {faqs.map((f, i) => (
+            <Accordion.Item key={f.question} value={`item-${i}`} className="overflow-hidden rounded-lg bg-zinc-900">
+              <Accordion.Header className="flex">
+                <Accordion.Trigger className="group flex flex-1 cursor-pointer items-start justify-between gap-6 px-5 py-4 text-left text-base font-medium text-white outline-none focus-visible:ring-2 focus-visible:ring-bitcoin focus-visible:ring-inset md:px-6 md:py-5 md:text-lg">
+                  {f.question}
+                  <ChevronDown
+                    aria-hidden
+                    className="pointer-events-none size-5 shrink-0 translate-y-0.5 text-zinc-500 transition-transform duration-200 group-data-[state=open]:rotate-180 md:translate-y-1"
+                  />
+                </Accordion.Trigger>
+              </Accordion.Header>
+              <Accordion.Content className="overflow-hidden data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
+                <p className="px-5 pb-5 text-base leading-relaxed text-pretty text-zinc-400 md:px-6 md:pb-6 md:text-[17px]">{f.answer}</p>
+              </Accordion.Content>
+            </Accordion.Item>
           ))}
-        </div>
+        </Accordion.Root>
+        <p className="mt-8 text-center text-base text-zinc-400">
+          Still have a question?{" "}
+          <a href={TELEGRAM_INVITE} target="_blank" rel="noopener noreferrer" className={link}>
+            Ask the community on Telegram
+          </a>
+        </p>
       </div>
     </section>
   );
