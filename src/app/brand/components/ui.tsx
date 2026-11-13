@@ -29,7 +29,7 @@ export function Chapter({
   children: ReactNode;
 }) {
   return (
-    // Chapter label inspired by the brand guidelines page: a big orange number
+    // Chapter label, as in the printed brand guidelines: a big orange number
     // over a quiet label in a side column on wide screens, inline above the
     // heading on narrower ones.
     <section
@@ -46,11 +46,11 @@ export function Chapter({
       <div className="min-w-0">
         <h2
           id={`${id}-title`}
-          className="mb-4 text-balance text-[clamp(30px,4vw,42px)] font-bold leading-[1.08] tracking-[-0.01em] text-white"
+          className="mb-4 type-h3 text-white"
         >
           {title}
         </h2>
-        {lede && <p className="mb-8 max-w-3xl text-lg leading-relaxed text-zinc-300">{lede}</p>}
+        {lede && <p className="mb-8 max-w-3xl type-lede text-zinc-300">{lede}</p>}
         {children}
       </div>
     </section>

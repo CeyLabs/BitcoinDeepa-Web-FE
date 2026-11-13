@@ -1,31 +1,32 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, type ComponentType } from "react";
 import Link from "next/link";
-import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
-import confetti from "canvas-confetti";
-import { TwitterIcon, TelegramIcon, InstagramIcon } from "./icons";
+import { motion } from "framer-motion";
+import { useCoinBurst } from "./footer/coin-burst";
+import { FooterWordmark } from "./footer/footer-wordmark";
+import { SOCIAL_LINKS } from "@/src/lib/site";
+import { Github, InstagramIcon, LumaIcon, TelegramIcon, TwitterIcon } from "./icons";
 import { BrandName } from "./brand-provider";
+import { TELEGRAM_INVITE } from "./nav/nav-data";
+import { SriLankaFlag } from "./sri-lanka-flag";
 
 const CURRENT_YEAR = new Date().getFullYear();
 
-const CONFETTI_CONFIG = {
-  particleCount: 30,
-  spread: 60,
-  colors: ["#F8931A", "#ffb84d", "#e68a00"],
-  disableForReducedMotion: true,
-};
-
-const ICON_COMPONENTS = {
-  telegram: <TelegramIcon className="text-white" />,
-  twitter: <TwitterIcon className="text-white" />,
-  instagram: <InstagramIcon className="text-white" />,
-};
+// Every official channel, same set as the community page's channel list.
+const SOCIALS: Array<{ label: string; href: string; Icon: ComponentType<{ className?: string }> }> = [
+  { label: "Telegram community", href: TELEGRAM_INVITE, Icon: TelegramIcon },
+  { label: "X (@pearlofsatoshi)", href: SOCIAL_LINKS.x, Icon: TwitterIcon },
+  { label: "Instagram (@bitcoindeepa)", href: SOCIAL_LINKS.instagram, Icon: InstagramIcon },
+  { label: "Events on Luma", href: "https://lu.ma/bitcoindeepa", Icon: LumaIcon },
+  { label: "GitHub (CeyLabs)", href: SOCIAL_LINKS.github, Icon: Github },
+];
 
 const Footer = () => {
   const [heartClicked, setHeartClicked] = useState(false);
   const heartRef = useRef<HTMLButtonElement>(null);
+  const burst = useCoinBurst();
+  const resetTimer = useRef<number | undefined>(undefined);
 
   const handleHeartClick = () => {
     setHeartClicked(true);
@@ -34,61 +35,42 @@ const Footer = () => {
       navigator.vibrate(100);
     }
 
+    // Throw a handful of BTC and sats coins from the heart.
     if (heartRef.current) {
       const rect = heartRef.current.getBoundingClientRect();
-      const x = (rect.left + rect.width / 2) / window.innerWidth;
-      const y = (rect.top + rect.height / 2) / window.innerHeight;
-
-      confetti({
-        ...CONFETTI_CONFIG,
-        origin: { x, y },
-      });
+      burst(rect.left + rect.width / 2, rect.top + rect.height / 2);
     }
 
-    setTimeout(() => {
-      setHeartClicked(false);
-    }, 1000);
+    // One timer, restarted on every click: the flag stays up until a second
+    // after the last click instead of flickering off mid-streak.
+    window.clearTimeout(resetTimer.current);
+    resetTimer.current = window.setTimeout(() => setHeartClicked(false), 1000);
   };
 
   return (
     <footer className="relative overflow-hidden bg-black">
       {/* No backdrop-blur here: in Safari it samples past the viewport edge and
           shows a white haze while the footer scrolls in. */}
-      <div className="relative border-t border-zinc-800 py-10">
-        <div className="absolute inset-0 pointer-events-none overflow-hidden ">
-          <div className="absolute bottom-0 left-1/2 transform bg-bitcoin-dark/60 -translate-x-1/2 translate-y-1/2 w-[226px] h-[226px] rounded-full blur-[125px]" />
-        </div>
-
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute right-0 bottom-0 w-[260px] h-[260px] opacity-[0.1]">
-            <Image
-              src="/images/brand/Yaka.png"
-              alt="Bitcoin Deepa Logo (Bitcoin දීප)"
-              width={260}
-              height={260}
-              className="object-contain"
-            />
-          </div>
-        </div>
-
+      <div className="relative border-t border-zinc-800 pt-10">
         <div className="container mx-auto px-6 relative z-10 py-12">
-          <div className="flex gap-3 mb-8 justify-center">
-            <SocialButton
-              href="https://t.me/+OoVmewRlUHg1MTA1"
-              icon="telegram"
-              small
-            />
-            <SocialButton
-              href="https://x.com/pearlofsatoshi"
-              icon="twitter"
-              small
-            />
-            <SocialButton
-              href="https://instagram.com/bitcoindeepa"
-              icon="instagram"
-              small
-            />
-          </div>
+          <ul className="mb-8 flex flex-wrap justify-center gap-3">
+            {SOCIALS.map(({ label, href, Icon }) => (
+              <li key={label}>
+                <motion.a
+                  href={href}
+                  target={href.startsWith("mailto:") ? undefined : "_blank"}
+                  rel={href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
+                  aria-label={label}
+                  title={label}
+                  className="flex size-9 items-center justify-center rounded-xl bg-zinc-800 text-white transition-colors hover:bg-zinc-700 hover:text-bitcoin"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Icon className="size-4" />
+                </motion.a>
+              </li>
+            ))}
+          </ul>
 
           <div className="flex flex-wrap gap-x-6 gap-y-1 mb-4 justify-center">
             <NavLink
@@ -139,34 +121,30 @@ const Footer = () => {
               <div className="relative">
                 <motion.button
                   ref={heartRef}
-                  className={`flex items-center justify-center w-full h-8 rounded-xl bg-zinc-800 hover:bg-zinc-700 transition-all duration-300 ${
-                    heartClicked ? "scale-110" : ""
-                  }`}
+                  type="button"
+                  aria-label="Send some love"
+                  className="grid w-full h-8 place-items-center rounded-xl bg-zinc-800 transition-colors hover:bg-zinc-700"
                   onClick={handleHeartClick}
-                  whileTap={{ scale: 0.95 }}
+                  whileTap={{ scale: 0.96 }}
                 >
-                  <AnimatePresence mode="wait">
-                    {heartClicked ? (
-                      <motion.span
-                        key="bitcoin-heart"
-                        initial={{ scale: 0.5, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        exit={{ scale: 1.5, opacity: 0 }}
-                        className="text-lg"
-                      >
-                        <span className="text-bitcoin">♥ 🇱🇰</span>
-                      </motion.span>
-                    ) : (
-                      <motion.span
-                        key="regular-heart"
-                        initial={{ scale: 0.8 }}
-                        animate={{ scale: 1 }}
-                        className="text-lg text-red-500"
-                      >
-                        ♥
-                      </motion.span>
-                    )}
-                  </AnimatePresence>
+                  {/* Both states stay mounted in one cell and cross-fade, so
+                      rapid clicks can never leave the button empty. */}
+                  <span
+                    aria-hidden
+                    className={`col-start-1 row-start-1 text-lg text-red-500 transition-[opacity,scale,filter] duration-300 ease-[cubic-bezier(0.2,0,0,1)] ${
+                      heartClicked ? "scale-25 opacity-0 blur-[4px]" : "scale-100 opacity-100 blur-0"
+                    }`}
+                  >
+                    ♥
+                  </span>
+                  <span
+                    aria-hidden
+                    className={`col-start-1 row-start-1 flex items-center gap-1.5 text-lg text-bitcoin transition-[opacity,scale,filter] duration-300 ease-[cubic-bezier(0.2,0,0,1)] ${
+                      heartClicked ? "scale-100 opacity-100 blur-0" : "scale-25 opacity-0 blur-[4px]"
+                    }`}
+                  >
+                    ♥ <SriLankaFlag className="h-3.5" />
+                  </span>
                 </motion.button>
               </div>
             </div>
@@ -176,33 +154,14 @@ const Footer = () => {
             &copy; {CURRENT_YEAR} <BrandName />. All rights reserved.
           </div>
         </div>
+
+        {/* Signature wordmark: stacked hairline outlines that light up under
+            the pointer, cropped by the bottom edge of the page. */}
+        <div className="mx-auto -mb-[9%] max-w-7xl px-4 sm:px-6 lg:px-8">
+          <FooterWordmark />
+        </div>
       </div>
     </footer>
-  );
-};
-
-const SocialButton = ({
-  href,
-  icon,
-  small,
-}: {
-  href: string;
-  icon: string;
-  small?: boolean;
-}) => {
-  return (
-    <motion.a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={`rounded-xl bg-zinc-800 flex items-center justify-center w-9 h-9`}
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
-    >
-      <div className="w-4 h-4">
-        {ICON_COMPONENTS[icon as keyof typeof ICON_COMPONENTS]}
-      </div>
-    </motion.a>
   );
 };
 
