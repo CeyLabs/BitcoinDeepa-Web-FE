@@ -1,5 +1,6 @@
 import { defineConsentConfig, hosted } from "c15t/next";
 import { consentScripts } from "./src/lib/consent-scripts";
+import { consentSlots, consentTheme } from "./src/lib/consent-theme";
 
 // Consent is resolved in the browser through the backend's /init (hosted
 // mode), so every page stays static and the build never calls the backend.
@@ -23,6 +24,10 @@ export default defineConsentConfig({
   ],
   options: {
     colorScheme: "dark",
+    // Tokens are rendered by <ConsentTheme> in the layout; the components read
+    // the button roles from the theme here and the per-part classes from slots.
+    theme: consentTheme,
+    components: consentSlots,
     legalLinks: {
       privacyPolicy: { href: "/privacy-policy#cookies-and-tracking-technologies" },
       termsOfService: { href: "/terms" },

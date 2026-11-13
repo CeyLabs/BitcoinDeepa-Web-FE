@@ -1,6 +1,11 @@
 import type { Script } from "c15t";
+import { gtag } from "@c15t/integrations/google-tag";
 import { metaPixel } from "@c15t/integrations/meta-pixel";
 import { FB_PIXEL_ID, setMarketingAllowed } from "./facebook-pixel";
+
+// Google Analytics 4 measurement ID (G-XXXXXXXXXX). Unset = no GA4 at all:
+// no script, and no Analytics switch in the preferences dialog.
+const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim();
 
 // Third-party scripts, each loaded only once its consent category is allowed.
 export const consentScripts: Script[] = [
@@ -17,4 +22,9 @@ export const consentScripts: Script[] = [
     onBeforeLoad: ({ hasConsent }) => setMarketingAllowed(hasConsent),
     onConsentChange: ({ hasConsent }) => setMarketingAllowed(hasConsent),
   },
+  // Measurement: gtag.js loads only after Analytics consent, and nothing goes
+  // to Google before then. c15t sends the Consent Mode v2 default and updates.
+  ...(GA_MEASUREMENT_ID
+    ? [gtag({ id: GA_MEASUREMENT_ID, category: "measurement", loadMode: "after-consent" })]
+    : []),
 ];

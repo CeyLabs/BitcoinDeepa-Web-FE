@@ -187,7 +187,7 @@ export default function RootLayout({
                 <Navbar />
                 {children}
                 <Footer />
-                <ConsentBanner legalLinks={["privacyPolicy"]} />
+                <ConsentBanner legalLinks={["privacyPolicy"]} primaryButton="accept" hideBranding />
                 <ConsentDialog />
               </LenisProvider>
             </BrandProvider>
