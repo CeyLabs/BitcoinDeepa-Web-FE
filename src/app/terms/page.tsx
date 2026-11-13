@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/src/lib/seo";
 import Link from "next/link";
 import { BrandName } from "@/src/components/brand-provider";
 
-export const metadata: Metadata = {
-  title: "Terms of Service | Bitcoin Deepa",
+export const metadata: Metadata = pageMetadata({
+  title: "Terms of Service",
   description:
-    "Terms of Service for Bitcoin Deepa - Sri Lankan Bitcoin Community",
-};
+    "The rules for using the Bitcoin Deepa website, joining our Sri Lankan Bitcoin community, attending events, ordering books and trading through BitcoinDeepaBot.",
+  path: "/terms",
+});
 
 export default function Terms() {
   return (

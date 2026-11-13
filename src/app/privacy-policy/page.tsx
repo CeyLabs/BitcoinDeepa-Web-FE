@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/src/lib/seo";
 import Link from "next/link";
 import { BrandName } from "@/src/components/brand-provider";
 
-export const metadata: Metadata = {
-  title: "Privacy Policy | Bitcoin Deepa",
-  description: "Privacy Policy for Bitcoin Deepa - Sri Lankan Bitcoin Community",
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Privacy Policy",
+  description:
+    "How Bitcoin Deepa collects, uses and protects your personal information across our website, community, events, book orders and BitcoinDeepaBot.",
+  path: "/privacy-policy",
+});
 
 export default function Privacy() {
   return (

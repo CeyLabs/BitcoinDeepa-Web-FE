@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/src/lib/seo";
 
-export const metadata: Metadata = {
-  title: "License | BitcoinDeepa",
+export const metadata: Metadata = pageMetadata({
+  title: "Open Source License",
   description:
-    "Open source license information for the BitcoinDeepa community project",
-};
+    "Bitcoin Deepa is an open source community project. The website's source code is released under the MIT License.",
+  path: "/license",
+});
 
 export default function LicensePage() {
   const currentYear = new Date().getFullYear();

@@ -1,0 +1,27 @@
+# Bitcoin Deepa
+
+> Bitcoin Deepa (Bitcoin දීප, "Pearl of Satoshi") is Sri Lanka's grassroots, Bitcoin-only community. We focus on education, meetups and events, and sharing Bitcoin resources in Sinhala and English. Nothing we publish is financial advice.
+
+Bitcoin Deepa runs community events across Sri Lanka, a Telegram community, BitcoinDeepaBot (a Telegram Lightning wallet and tip bot for buying and selling Bitcoin with Sri Lankan Rupees), and published the Sinhala edition of "The Bullish Case for Bitcoin" (බිට්කොයින් පෙළහර).
+
+## Key Pages
+
+- [Home](https://www.bitcoindeepa.com/): About the community, events, FAQ and how to join
+- [Satoshi to LKR & USD Converter](https://www.bitcoindeepa.com/satoshi-to-usd-and-lkr-converter): Convert sats to Sri Lankan Rupees, US Dollars and BTC at live rates
+- [Brand Guidelines](https://www.bitcoindeepa.com/brand): Logo, Yaka symbol, colours, typography and downloadable brand assets
+- [Release Notes](https://www.bitcoindeepa.com/releases): Changes to the website, BitcoinDeepaBot and Telegram mini app
+
+## Community
+
+- [Telegram](https://t.me/BitcoinDeepa): Main community chat
+- [X (Twitter)](https://x.com/pearlofsatoshi): News and announcements
+- [Instagram](https://instagram.com/bitcoindeepa)
+- [BitcoinDeepaBot](https://t.me/bitcoindeepabot): Lightning wallet, tip bot and LKR on/off ramp
+- [Blog](https://blog.bitcoindeepa.com): Articles and guides
+
+## Optional
+
+- [Terms of Service](https://www.bitcoindeepa.com/terms)
+- [Privacy Policy](https://www.bitcoindeepa.com/privacy-policy)
+- [Return Policy](https://www.bitcoindeepa.com/return-policy)
+- [Open Source License](https://www.bitcoindeepa.com/license): The website is MIT licensed; source at https://github.com/CeyLabs/BitcoinDeepa-Web-FE
