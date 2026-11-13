@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { LegalPage, LegalSection } from "@/src/components/legal/legal-page";
 import { pageMetadata } from "@/src/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
@@ -8,35 +9,33 @@ export const metadata: Metadata = pageMetadata({
   path: "/license",
 });
 
+const SECTIONS = [
+  { id: "mit-license", title: "MIT License" },
+  { id: "source-code", title: "Source Code" },
+];
+
 export default function LicensePage() {
   const currentYear = new Date().getFullYear();
   return (
-    <div className="relative overflow-hidden bg-black">
-      <div className="fixed inset-0 z-0 bg-linear-to-b from-zinc-950 via-black to-zinc-950 pointer-events-none"></div>
-      <div className="fixed inset-0 z-0 opacity-30 pointer-events-none">
-        <div className="absolute top-[20%] left-1/2 -translate-x-1/2 w-full h-[600px] bg-radial-[ellipse_at_center] from-bitcoin/20 via-transparent to-transparent"></div>
+    <LegalPage
+      title="Open Source License"
+      tag="Open Source"
+      updated="Nov 12, 2026"
+      updatedIso="2026-11-12"
+      path="/license"
+      sections={SECTIONS}
+    >
+      <div>
+        <p>
+          BitcoinDeepa is an open source community initiative. The website&apos;s
+          source code is released under the MIT License. You are free to use,
+          modify, and distribute this project provided that the following
+          license notice is included with your copies.
+        </p>
       </div>
-      <div className="relative z-10">
-        <main className="pt-32 pb-20">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-4xl mx-auto">
-              <div className="mb-12 text-center">
-                <h1 className="text-4xl md:text-5xl font-bold mb-4">
-                  <span className="text-white">Open Source</span>
-                  <span className="text-bitcoin ml-2">License</span>
-                </h1>
-              </div>
-              <div className="space-y-10">
-                <section className="bg-zinc-900/50 backdrop-blur-xs border border-zinc-800 rounded-xl p-6 md:p-8">
-                  <p className="text-gray-300 text-justify">
-                    BitcoinDeepa is an open source community initiative. The
-                    website's source code is released under the MIT License. You
-                    are free to use, modify, and distribute this project
-                    provided that the following license notice is included with
-                    your copies.
-                  </p>
-                  <pre className="mt-4 whitespace-pre-wrap text-gray-400 text-xs bg-zinc-950 p-4 rounded-lg">
-                    {`MIT License
+
+      <LegalSection id={SECTIONS[0].id} title={SECTIONS[0].title}>
+        <pre>{`MIT License
 
 Copyright (c) ${currentYear} BitcoinDeepa
 
@@ -44,14 +43,19 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.`}
-                  </pre>
-                </section>
-              </div>
-            </div>
-          </div>
-        </main>
-      </div>
-    </div>
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.`}</pre>
+      </LegalSection>
+
+      <LegalSection id={SECTIONS[1].id} title={SECTIONS[1].title}>
+        <p>
+          The code for this website lives on GitHub at{" "}
+          <a href="https://github.com/CeyLabs/BitcoinDeepa-Web-FE" target="_blank" rel="noopener noreferrer">
+            CeyLabs/BitcoinDeepa-Web-FE
+          </a>
+          . Release notes for each version are on our{" "}
+          <a href="/releases">releases page</a>.
+        </p>
+      </LegalSection>
+    </LegalPage>
   );
 }
