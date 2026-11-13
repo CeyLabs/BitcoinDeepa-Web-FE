@@ -52,7 +52,7 @@ const Footer = () => {
 
   return (
     <footer className="relative overflow-hidden">
-      <div className="relative backdrop-blur-2xl border border-white/[0.08] shadow-2xl ring-1 ring-white/[0.05] py-10">
+      <div className="relative backdrop-blur-2xl border border-white/8 shadow-2xl ring-1 ring-white/5 py-10">
         <div className="absolute inset-0 pointer-events-none overflow-hidden ">
           <div className="absolute bottom-0 left-1/2 transform bg-bitcoin-dark/60 -translate-x-1/2 translate-y-1/2 w-[226px] h-[226px] rounded-full blur-[125px]" />
         </div>

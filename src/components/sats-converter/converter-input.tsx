@@ -31,7 +31,7 @@ export function ConverterInput({
   disabled = false,
 }: ConverterInputProps) {
   return (
-    <Card className="p-6 bg-zinc-900/50 backdrop-blur-sm border-bitcoin/10 transition-colors group focus-within:border-bitcoin/50">
+    <Card className="p-6 bg-zinc-900/50 backdrop-blur-xs border-bitcoin/10 transition-colors group focus-within:border-bitcoin/50">
       <div className="flex items-center space-x-4">
         <div className="flex-1">
           <Input
@@ -44,7 +44,7 @@ export function ConverterInput({
             inputMode={inputMode}
             disabled={disabled}
             autoComplete="off"
-            className="text-2xl md:text-3xl font-bold bg-transparent border-none text-white placeholder:text-gray-500 focus-visible:ring-0 focus-visible:ring-offset-0 focus:outline-none p-0 h-auto shadow-none disabled:text-gray-500"
+            className="text-2xl md:text-3xl font-bold bg-transparent border-none text-white placeholder:text-gray-500 focus-visible:ring-0 focus-visible:ring-offset-0 focus:outline-hidden p-0 h-auto shadow-none disabled:text-gray-500"
           />
         </div>
         <div className="flex items-center space-x-2 text-gray-400">

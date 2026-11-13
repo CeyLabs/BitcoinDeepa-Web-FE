@@ -16,9 +16,9 @@ export const metadata: Metadata = pageMetadata({
 export default function ReturnPolicy() {
   return (
     <div className="relative min-h-screen overflow-hidden bg-black">
-      <div className="fixed inset-0 z-0 bg-gradient-to-b from-zinc-950 via-black to-zinc-950 pointer-events-none"></div>
+      <div className="fixed inset-0 z-0 bg-linear-to-b from-zinc-950 via-black to-zinc-950 pointer-events-none"></div>
       <div className="fixed inset-0 z-0 opacity-30 pointer-events-none">
-        <div className="absolute top-[20%] left-1/2 -translate-x-1/2 w-full h-[600px] bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-bitcoin/20 via-transparent to-transparent"></div>
+        <div className="absolute top-[20%] left-1/2 -translate-x-1/2 w-full h-[600px] bg-radial-[ellipse_at_center] from-bitcoin/20 via-transparent to-transparent"></div>
       </div>
       <div className="relative z-10">
         <main className="pt-32 pb-20">
@@ -33,7 +33,7 @@ export default function ReturnPolicy() {
               </div>
 
               <div className="space-y-10">
-                <section className="bg-zinc-900/50 backdrop-blur-sm border border-zinc-800 rounded-xl p-6 md:p-8">
+                <section className="bg-zinc-900/50 backdrop-blur-xs border border-zinc-800 rounded-xl p-6 md:p-8">
                   <p className="text-gray-300 mb-4 text-justify">
                     We want you to be happy with your order from <BrandName />.
                     This Return Policy explains what to do if something goes
@@ -51,7 +51,7 @@ export default function ReturnPolicy() {
                   </p>
                 </section>
 
-                <section className="bg-zinc-900/50 backdrop-blur-sm border border-zinc-800 rounded-xl p-6 md:p-8">
+                <section className="bg-zinc-900/50 backdrop-blur-xs border border-zinc-800 rounded-xl p-6 md:p-8">
                   <h2 className="text-2xl font-bold text-white mb-4">
                     Damaged or Wrong Items
                   </h2>
@@ -79,7 +79,7 @@ export default function ReturnPolicy() {
                   </p>
                 </section>
 
-                <section className="bg-zinc-900/50 backdrop-blur-sm border border-zinc-800 rounded-xl p-6 md:p-8">
+                <section className="bg-zinc-900/50 backdrop-blur-xs border border-zinc-800 rounded-xl p-6 md:p-8">
                   <h2 className="text-2xl font-bold text-white mb-4">
                     Change of Mind Returns
                   </h2>
@@ -92,7 +92,7 @@ export default function ReturnPolicy() {
                   </p>
                 </section>
 
-                <section className="bg-zinc-900/50 backdrop-blur-sm border border-zinc-800 rounded-xl p-6 md:p-8">
+                <section className="bg-zinc-900/50 backdrop-blur-xs border border-zinc-800 rounded-xl p-6 md:p-8">
                   <h2 className="text-2xl font-bold text-white mb-4">
                     Order Cancellations
                   </h2>
@@ -106,7 +106,7 @@ export default function ReturnPolicy() {
                   </p>
                 </section>
 
-                <section className="bg-zinc-900/50 backdrop-blur-sm border border-zinc-800 rounded-xl p-6 md:p-8">
+                <section className="bg-zinc-900/50 backdrop-blur-xs border border-zinc-800 rounded-xl p-6 md:p-8">
                   <h2 className="text-2xl font-bold text-white mb-4">
                     Out of Stock and Undelivered Orders
                   </h2>
@@ -131,7 +131,7 @@ export default function ReturnPolicy() {
                   </ul>
                 </section>
 
-                <section className="bg-zinc-900/50 backdrop-blur-sm border border-zinc-800 rounded-xl p-6 md:p-8">
+                <section className="bg-zinc-900/50 backdrop-blur-xs border border-zinc-800 rounded-xl p-6 md:p-8">
                   <h2 className="text-2xl font-bold text-white mb-4">
                     Buying and Selling Bitcoin with BitcoinDeepaBot
                   </h2>
@@ -181,7 +181,7 @@ export default function ReturnPolicy() {
                   </p>
                 </section>
 
-                <section className="bg-zinc-900/50 backdrop-blur-sm border border-zinc-800 rounded-xl p-6 md:p-8">
+                <section className="bg-zinc-900/50 backdrop-blur-xs border border-zinc-800 rounded-xl p-6 md:p-8">
                   <h2 className="text-2xl font-bold text-white mb-4">
                     How Refunds Work
                   </h2>
@@ -199,7 +199,7 @@ export default function ReturnPolicy() {
                   </p>
                 </section>
 
-                <section className="bg-zinc-900/50 backdrop-blur-sm border border-zinc-800 rounded-xl p-6 md:p-8">
+                <section className="bg-zinc-900/50 backdrop-blur-xs border border-zinc-800 rounded-xl p-6 md:p-8">
                   <h2 className="text-2xl font-bold text-white mb-4">
                     Changes to This Policy
                   </h2>
@@ -211,7 +211,7 @@ export default function ReturnPolicy() {
                   </p>
                 </section>
 
-                <section className="bg-zinc-900/50 backdrop-blur-sm border border-zinc-800 rounded-xl p-6 md:p-8">
+                <section className="bg-zinc-900/50 backdrop-blur-xs border border-zinc-800 rounded-xl p-6 md:p-8">
                   <h2 className="text-2xl font-bold text-white mb-4">
                     Contact Us
                   </h2>

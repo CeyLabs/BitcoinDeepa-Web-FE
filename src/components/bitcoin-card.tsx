@@ -53,7 +53,7 @@ const FeatureItem: React.FC<FeatureItemProps> = ({
     transition={{ duration: 0.3, delay: 0.3 + 0.1 * index }}
     className="flex items-start"
   >
-    <div className="h-6 w-6 rounded-full bg-bitcoin/20 flex items-center justify-center mt-0.5 mr-3 flex-shrink-0">
+    <div className="h-6 w-6 rounded-full bg-bitcoin/20 flex items-center justify-center mt-0.5 mr-3 shrink-0">
       <div className="h-2 w-2 rounded-full bg-bitcoin" />
     </div>
     <span className="text-gray-300">{feature}</span>
@@ -132,7 +132,7 @@ const ViewMoreDialog: React.FC = () => {
             <ul className="space-y-4">
               {HOW_IT_WORKS_STEPS.map((step, idx) => (
                 <li className="flex items-start" key={idx}>
-                  <div className="h-6 w-6 rounded-full bg-bitcoin/20 flex items-center justify-center mt-0.5 mr-3 flex-shrink-0">
+                  <div className="h-6 w-6 rounded-full bg-bitcoin/20 flex items-center justify-center mt-0.5 mr-3 shrink-0">
                     <div className="h-2 w-2 rounded-full bg-bitcoin" />
                   </div>
                   <span className="text-gray-300">{step}</span>
@@ -296,7 +296,7 @@ export default function BitcoinCard() {
                     className="w-full h-full object-cover"
                   />
                   <motion.div
-                    className="absolute inset-0 bg-gradient-radial from-white/20 to-transparent opacity-50 pointer-events-none"
+                    className="absolute inset-0 bg-radial from-white/20 to-transparent opacity-50 pointer-events-none"
                     style={{
                       backgroundPosition: `${glareX}% ${glareY}%`,
                       backgroundSize: "150% 150%",
@@ -321,7 +321,7 @@ export default function BitcoinCard() {
                     className="w-full h-full object-cover"
                   />
                   <motion.div
-                    className="absolute inset-0 bg-gradient-radial from-white/20 to-transparent opacity-50 pointer-events-none"
+                    className="absolute inset-0 bg-radial from-white/20 to-transparent opacity-50 pointer-events-none"
                     style={{
                       backgroundPosition: `${glareX}% ${glareY}%`,
                       backgroundSize: "150% 150%",

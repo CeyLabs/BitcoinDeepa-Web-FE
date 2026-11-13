@@ -178,7 +178,7 @@ export default function Navbar() {
                   }`}
                 />
                 <div
-                  className={`bg-bitcoin h-[2px] w-6 rounded transform transition-all duration-200 ease-in-out ${
+                  className={`bg-bitcoin h-[2px] w-6 rounded-sm transform transition-all duration-200 ease-in-out ${
                     isMenuOpen ? "opacity-0 -translate-x-2" : ""
                   }`}
                 />

@@ -118,7 +118,7 @@ export default function Faq() {
               className="mb-4"
             >
               <div
-                className={`bg-zinc-900/80 backdrop-blur-sm border ${
+                className={`bg-zinc-900/80 backdrop-blur-xs border ${
                   openIndex === index ? "border-bitcoin/30" : "border-bitcoin/10"
                 } rounded-xl overflow-hidden transition-all duration-300`}
               >

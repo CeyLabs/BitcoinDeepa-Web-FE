@@ -13,12 +13,12 @@ export default function Home() {
   return (
     <div className="relative min-h-screen overflow-hidden bg-black">
       {/* Global background gradient */}
-      {/* <div className="fixed inset-0 z-0 bg-gradient-to-b from-zinc-950 via-black to-zinc-950 pointer-events-none"></div> */}
+      {/* <div className="fixed inset-0 z-0 bg-linear-to-b from-zinc-950 via-black to-zinc-950 pointer-events-none"></div> */}
 
       {/* Subtle radial gradients that overlap sections */}
       {/* <div className="fixed inset-0 z-0 opacity-30 pointer-events-none">
-        <div className="absolute top-[20%] left-1/2 -translate-x-1/2 w-full h-[600px] bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-bitcoin/20 via-transparent to-transparent"></div>
-        <div className="absolute top-[60%] left-1/2 -translate-x-1/2 w-full h-[600px] bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-bitcoin/20 via-transparent to-transparent"></div>
+        <div className="absolute top-[20%] left-1/2 -translate-x-1/2 w-full h-[600px] bg-radial-[ellipse_at_center] from-bitcoin/20 via-transparent to-transparent"></div>
+        <div className="absolute top-[60%] left-1/2 -translate-x-1/2 w-full h-[600px] bg-radial-[ellipse_at_center] from-bitcoin/20 via-transparent to-transparent"></div>
       </div> */}
 
       <div className="relative z-10">

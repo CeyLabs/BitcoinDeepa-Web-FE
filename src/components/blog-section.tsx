@@ -115,7 +115,7 @@ export default function BlogSection() {
 
   return (
     <section id="blog" className="py-16 md:py-24 relative overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-bitcoin/5 via-transparent to-transparent pointer-events-none"></div>
+      <div className="absolute inset-0 bg-radial-[ellipse_at_top] from-bitcoin/5 via-transparent to-transparent pointer-events-none"></div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div
@@ -174,9 +174,9 @@ export default function BlogSection() {
             {Array.from({ length: 3 }).map((_, i) => (
               <div
                 key={i}
-                className="animate-pulse flex flex-col h-full bg-zinc-900/50 backdrop-blur-sm border border-bitcoin/10 rounded-xl overflow-hidden"
+                className="animate-pulse flex flex-col h-full bg-zinc-900/50 backdrop-blur-xs border border-bitcoin/10 rounded-xl overflow-hidden"
               >
-                <div className="w-full aspect-[16/9] bg-zinc-800" />
+                <div className="w-full aspect-video bg-zinc-800" />
                 <div className="p-5 space-y-4">
                   <div className="h-4 bg-zinc-700 rounded w-3/4" />
                   <div className="h-3 bg-zinc-700 rounded w-1/2" />
@@ -186,7 +186,7 @@ export default function BlogSection() {
             ))}
           </div>
         ) : error ? (
-          <div className="bg-zinc-900/50 backdrop-blur-sm border border-red-500/20 rounded-xl p-8 text-center">
+          <div className="bg-zinc-900/50 backdrop-blur-xs border border-red-500/20 rounded-xl p-8 text-center">
             <div className="inline-flex items-center justify-center size-12 rounded-full bg-red-500/10 mb-4">
               <AlertCircleIcon />
             </div>
@@ -196,7 +196,7 @@ export default function BlogSection() {
             <p className="text-gray-400">{error}</p>
           </div>
         ) : posts.length === 0 ? (
-          <div className="bg-zinc-900/50 backdrop-blur-sm border border-bitcoin/10 rounded-xl p-8 text-center">
+          <div className="bg-zinc-900/50 backdrop-blur-xs border border-bitcoin/10 rounded-xl p-8 text-center">
             <div className="inline-flex items-center justify-center size-16 rounded-full bg-bitcoin/10 mb-4">
               <EmptyFileIcon />
             </div>
@@ -222,7 +222,7 @@ export default function BlogSection() {
                 style={{ transform: `translateX(-${currentSlide * 100}%)` }}
               >
                 {posts.map((post) => (
-                  <div key={post.id} className="w-full flex-shrink-0 px-2">
+                  <div key={post.id} className="w-full shrink-0 px-2">
                     <BlogPostCard post={post} />
                   </div>
                 ))}
@@ -271,7 +271,7 @@ function BlogPostCard({ post }: { post: GhostPost }) {
         href={post.url}
         target="_blank"
         rel="noopener noreferrer"
-        className="block relative aspect-[16/9] overflow-hidden"
+        className="block relative aspect-video overflow-hidden"
       >
         {post.feature_image ? (
           <Image
@@ -318,7 +318,7 @@ function BlogPostCard({ post }: { post: GhostPost }) {
         </p>
 
         <div className="mt-auto flex items-center">
-          <div className="size-8 rounded-full overflow-hidden bg-zinc-800 mr-3 flex-shrink-0">
+          <div className="size-8 rounded-full overflow-hidden bg-zinc-800 mr-3 shrink-0">
             {post.primary_author.profile_image ? (
               <Image
                 src={post.primary_author.profile_image || "/placeholder.svg"}

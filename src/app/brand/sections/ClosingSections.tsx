@@ -46,7 +46,7 @@ export function PatternsSection() {
             backgroundSize: "220px auto",
           }}
           label="On white"
-          labelClass="bg-white text-black shadow"
+          labelClass="bg-white text-black shadow-sm"
         />
         <PatternPanel
           tall

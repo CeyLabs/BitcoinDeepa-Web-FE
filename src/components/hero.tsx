@@ -75,7 +75,7 @@ export default function Hero() {
             <div className="relative w-full px-8 sm:px-0 md:px-12 aspect-square max-w-md mx-auto">
               <div className="absolute inset-4 bg-bitcoin/20 rounded-full blur-2xl"></div>
               <div className="relative z-10 size-full flex items-center justify-center">
-                <div className="size-64 md:w-[21rem] md:h-[21rem] relative">
+                <div className="size-64 md:w-84 md:h-84 relative">
                   <div className="absolute inset-0 rounded-full bg-bitcoin-gradient animate-pulse"></div>
                   <div className="absolute inset-2 rounded-full bg-black flex items-center justify-center">
                     <Image

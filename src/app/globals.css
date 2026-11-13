@@ -1,6 +1,7 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
 
 /* Brand dark palette (Bitcoin Deepa brand guidelines v1.0):
    Genesis Black ground, warm panel #141210, line #2b2723, muted #a39a91,
@@ -28,9 +29,123 @@
   --radius: 0.5rem;
 }
 
+/* Brand typefaces: Ubuntu is the primary site font, Nunito Sans the secondary
+   one. Noto Sans Sinhala picks up Sinhala glyphs. `inline` makes utilities use
+   the next/font variables directly instead of going through a :root variable. */
+@theme inline {
+  --font-sans: var(--font-ubuntu), var(--font-noto-sinhala), system-ui, sans-serif;
+  --font-display: var(--font-ubuntu), var(--font-noto-sinhala), system-ui, sans-serif;
+  --font-secondary: var(--font-nunito-sans), var(--font-noto-sinhala), system-ui, sans-serif;
+  --font-sinhala: var(--font-noto-sinhala), var(--font-ubuntu), system-ui, sans-serif;
+}
+
+@theme {
+  /* Warm neutral scale from the brand guidelines. Anchors: 50 Paper Wallet
+     Cream, 100 light panel, 200 light line, 400 muted text, 700/800 dark line,
+     900 dark panel. It replaces Tailwind's cool greys site-wide, so every
+     zinc/gray/neutral class picks up the brand palette. */
+  --color-zinc-50: #fffcfa;
+  --color-zinc-100: #f6f2ed;
+  --color-zinc-200: #e4ddd5;
+  --color-zinc-300: #c9c1b8;
+  --color-zinc-400: #a39a91;
+  --color-zinc-500: #7a7169;
+  --color-zinc-600: #5a524b;
+  --color-zinc-700: #3a3330;
+  --color-zinc-800: #2b2723;
+  --color-zinc-900: #141210;
+  --color-zinc-950: #0a0908;
+
+  --color-gray-50: #fffcfa;
+  --color-gray-100: #f6f2ed;
+  --color-gray-200: #e4ddd5;
+  --color-gray-300: #c9c1b8;
+  --color-gray-400: #a39a91;
+  --color-gray-500: #7a7169;
+  --color-gray-600: #5a524b;
+  --color-gray-700: #3a3330;
+  --color-gray-800: #2b2723;
+  --color-gray-900: #141210;
+  --color-gray-950: #0a0908;
+
+  --color-neutral-50: #fffcfa;
+  --color-neutral-100: #f6f2ed;
+  --color-neutral-200: #e4ddd5;
+  --color-neutral-300: #c9c1b8;
+  --color-neutral-400: #a39a91;
+  --color-neutral-500: #7a7169;
+  --color-neutral-600: #5a524b;
+  --color-neutral-700: #3a3330;
+  --color-neutral-800: #2b2723;
+  --color-neutral-900: #141210;
+  --color-neutral-950: #0a0908;
+
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+
+  --color-primary: #f8931a;
+  --color-primary-foreground: hsl(var(--primary-foreground));
+
+  --color-bitcoin: #f8931a;
+  --color-bitcoin-light: #ffb84d;
+  --color-bitcoin-dark: #e68a00;
+
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+
+  --animate-shimmer-text: shimmer-text 2s infinite linear;
+  --animate-float: float 6s ease-in-out infinite;
+
+  @keyframes shimmer-text {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: 0 0;
+    }
+  }
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+}
+
 @layer base {
-  * {
-    @apply border-border;
+  /* Tailwind v4 defaults borders to currentcolor; keep the v3 behaviour of a
+     theme border colour everywhere, including pseudo-elements. */
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-border, currentcolor);
   }
   body {
     @apply bg-background text-foreground;
@@ -49,85 +164,86 @@
   select {
     @apply font-secondary;
   }
-}
-
-/* Custom animations */
-@keyframes float {
-  0% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-  100% {
-    transform: translateY(0px);
+  /* Tailwind v4 dropped the pointer cursor on buttons; restore it. */
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
   }
 }
 
-.animate-float {
-  animation: float 6s ease-in-out infinite;
+/* Centred container, max 1400px (was `theme.container` in v3). */
+@utility container {
+  margin-inline: auto;
+  padding-inline: 2rem;
+  @media (width >= 1400px) {
+    max-width: 1400px;
+  }
 }
 
-/* Gradient text */
-.gradient-text {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-orange-500 to-yellow-500;
+@utility h-screen-dynamic {
+  height: 100vh;
+  @supports (height: 100svh) {
+    height: 100svh;
+  }
 }
 
-/* Bitcoin gradient */
-.bitcoin-gradient {
-  background: linear-gradient(to right, #F8931A, #ffb84d);
+@utility min-h-screen-dynamic {
+  min-height: 100vh;
+  @supports (height: 100svh) {
+    min-height: 100svh;
+  }
+}
+
+@utility min-h-hero {
+  min-height: 79vh;
+  @supports (height: 100svh) {
+    min-height: 79svh;
+  }
+}
+
+/* Yaka flame gradient (brand guidelines, Colour): mask and one hero moment only. */
+@utility bg-bitcoin-gradient {
+  background-image: linear-gradient(
+    to top right,
+    #f6921e 0%,
+    #f58d1e 21%,
+    #f2801f 44%,
+    #ee6b21 67%,
+    #e94d24 91%,
+    #e74126 100%
+  );
+}
+
+@utility gradient-text {
+  @apply bg-clip-text text-transparent bg-linear-to-r from-orange-500 to-yellow-500;
+}
+
+@utility bitcoin-gradient {
+  background: linear-gradient(to right, #f8931a, #ffb84d);
 }
 
 /* The flame gradient is never used for text (brand guidelines, Colour). */
-.bitcoin-gradient-text {
+@utility bitcoin-gradient-text {
   @apply text-bitcoin;
 }
 
-/* 3D Card Styles */
-.perspective-1000 {
+/* 3D card styles */
+@utility perspective-1000 {
   perspective: 1000px;
 }
 
-.preserve-3d {
+@utility preserve-3d {
   transform-style: preserve-3d;
 }
 
-.backface-hidden {
+@utility backface-hidden {
   backface-visibility: hidden;
 }
 
-/* Radial gradient for card glare effect */
-.bg-gradient-radial {
-  background-image: radial-gradient(var(--tw-gradient-stops));
-}
-
-.hide-scrollbar::-webkit-scrollbar {
+@utility hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
     display: none;
-}
-.hide-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-}
-
-@layer utilities {
-  .h-screen-dynamic {
-    height: 100vh;
-  }
-  .min-h-screen-dynamic {
-    min-height: 100vh;
-  }
-  .min-h-hero {
-    min-height: 79vh;
-  }
-  @supports (height: 100svh) {
-    .h-screen-dynamic {
-      height: 100svh;
-    }
-    .min-h-screen-dynamic {
-      min-height: 100svh;
-    }
-    .min-h-hero {
-      min-height: 79svh;
-    }
   }
 }

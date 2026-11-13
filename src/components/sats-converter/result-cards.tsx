@@ -17,7 +17,7 @@ export const ResultCard = memo(
     iconAlt: string;
     currency: string;
   }) => (
-    <Card className="p-6 bg-zinc-900/50 backdrop-blur-sm border-bitcoin/10 transition-colors">
+    <Card className="p-6 bg-zinc-900/50 backdrop-blur-xs border-bitcoin/10 transition-colors">
       <div className="flex items-center justify-between">
         <div className="text-2xl md:text-3xl font-bold text-white">{value}</div>
         <div className="flex items-center space-x-2 text-gray-400">
@@ -40,7 +40,7 @@ ResultCard.displayName = "ResultCard";
 // LKR card component with loading state support
 export const LKRCard = memo(
   ({ value }: { value: string | React.ReactNode }) => (
-    <Card className="p-6 bg-zinc-900/50 backdrop-blur-sm border-bitcoin/10 transition-colors">
+    <Card className="p-6 bg-zinc-900/50 backdrop-blur-xs border-bitcoin/10 transition-colors">
       <div className="flex items-center justify-between">
         <div className="text-2xl md:text-3xl font-bold text-white">{value}</div>
         <div className="flex items-center space-x-2 text-gray-400">

@@ -142,10 +142,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${ubuntu.variable} ${nunitoSans.variable} ${notoSinhala.variable} font-sans antialiased`}
-      >
+    <html
+      lang="en"
+      suppressHydrationWarning
+      // Font variables live on <html> so Tailwind's theme (defined on :root)
+      // can resolve var(--font-ubuntu) etc.
+      className={`${ubuntu.variable} ${nunitoSans.variable} ${notoSinhala.variable}`}
+    >
+      <body className="font-sans antialiased">
         <JsonLd data={ORGANIZATION_JSON_LD} />
         <FacebookPixel />
         <ThemeProvider
