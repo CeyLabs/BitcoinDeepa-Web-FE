@@ -7,9 +7,9 @@ import Navbar from "@/src/components/navbar";
 import Footer from "@/src/components/footer";
 import LenisProvider from "@/src/components/lenis-provider";
 import { BrandProvider } from "@/src/components/brand-provider";
-import FacebookPixel from "@/src/components/facebook-pixel";
+import { ConsentBanner, ConsentDialog, ConsentRoot, ConsentTheme } from "c15t/next";
 import { JsonLd } from "@/src/components/seo/json-ld";
-import { CookieNotice } from "@/src/components/cookie-notice";
+import { consentTheme } from "@/src/lib/consent-theme";
 import {
   absoluteUrl,
   CONTACT_EMAIL,
@@ -169,21 +169,29 @@ export default function RootLayout({
     >
       <body className="font-sans antialiased">
         <JsonLd data={ORGANIZATION_JSON_LD} />
-        <FacebookPixel />
+        {/* Consent tokens render here on the server, so the banner paints in
+            brand colours with no extra client code. */}
+        <ConsentTheme theme={consentTheme} colorScheme="dark" />
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
           enableSystem={false}
           disableTransitionOnChange
         >
-          <BrandProvider>
-            <LenisProvider>
-              <Navbar />
-              {children}
-              <Footer />
-              <CookieNotice />
-            </LenisProvider>
-          </BrandProvider>
+          {/* No resolveConsent(): the browser resolves consent after
+              hydration, so pages stay static. Scripts (the Meta Pixel) and
+              options come from c15t.config.ts. */}
+          <ConsentRoot>
+            <BrandProvider>
+              <LenisProvider>
+                <Navbar />
+                {children}
+                <Footer />
+                <ConsentBanner legalLinks={["privacyPolicy"]} />
+                <ConsentDialog />
+              </LenisProvider>
+            </BrandProvider>
+          </ConsentRoot>
         </ThemeProvider>
       </body>
     </html>

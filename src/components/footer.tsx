@@ -3,6 +3,7 @@
 import { useState, useRef, type ComponentType } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { ConsentDialogLink } from "c15t/next";
 import { useCoinBurst } from "./footer/coin-burst";
 import { FooterWordmark } from "./footer/footer-wordmark";
 import { SOCIAL_LINKS } from "@/src/lib/site";
@@ -83,6 +84,10 @@ const Footer = () => {
             <NavLink href="/releases" label="Release Notes" small />
             <NavLink href="/#faq" label="FAQ" small />
             <NavLink href="/license" label="License" small />
+            {/* Reopens the consent preferences at any time. */}
+            <ConsentDialogLink className="cursor-pointer text-sm text-zinc-300 transition-colors hover:text-white">
+              Cookie settings
+            </ConsentDialogLink>
           </div>
 
           <div className="flex justify-center">
