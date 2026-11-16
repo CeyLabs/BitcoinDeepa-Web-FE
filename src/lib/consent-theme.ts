@@ -38,21 +38,26 @@ export const consentTheme = defineTheme({
 // A compact banner: one card with no separate footer band, smaller type and
 // small buttons. Tailwind's utilities layer sits above c15t's `components`
 // layer, so these classes win without !important.
-const smallButton = "h-8 rounded-xl px-3.5 text-[13px] font-medium";
+//
+// The small-button size is scoped to the banner and dialog footers. The global
+// `button` slots would also restyle <ConsentDialogLink> in the site footer,
+// which has to match the plain text links next to it.
+const smallButtons =
+  "[&_button]:h-8 [&_button]:rounded-xl [&_button]:px-3.5 [&_button]:text-[13px] [&_button]:font-medium";
 
 export const consentSlots = {
   banner: {
     card: { className: "rounded-xl" },
     header: { className: "gap-1 px-4 pt-4 pb-5" },
     title: { className: "text-[15px] leading-snug font-medium" },
-    footer: { className: "gap-2 border-t-0 bg-transparent px-4 pt-0 pb-4" },
+    footer: { className: `gap-2 border-t-0 bg-transparent px-4 pt-0 pb-4 ${smallButtons}` },
     actionGroup: { className: "gap-2" },
   },
   description: {
     banner: { className: "mt-0 text-[13px] leading-relaxed" },
   },
-  button: {
-    primary: { className: smallButton },
-    secondary: { className: smallButton },
+  // The preferences dialog's footer is the preference widget's footer.
+  manager: {
+    footer: { className: smallButtons },
   },
 };
