@@ -1,8 +1,9 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
+import { IMG } from "@/src/app/brand/brand-data";
 import { fbEvent } from "@/src/lib/facebook-pixel";
-import { LivingYaka } from "./hero/living-yaka";
 import { TELEGRAM_INVITE } from "./nav/nav-data";
 import { SriLankaFlag } from "./sri-lanka-flag";
 import { Button, ResponsiveLabel } from "./ui/button";
@@ -45,7 +46,16 @@ export default function Hero() {
         </div>
 
         <div className="animate-enter relative pt-10 pb-8 lg:py-0" style={enter(200)}>
-          <LivingYaka />
+          {/* The official Yaka, exactly as in the brand kit: no recolouring, glows or effects. */}
+          <Image
+            src={IMG.yakaSvg}
+            alt="Bitcoin Deepa Yaka mark"
+            width={IMG.yaka.w}
+            height={IMG.yaka.h}
+            priority
+            unoptimized
+            className="mx-auto h-auto w-[min(380px,72vw)] lg:w-[min(440px,34vw)]"
+          />
         </div>
       </div>
     </section>
