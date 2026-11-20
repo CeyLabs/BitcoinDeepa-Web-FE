@@ -1,6 +1,7 @@
 import Image from "next/image";
 import type { CSSProperties } from "react";
 import { IMG } from "../brand-data";
+import { CompareSlider } from "../components/CompareSlider";
 import { DownloadAsset } from "../components/DownloadAsset";
 import { Caption, Chapter, Tile } from "../components/ui";
 
@@ -8,31 +9,38 @@ export function BackgroundsSection() {
   return (
     <Chapter
       id="backgrounds"
-      number="04"
+      number="05"
       label="Backgrounds"
       title="Three approved grounds"
       lede="White, black and Bitcoin orange. On orange the logo changes: the mask turns single-colour and දීප turns black, because orange on orange disappears. Use only the two orange-ground files there."
     >
       <div className="grid gap-4 md:grid-cols-3">
-        <div>
-          <Tile
-            ground="white"
-            image={IMG.logoBlack}
-            alt="Logo on white"
-            className="aspect-square"
-            imgClassName="max-h-[200px]"
+        <div className="md:col-span-2">
+          <CompareSlider
+            label="Compare the logo on white and on black"
+            firstLabel="White"
+            secondLabel="Black"
+            className="aspect-square md:aspect-auto md:h-[calc(100%-2rem)]"
+            first={
+              <Tile
+                ground="white"
+                image={IMG.logoBlack}
+                alt="Logo on white, black version"
+                className="size-full rounded-none"
+                imgClassName="max-h-[200px] pointer-events-none"
+              />
+            }
+            second={
+              <Tile
+                ground="black"
+                image={IMG.logoWhite}
+                alt="Logo on black, white version"
+                className="size-full rounded-none"
+                imgClassName="max-h-[200px] pointer-events-none"
+              />
+            }
           />
-          <Caption title="White" note="Black version" />
-        </div>
-        <div>
-          <Tile
-            ground="black"
-            image={IMG.logoWhite}
-            alt="Logo on black"
-            className="aspect-square"
-            imgClassName="max-h-[200px]"
-          />
-          <Caption title="Black" note="White version" />
+          <Caption title="White and black" note="Drag to compare: black version on white, white version on black" />
         </div>
         <div>
           <div className="relative aspect-square overflow-hidden rounded-xl bg-[#F8931A]">
@@ -97,7 +105,7 @@ const MINIMUMS = [
     value: "48px",
     print: "15mm print",
     title: "Yaka symbol",
-    body: "The smallest size at which the mask's lines stay open. For app icons and favicons, use the දීප symbol.",
+    body: "The smallest size at which the mask's lines stay open. For app icons and favicons, use the ₿ දීප app icon.",
   },
 ];
 
@@ -105,7 +113,7 @@ export function ClearSpaceSection() {
   return (
     <Chapter
       id="clear-space"
-      number="05"
+      number="06"
       label="Clear space & size"
       title="Give it room"
       lede={
@@ -195,7 +203,7 @@ export function MisuseSection() {
   return (
     <Chapter
       id="misuse"
-      number="06"
+      number="07"
       label="Misuse"
       title="Never do this"
       lede="Use the files exactly as supplied. Never retype “bitcoin දීප” in a font: the දීප is custom lettering."

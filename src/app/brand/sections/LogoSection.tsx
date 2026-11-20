@@ -204,24 +204,25 @@ export function LogoSection() {
       {/* Logo family */}
       <div className="mt-14 grid gap-6 sm:grid-cols-2">
         <Family
-          title="With slogan"
+          title="Primary logo with slogan"
           body={
             <>
-              Heroes, posters, packaging and campaign openers, where there is room to read{" "}
-              <i>Pearl of Satoshi</i>.
+              The primary logo with <i>Pearl of Satoshi</i> under &ldquo;bitcoin&rdquo;, in a black
+              version for light grounds and a white version for dark grounds. Use it for heroes,
+              posters, packaging and campaign openers, where there is room to read the slogan.
             </>
           }
-          left={{ image: IMG.sloganBlack, alt: "Logo with slogan, black" }}
-          right={{ image: IMG.sloganWhite, alt: "Logo with slogan, white" }}
+          left={{ image: IMG.sloganPrimaryBlack, alt: "Primary logo with slogan, for light grounds" }}
+          right={{ image: IMG.sloganPrimaryWhite, alt: "Primary logo with slogan, for dark grounds" }}
           downloads={[
-            { label: "Black SVG", path: IMG.sloganBlackSvg },
-            { label: "White SVG", path: IMG.sloganWhiteSvg },
+            { label: "Black PNG", path: IMG.sloganPrimaryBlack.src },
+            { label: "White PNG", path: IMG.sloganPrimaryWhite.src },
           ]}
         />
         <Family
           title="App icon and orange version"
-          body="The දීප symbol is the app icon; see the App icon section. The orange-ground files are covered under Backgrounds."
-          left={{ image: IMG.iconLight, alt: "Deepa app icon", imgClassName: "max-h-[110px] rounded-[22px] shadow-sm" }}
+          body="The ₿ දීප mark is the app icon; see the App icon section. The orange-ground files are covered under Backgrounds."
+          left={{ image: IMG.iconLight, alt: "₿ දීප app icon", imgClassName: "max-h-[110px] rounded-[22px] shadow-sm" }}
           right={{ image: IMG.orangeWhite, alt: "Logo on orange, white version", imgClassName: "max-h-[130px] rounded-lg" }}
         />
         <Family

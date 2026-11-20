@@ -16,7 +16,7 @@ export function ColourSection() {
   return (
     <Chapter
       id="colour"
-      number="07"
+      number="08"
       label="Colour"
       title="Bitcoin orange leads"
       lede="Orange carries the brand. Black and white are the grounds. The flame gradient belongs to the mask, and the four heritage colours belong to the secondary pattern. Copy any value in HEX, RGB or HSL."
