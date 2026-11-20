@@ -108,13 +108,15 @@ function CardDetails() {
           <div className="mt-8 flex flex-col gap-4 rounded-xl bg-bitcoin p-6 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <span className="flex h-7 w-fit items-center rounded-md bg-black px-2.5 text-sm font-medium text-bitcoin">
-                Coming soon
+                Members only
               </span>
-              <p className="mt-3 font-medium text-black">Be the first to know when the card is available.</p>
+              <p className="mt-3 font-medium text-black">
+                The card is shared only with our community of <BrandName /> wallet users.
+              </p>
             </div>
             <Button asChild variant="dark">
               <a href={TELEGRAM_INVITE} target="_blank" rel="noopener noreferrer">
-                Get updates on Telegram <ArrowUpRight />
+                Join on Telegram <ArrowUpRight />
               </a>
             </Button>
           </div>
@@ -143,7 +145,7 @@ export default function BitcoinCard() {
           />
           <span className="flex h-8 items-center gap-2 rounded-md bg-black px-3 text-sm text-zinc-300">
             <span className="size-2 rounded-full bg-bitcoin" />
-            Coming soon · Lightning Bolt Card
+            Exclusive to <BrandName /> wallet users
           </span>
           <h2
             id="card-title"

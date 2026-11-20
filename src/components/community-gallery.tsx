@@ -29,7 +29,7 @@ export const COMMUNITY_GALLERY: GalleryItem[] = [
   { type: "photo", src: `${P}/2022-mike-g-meetup.png`, alt: "Group photo at the meetup with Mike G", caption: "Meetup with Mike G, Colombo" },
   { type: "icon", src: ICONS_3D.lightning, label: "Lightning payments" },
   { type: "photo", src: `${P}/2023-colombo-session.jpeg`, alt: "A talk at a Colombo meetup", caption: "Learning together in Colombo" },
-  { type: "stat", value: "4 cities", label: "Colombo, Galle, Kandy and Ella" },
+  { type: "stat", value: "Islandwide", label: "Meetups from Colombo and Galle to Kandy and Ella" },
   { type: "photo", src: `${P}/2025-book.png`, alt: "The Sinhala edition of The Bullish Case for Bitcoin", caption: "බිට්කොයින් පෙළහර book launch" },
   { type: "icon", src: ICONS_3D.book, label: "Resources in Sinhala" },
   { type: "photo", src: `${P}/2023-bitcoin-katha-lightning.jpeg`, alt: "Bitcoin Katha podcast cover", caption: "Bitcoin කතා podcast", tall: true },
