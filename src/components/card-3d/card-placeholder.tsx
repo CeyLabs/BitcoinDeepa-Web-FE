@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 export const FRONT_SRC = "/images/bdfcard.png";
-export const BACK_SRC = "/images/bdbcard.png";
+export const BACK_SRC = "/images/bd-card-back.png";
 
 /** Flat card shown while the 3D scene loads, or when WebGL is unavailable. */
 export function CardPlaceholder() {

@@ -25,7 +25,7 @@ export const COMMUNITY_GALLERY: GalleryItem[] = [
   { type: "photo", src: `${P}/2023-ella-meetup.png`, alt: "Group photo in the hills at the Ella meetup", caption: "Ceylon Bitcoin Meetup, Ella" },
   { type: "icon", src: ICONS_3D.meetup, label: "Meetups across the island" },
   { type: "stat", value: "2022", label: "Our first Ceylon Bitcoin Meetup" },
-  { type: "photo", src: `${P}/2023-bolt-cards.png`, alt: "Bitcoin Deepa Bolt Card NFC wallet cards", caption: "Bolt Card tap-to-pay wallets", tall: true },
+  { type: "photo", src: `${P}/bd-card-back.png`, alt: "Back of the Bitcoin Deepa Bolt Card NFC wallet card", caption: "Bolt Card tap-to-pay wallets", tall: true },
   { type: "photo", src: `${P}/2022-mike-g-meetup.png`, alt: "Group photo at the meetup with Mike G", caption: "Meetup with Mike G, Colombo" },
   { type: "icon", src: ICONS_3D.lightning, label: "Lightning payments" },
   { type: "photo", src: `${P}/2023-colombo-session.jpeg`, alt: "A talk at a Colombo meetup", caption: "Learning together in Colombo" },
