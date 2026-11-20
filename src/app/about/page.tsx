@@ -8,6 +8,8 @@ import { TELEGRAM_INVITE } from "@/src/components/nav/nav-data";
 import { pageMetadata } from "@/src/lib/seo";
 import { absoluteUrl, SITE_NAME, SITE_URL } from "@/src/lib/site";
 import { JOURNEY, type JourneyEntry } from "./journey-data";
+import { JourneyMilestone, JourneyTimeline, JourneyYear } from "./journey-timeline";
+import { LivingMosaic, type MosaicPhoto } from "./living-mosaic";
 
 const DESCRIPTION =
   "Bitcoin Deepa, the Pearl of Satoshi, is Sri Lanka's grassroots Bitcoin-only community: meetups across the island, education in Sinhala and English, open-source Lightning tools and merchant adoption since 2022.";
@@ -22,7 +24,7 @@ const P = "/images/about";
 
 const STATS = [
   { value: "2022", label: "First Ceylon Bitcoin Meetup" },
-  { value: "4", label: "Cities with meetups" },
+  { value: "Islandwide", label: "Meetups across Sri Lanka" },
   { value: "1 of 18", label: "HRF Bitcoin Dev Fund projects" },
   { value: "0.009 BTC", label: "Crowdfunded for COVID relief" },
 ];
@@ -65,13 +67,23 @@ const WHY = [
   },
 ];
 
-// Hero mosaic: several smaller photos keep each one at its native sharpness.
-const MOSAIC = [
-  { src: `${P}/2023-ella-meetup.png`, alt: "Group photo in the hills at the Ceylon Bitcoin Meetup in Ella", w: 714, h: 536, cls: "col-span-2 row-span-2" },
-  { src: `${P}/2022-mike-g-meetup.png`, alt: "Group photo at the Ceylon Bitcoin Meetup with Mike G", w: 640, h: 480, cls: "" },
-  { src: `${P}/2025-book.png`, alt: "The Sinhala edition of The Bullish Case for Bitcoin", w: 1024, h: 717, cls: "" },
-  { src: `${P}/2023-colombo-session.jpeg`, alt: "Attendees at a Colombo meetup", w: 512, h: 384, cls: "" },
-  { src: `${P}/2023-bolt-card.jpeg`, alt: "A Bitcoin Deepa Bolt Card NFC wallet card", w: 337, h: 384, cls: "" },
+/** Hero mosaic: the feature photo stays; the small tiles cycle through the rest. */
+const MOSAIC_FEATURE: MosaicPhoto = {
+  src: `${P}/2023-ella-meetup.png`,
+  alt: "Group photo in the hills at the Ceylon Bitcoin Meetup in Ella",
+  caption: "Ceylon Bitcoin Meetup, Ella",
+};
+const MOSAIC_POOL: MosaicPhoto[] = [
+  { src: `${P}/2022-mike-g-meetup.png`, alt: "Group photo at the Ceylon Bitcoin Meetup with Mike G", caption: "Meetup with Mike G, Colombo" },
+  { src: `${P}/2025-book.png`, alt: "The Sinhala edition of The Bullish Case for Bitcoin", caption: "Our Sinhala Bitcoin book" },
+  { src: `${P}/2023-colombo-session.jpeg`, alt: "Attendees at a Colombo meetup", caption: "Learning together in Colombo" },
+  { src: `${P}/2023-bolt-card.jpeg`, alt: "A Bitcoin Deepa Bolt Card NFC wallet card", caption: "Bolt Card tap-to-pay" },
+  { src: `${P}/2022-kandy-meetup.png`, alt: "Group photo at the Ceylon Bitcoin Meetup in Kandy", caption: "Ceylon Bitcoin Meetup, Kandy" },
+  { src: `${P}/2023-ella-session.png`, alt: "An outdoor session at the Ella meetup", caption: "Workshop in the hills" },
+  { src: `${P}/2022-galle-meetup.png`, alt: "Attendees at the Ceylon Bitcoin Meetup in Galle", caption: "Ceylon Bitcoin Meetup, Galle" },
+  { src: `${P}/2025-tapsigner.png`, alt: "TapSigner cards for a multisig setup", caption: "Multisig payroll with TapSigner" },
+  { src: `${P}/2025-book-launch-stage.png`, alt: "On stage at the Sinhala book launch", caption: "Book launch" },
+  { src: `${P}/2024-hrf-grant.png`, alt: "Announcement of the HRF Bitcoin Development Fund grant", caption: "HRF Bitcoin Dev Fund grant" },
 ];
 
 const btnPrimary = buttonVariants();
@@ -90,11 +102,7 @@ function SectionHeading({ eyebrow, title, lede }: { eyebrow: string; title: stri
 function Entry({ entry }: { entry: JourneyEntry }) {
   const photos = entry.photos ?? [];
   return (
-    <li className="relative pl-8 sm:pl-10">
-      <span
-        aria-hidden
-        className="absolute top-1.5 left-0 size-3 -translate-x-[calc(50%-0.5px)] rounded-full bg-bitcoin ring-4 ring-black"
-      />
+    <JourneyMilestone>
       <div className="flex flex-wrap items-center gap-3">
         <span className="flex h-7 items-center rounded-md bg-zinc-800 px-2.5 text-sm text-zinc-300">
           {entry.month}
@@ -134,7 +142,7 @@ function Entry({ entry }: { entry: JourneyEntry }) {
           ))}
         </div>
       )}
-    </li>
+    </JourneyMilestone>
   );
 }
 
@@ -190,25 +198,9 @@ export default function AboutPage() {
             </div>
           </div>
 
-          {/* Photo mosaic */}
+          {/* Living photo mosaic */}
           <div className="mt-16 md:mt-20">
-            <div className="grid h-[320px] grid-cols-3 grid-rows-2 gap-2 sm:h-[420px] md:h-[480px] md:grid-cols-4">
-              {MOSAIC.map((m, i) => (
-                <div
-                  key={m.src}
-                  className={`relative overflow-hidden rounded-md bg-zinc-900 ${m.cls} ${i === 4 ? "hidden md:block" : ""}`}
-                >
-                  <Image
-                    src={m.src}
-                    alt={m.alt}
-                    fill
-                    priority={i === 0}
-                    sizes={i === 0 ? "(min-width: 768px) 640px, 66vw" : "(min-width: 768px) 320px, 33vw"}
-                    className="object-cover"
-                  />
-                </div>
-              ))}
-            </div>
+            <LivingMosaic feature={MOSAIC_FEATURE} pool={MOSAIC_POOL} />
             <div className="mt-2 flex h-1.5 gap-1.5" aria-hidden="true">
               {HERITAGE_STRIP.map((s, i) => (
                 <span key={i} className="rounded-sm" style={{ background: s.c, flexGrow: s.f, flexBasis: 0 }} />
@@ -317,27 +309,15 @@ export default function AboutPage() {
               title="From a first meetup to a Sinhala book"
               lede="The milestones so far, year by year."
             />
-            <div className="mx-auto max-w-5xl space-y-14">
+            <JourneyTimeline>
               {JOURNEY.map((y) => (
-                <section
-                  key={y.year}
-                  aria-labelledby={`year-${y.year}`}
-                  className="md:grid md:grid-cols-[120px_minmax(0,1fr)] md:gap-8"
-                >
-                  <h3
-                    id={`year-${y.year}`}
-                    className="mb-6 text-4xl leading-none font-medium tracking-[-0.02em] tabular-nums text-white md:sticky md:top-28 md:mb-0 md:self-start"
-                  >
-                    {y.year}
-                  </h3>
-                  <ol className="relative space-y-10 border-l border-zinc-800">
-                    {y.entries.map((e) => (
-                      <Entry key={`${y.year}-${e.month}-${e.title}`} entry={e} />
-                    ))}
-                  </ol>
-                </section>
+                <JourneyYear key={y.year} year={y.year}>
+                  {y.entries.map((e) => (
+                    <Entry key={`${y.year}-${e.month}-${e.title}`} entry={e} />
+                  ))}
+                </JourneyYear>
               ))}
-            </div>
+            </JourneyTimeline>
           </section>
 
           {/* Backed by */}
