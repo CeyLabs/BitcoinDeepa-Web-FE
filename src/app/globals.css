@@ -119,16 +119,6 @@
   --animate-float: float 6s ease-in-out infinite;
   /* Endless strip: content is rendered twice and shifted by half its width. */
   --animate-marquee: marquee var(--marquee-duration, 80s) linear infinite;
-  /* Join section coin: a slow turn either side, like it's hanging in the air. */
-  @keyframes coin-sway {
-    0%,
-    100% {
-      transform: rotateY(-18deg) rotateX(4deg);
-    }
-    50% {
-      transform: rotateY(18deg) rotateX(-4deg);
-    }
-  }
 
   /* Accordion panels open/close to Radix's measured content height. */
   --animate-accordion-down: accordion-down 0.2s ease-out;
@@ -316,35 +306,19 @@
   }
 }
 
-/* Join section: the two hands travel in from the sides as the section
-   scrolls up, driven by the browser (no JS). Unsupported: they just sit. */
-@keyframes hand-in-left {
+/* Join section: the hand rises into place as the section scrolls up,
+   driven by the browser (no JS). Unsupported: it just sits. */
+@keyframes hand-rise {
   from {
     opacity: 0;
-    translate: -22% 0;
+    translate: 0 14%;
   }
 }
-@keyframes hand-in-right {
-  from {
-    opacity: 0;
-    translate: 22% 0;
-  }
-}
-@utility hand-in-left {
+@utility hand-rise {
   @supports (animation-timeline: view()) {
-    animation: hand-in-left linear both;
+    animation: hand-rise linear both;
     animation-timeline: view();
-    animation-range: entry 0% cover 45%;
-  }
-  @media (prefers-reduced-motion: reduce) {
-    animation: none;
-  }
-}
-@utility hand-in-right {
-  @supports (animation-timeline: view()) {
-    animation: hand-in-right linear both;
-    animation-timeline: view();
-    animation-range: entry 0% cover 45%;
+    animation-range: entry 0% cover 40%;
   }
   @media (prefers-reduced-motion: reduce) {
     animation: none;
@@ -498,5 +472,28 @@
   }
   .legal-prose pre {
     @apply mt-6 overflow-x-auto rounded-xl bg-zinc-900 p-5 font-mono text-[13px] leading-relaxed whitespace-pre-wrap text-zinc-400;
+  }
+}
+
+/* Nav feature tiles (src/components/nav/tile-art.tsx). */
+@keyframes tile-sheen {
+  0%,
+  15% {
+    background-position: 100% 0;
+  }
+  65%,
+  100% {
+    background-position: 0% 0;
+  }
+}
+@keyframes tile-glow {
+  0%,
+  100% {
+    opacity: 0.6;
+    transform: scale(0.92);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.04);
   }
 }

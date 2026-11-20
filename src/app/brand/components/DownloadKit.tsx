@@ -1,18 +1,12 @@
 import { Download } from "lucide-react";
+import { buttonVariants } from "@/src/components/ui/button";
 import { cn } from "@/src/lib/utils";
 import { ZIP_ALL, ZIP_PNG, ZIP_SVG } from "../brand-data";
 
 export function DownloadAllButton({ className }: { className?: string }) {
   return (
-    <a
-      href={ZIP_ALL}
-      download
-      className={cn(
-        "inline-flex items-center gap-2 rounded-xl bg-[#F8931A] px-5 py-3 text-sm font-semibold text-black shadow-lg shadow-[#F8931A]/20 transition-all hover:bg-[#ffa53d] hover:shadow-xl",
-        className,
-      )}
-    >
-      <Download className="h-4 w-4" />
+    <a href={ZIP_ALL} download className={cn(buttonVariants({ size: "lg" }), className)}>
+      <Download />
       Download all assets
     </a>
   );
@@ -33,13 +27,10 @@ function KitButton({
     <a
       href={href}
       download
-      className={cn(
-        "inline-flex items-center justify-between gap-3 rounded-xl border-[1.5px] border-white px-5 py-3 text-sm font-semibold text-white transition-colors hover:border-bitcoin hover:text-bitcoin",
-        className,
-      )}
+      className={cn(buttonVariants({ variant: "secondary", size: "lg" }), "justify-between", className)}
     >
       <span className="inline-flex items-center gap-2">
-        <Download className="h-4 w-4" />
+        <Download />
         {label}
       </span>
       <span className="text-xs font-medium text-zinc-400">{size}</span>
@@ -52,5 +43,5 @@ export function DownloadSvgButton({ className }: { className?: string }) {
 }
 
 export function DownloadPngButton({ className }: { className?: string }) {
-  return <KitButton href={ZIP_PNG} label="PNG only" size="14 MB" className={className} />;
+  return <KitButton href={ZIP_PNG} label="PNG only" size="17 MB" className={className} />;
 }

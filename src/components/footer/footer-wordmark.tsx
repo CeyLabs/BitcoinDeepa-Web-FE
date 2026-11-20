@@ -15,10 +15,33 @@ const VIEWBOX = `${STEP_X * (LAYERS - 1) - 2} -2 ${539.2 - STEP_X * (LAYERS - 1)
 // The whole mark dissolves downwards into the cropped bottom edge.
 const FADE = "linear-gradient(to bottom, #000 0%, #000 45%, rgba(0,0,0,0.4) 75%, transparent 95%)";
 
+// Logo colours, revealed around the pointer.
+const LIT = { base: "#FFFFFF", accent: "#F8931A" } as const;
+
+// Soft spotlight that follows the pointer (vars set on the root element).
+const SPOTLIGHT =
+  "radial-gradient(circle 240px at var(--mx, 50%) var(--my, 50%), #000 0%, rgba(0,0,0,0.6) 45%, transparent 100%)";
+
+/** The stacked hairline outlines, stroked by tone. */
+function Outlines({ stroke }: { stroke: (tone: "base" | "accent") => string }) {
+  return (
+    <>
+      {/* Back to front, so the front outline sits on top and is brightest. */}
+      {Array.from({ length: LAYERS }, (_, i) => LAYERS - 1 - i).map((k) => (
+        <g key={k} transform={`translate(${STEP_X * k} ${STEP_Y * k})`} opacity={k === 0 ? 1 : 0.62 - k * 0.07}>
+          {WORDMARK.map((p, j) => (
+            <path key={j} d={p.d} stroke={stroke(p.tone)} strokeWidth={1} vectorEffect="non-scaling-stroke" />
+          ))}
+        </g>
+      ))}
+    </>
+  );
+}
+
 /**
  * Footer signature: the official wordmark as a stack of hairline outlines.
- * A soft light follows the pointer and, blended over the lines, lights up
- * only the strokes underneath it.
+ * Around the pointer the lines light up in the logo's own colours: white
+ * "bitcoin", Satoshi Orange "දීප".
  */
 export function FooterWordmark() {
   const ref = useRef<HTMLDivElement>(null);
@@ -44,14 +67,12 @@ export function FooterWordmark() {
       onPointerMove={move}
       onPointerLeave={leave}
       onPointerCancel={leave}
-      // bg-black inside the isolated group gives the overlay blend a black
-      // backdrop, so the light shows only where there are lines.
-      className="group/wm relative isolate overflow-hidden bg-black select-none [touch-action:pan-y]"
+      className="group/wm relative overflow-hidden select-none [touch-action:pan-y]"
       style={{ maskImage: FADE, WebkitMaskImage: FADE }}
     >
+      {/* Resting state: warm grey through "bitcoin", into Satoshi Orange on "දීප". */}
       <svg viewBox={VIEWBOX} className="block h-auto w-full" fill="none">
         <defs>
-          {/* Warm grey through "bitcoin", into Satoshi Orange on "දීප". */}
           <linearGradient id={gradientId} gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="539.2" y2="0">
             <stop offset="0" stopColor="#6f655d" />
             <stop offset="0.62" stopColor="#9a8d82" />
@@ -59,32 +80,18 @@ export function FooterWordmark() {
             <stop offset="1" stopColor="#f8931a" />
           </linearGradient>
         </defs>
-        {/* Back to front, so the front outline sits on top and is brightest. */}
-        {Array.from({ length: LAYERS }, (_, i) => LAYERS - 1 - i).map((k) => (
-          <g key={k} transform={`translate(${STEP_X * k} ${STEP_Y * k})`} opacity={k === 0 ? 1 : 0.62 - k * 0.07}>
-            {WORDMARK.map((p, j) => (
-              <path
-                key={j}
-                d={p.d}
-                stroke={`url(#${gradientId})`}
-                strokeWidth={1}
-                vectorEffect="non-scaling-stroke"
-              />
-            ))}
-          </g>
-        ))}
+        <Outlines stroke={() => `url(#${gradientId})`} />
       </svg>
 
-      {/* Pointer light: overlay-blended, so the black background stays black
-          and only the hairlines beneath it brighten and warm up. */}
-      <div
-        className="pointer-events-none absolute top-0 left-0 size-[380px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-0 mix-blend-overlay blur-[40px] transition-opacity duration-500 group-data-[lit=true]/wm:opacity-100"
-        style={{
-          left: "var(--mx, 50%)",
-          top: "var(--my, 50%)",
-          background: "radial-gradient(circle, #ffffff 0%, #ffd9a0 30%, #f8931a 55%, transparent 72%)",
-        }}
-      />
+      {/* Lit state: the same outlines in logo colours, shown only under the pointer. */}
+      <svg
+        viewBox={VIEWBOX}
+        fill="none"
+        className="pointer-events-none absolute inset-0 size-full opacity-0 transition-opacity duration-500 group-data-[lit=true]/wm:opacity-100"
+        style={{ maskImage: SPOTLIGHT, WebkitMaskImage: SPOTLIGHT }}
+      >
+        <Outlines stroke={(tone) => LIT[tone]} />
+      </svg>
     </div>
   );
 }

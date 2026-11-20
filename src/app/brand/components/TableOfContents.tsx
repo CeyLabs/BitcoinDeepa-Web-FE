@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import { motion } from "framer-motion";
-import { List } from "lucide-react";
 import { cn } from "@/src/lib/utils";
 import { TOC_ITEMS } from "../brand-data";
 import { scrollToSection, useActiveSection } from "./toc-hooks";
@@ -13,14 +12,8 @@ export function TableOfContents() {
   const activeId = useActiveSection(IDS);
 
   return (
-    <nav
-      aria-label="On this page"
-      className="rounded-xl bg-zinc-900 p-5"
-    >
-      <div className="mb-3 flex items-center gap-2.5 text-zinc-300">
-        <List className="h-4 w-4" />
-        <p className="text-xs font-semibold uppercase tracking-wider">On this page</p>
-      </div>
+    <nav aria-label="On this page">
+      <p className="mb-4 px-3 type-eyebrow text-zinc-500">On this page</p>
       <ul className="flex flex-col gap-0.5">
         {TOC_ITEMS.map((item, i) => {
           const isActive = activeId === item.id;
@@ -41,7 +34,7 @@ export function TableOfContents() {
                 {isActive && (
                   <motion.span
                     layoutId="brand-toc-pill"
-                    className="absolute inset-0 z-0 rounded-md border border-zinc-700/60 bg-zinc-800/80"
+                    className="absolute inset-0 z-0 rounded-md bg-zinc-900"
                     transition={{ type: "spring", stiffness: 350, damping: 30 }}
                   />
                 )}

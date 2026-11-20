@@ -3,6 +3,7 @@
 import { useState, useRef, type ComponentType } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { ConsentDialogLink } from "c15t/next";
 import { useCoinBurst } from "./footer/coin-burst";
 import { FooterWordmark } from "./footer/footer-wordmark";
 import { SOCIAL_LINKS } from "@/src/lib/site";
@@ -19,7 +20,7 @@ const SOCIALS: Array<{ label: string; href: string; Icon: ComponentType<{ classN
   { label: "X (@pearlofsatoshi)", href: SOCIAL_LINKS.x, Icon: TwitterIcon },
   { label: "Instagram (@bitcoindeepa)", href: SOCIAL_LINKS.instagram, Icon: InstagramIcon },
   { label: "Events on Luma", href: "https://lu.ma/bitcoindeepa", Icon: LumaIcon },
-  { label: "GitHub (CeyLabs)", href: SOCIAL_LINKS.github, Icon: Github },
+  { label: "GitHub", href: SOCIAL_LINKS.github, Icon: Github },
 ];
 
 const Footer = () => {
@@ -83,6 +84,10 @@ const Footer = () => {
             <NavLink href="/releases" label="Release Notes" small />
             <NavLink href="/#faq" label="FAQ" small />
             <NavLink href="/license" label="License" small />
+            {/* Reopens the consent preferences at any time. */}
+            <ConsentDialogLink className="cursor-pointer text-sm text-zinc-300 transition-colors hover:text-white">
+              Cookie settings
+            </ConsentDialogLink>
           </div>
 
           <div className="flex justify-center">
@@ -144,7 +149,7 @@ const Footer = () => {
                       heartClicked ? "scale-100 opacity-100 blur-0" : "scale-25 opacity-0 blur-[4px]"
                     }`}
                   >
-                    ♥ <SriLankaFlag className="h-3.5" />
+                    ♥ <SriLankaFlag className="text-base" />
                   </span>
                 </motion.button>
               </div>

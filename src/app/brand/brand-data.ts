@@ -16,6 +16,7 @@ export const TOC_ITEMS: TocItem[] = [
   { title: "The idea", id: "idea" },
   { title: "Logo", id: "logo" },
   { title: "App icon", id: "app-icon" },
+  { title: "Profile picture", id: "profile-picture" },
   { title: "Backgrounds", id: "backgrounds" },
   { title: "Clear space & size", id: "clear-space" },
   { title: "Misuse", id: "misuse" },
@@ -36,6 +37,8 @@ export const IMG = {
   sloganBlack: { src: `${KIT}/02-Logo-with-Slogan/Black_w_Slogan.png`, w: 2400, h: 3821 },
   sloganWhite: { src: `${KIT}/02-Logo-with-Slogan/White_w_Slogan.png`, w: 2400, h: 3821 },
   sloganBlackSvg: `${KIT}/02-Logo-with-Slogan/Black_w_Slogan.svg`,
+  sloganPrimaryBlack: { src: `${KIT}/02-Logo-with-Slogan/PrimaryBlack_w_Slogan.png`, w: 2400, h: 3821 },
+  sloganPrimaryWhite: { src: `${KIT}/02-Logo-with-Slogan/PrimaryWhite_w_Slogan.png`, w: 2400, h: 3821 },
   sloganWhiteSvg: `${KIT}/02-Logo-with-Slogan/White_w_Slogan.svg`,
 
   wordBnO: { src: `${KIT}/03-Wordmark/DeepaLogo_BnO.png`, w: 2400, h: 876 },
@@ -62,9 +65,18 @@ export const IMG = {
   iconDark: { src: `${KIT}/05-App-Icon/AppIcon_Dark.png`, w: 1024, h: 1024 },
   iconSmallLight: { src: `${KIT}/05-App-Icon/AppIcon_Small_Light.png`, w: 1024, h: 1024 },
   iconSmallDark: { src: `${KIT}/05-App-Icon/AppIcon_Small_Dark.png`, w: 1024, h: 1024 },
+  iconOrange: { src: `${KIT}/05-App-Icon/AppIcon_Orange.png`, w: 1024, h: 1024 },
+  iconSmallOrange: { src: `${KIT}/05-App-Icon/AppIcon_Small_Orange.png`, w: 1024, h: 1024 },
 
   orangeBlack: { src: `${KIT}/06-On-Orange/BD_OrangeBG_Black.png`, w: 2400, h: 2400 },
   orangeWhite: { src: `${KIT}/06-On-Orange/BD_OrangeBG_White.png`, w: 2400, h: 2400 },
+
+  dpBlack: { src: `${KIT}/09-Profile-Picture/DP_Black.png`, w: 1080, h: 1080 },
+  dpWhite: { src: `${KIT}/09-Profile-Picture/DP_White.png`, w: 1080, h: 1080 },
+  dpOrange: { src: `${KIT}/09-Profile-Picture/DP_Orange.png`, w: 1080, h: 1080 },
+  dpBlackSvg: `${KIT}/09-Profile-Picture/DP_Black.svg`,
+  dpWhiteSvg: `${KIT}/09-Profile-Picture/DP_White.svg`,
+  dpOrangeSvg: `${KIT}/09-Profile-Picture/DP_Orange.svg`,
 
   btcPatternTile: `${KIT}/08-Patterns/Primary_Bitcoin_Pattern_Tile.png`,
   spikyLight: `${KIT}/08-Patterns/Secondary_SpikyTiles_Light.png`,

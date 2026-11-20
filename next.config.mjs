@@ -1,4 +1,5 @@
 import path from 'path'
+import { withConsentManifest } from 'c15t/next/build'
 import { fileURLToPath } from 'url'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -59,9 +60,12 @@ const nextConfig = {
             // linked, so preconnecting to those would just waste a connection.
             key: 'Link',
             value: [
-              '<https://connect.facebook.net>; rel=preconnect',
               // Events API, fetched from the browser.
               '<https://ceylabs.io>; rel=preconnect',
+              // Consent backend: the browser asks it for the policy on first load.
+              '<https://consent.ceylabs.io>; rel=preconnect',
+              // Meta Pixel library loads after marketing consent: resolve DNS early only.
+              '<https://connect.facebook.net>; rel=dns-prefetch',
             ].join(', '),
           },
         ],
@@ -84,4 +88,6 @@ if (userConfig) {
   }
 }
 
-export default nextConfig
+// Finds c15t.config.ts. In hosted() mode it downloads no policy manifest, so
+// the build never depends on the consent backend.
+export default withConsentManifest(nextConfig)

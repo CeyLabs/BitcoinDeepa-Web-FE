@@ -1,15 +1,19 @@
 export const FB_PIXEL_ID = '1818035272112095';
 
-declare global {
-  interface Window {
-    fbq?: (...args: any[]) => void;
-  }
+// The pixel itself is loaded by the consent manager (lib/consent-scripts.ts)
+// once marketing is allowed. This flag mirrors that permission, because
+// window.fbq stays defined after a visitor withdraws it.
+let marketingAllowed = false;
+
+export function setMarketingAllowed(allowed: boolean) {
+  marketingAllowed = allowed;
 }
 
 export const fbEvent = (name: string, options: Record<string, any> = {}) => {
-  if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
-    window.fbq('track', name, options);
-  }
+  if (!marketingAllowed) return;
+  // window.fbq is typed by @c15t/integrations; our event names are plain strings.
+  const fbq = typeof window !== 'undefined' ? (window.fbq as ((...args: unknown[]) => void) | undefined) : undefined;
+  if (typeof fbq === 'function') fbq('track', name, options);
 };
 
 // Meta Pixel only accepts values in its supported currencies, and LKR is not

@@ -7,7 +7,7 @@ export function PatternsSection() {
   return (
     <Chapter
       id="patterns"
-      number="09"
+      number="10"
       label="Patterns"
       title="Primary pattern: ₿"
       lede="A staggered field of ₿ marks in Bitcoin orange at about 10% strength. It is the brand's everyday background texture. It repeats on an even grid: ₿ marks every 86 units across and 44 down, each row shifted half a step, so the tile edges never show."
@@ -128,7 +128,7 @@ function DownloadLinks({ links }: { links: { label: string; path: string }[] }) 
 
 export function VoiceSection() {
   return (
-    <Chapter id="voice" number="10" label="Voice" title="How we sound">
+    <Chapter id="voice" number="11" label="Voice" title="How we sound">
       <div className="grid gap-6 md:grid-cols-3">
         {[
           {
@@ -182,7 +182,8 @@ const ASSET_ROWS = [
   ["Bold Yaka", "Small sizes, embroidery, engraving"],
   ["Half Yaka", "Edge crops on covers and banners"],
   ["Laser-eyed Yaka", "Hero moments on dark layouts"],
-  ["App icon (දීප symbol)", "App icons and favicons"],
+  ["App icon (₿ දීප)", "App icons and favicons"],
+  ["Profile picture", "Social profiles (1080px square)"],
   ["Slogan", "Slogan on its own"],
   ["Primary pattern (₿)", "Everyday background texture"],
   ["Secondary pattern (spiky tiles)", "Bands, borders, packaging, décor"],
@@ -192,7 +193,7 @@ export function AssetsSection() {
   return (
     <Chapter
       id="assets"
-      number="11"
+      number="12"
       label="Assets"
       title="Assets"
       lede="Download the full kit below. Use SVG wherever it is accepted; PNGs are transparent unless noted."
@@ -201,9 +202,9 @@ export function AssetsSection() {
         <div>
           <SubHeading>Download the asset kit</SubHeading>
           <Muted>
-            Every logo, symbol, app icon, slogan and pattern on this page, organised in numbered
-            folders. Vector files are SVG; every asset also comes as a transparent PNG at 2400px (app
-            icons at 1024px).
+            Every logo, symbol, app icon, profile picture, slogan and pattern on this page, organised
+            in numbered folders. Vector files are SVG; every asset also comes as a transparent PNG at
+            2400px (app icons at 1024px, profile pictures at 1080px).
           </Muted>
         </div>
         <div className="flex flex-col gap-2.5">

@@ -29,30 +29,22 @@ export function Chapter({
   children: ReactNode;
 }) {
   return (
-    // Chapter label, as in the printed brand guidelines: a big orange number
-    // over a quiet label in a side column on wide screens, inline above the
-    // heading on narrower ones.
-    <section
-      id={id}
-      aria-labelledby={`${id}-title`}
-      className="scroll-mt-28 xl:grid xl:grid-cols-[150px_minmax(0,1fr)] xl:gap-10"
-    >
-      <p className="mb-3 font-display text-sm font-medium text-zinc-400 xl:mb-0 xl:pt-2.5">
-        <span className="mr-2 inline text-lg font-bold tabular-nums text-bitcoin xl:mb-1.5 xl:mr-0 xl:block xl:text-[40px] xl:leading-none">
-          {number}
+    // Chapter number and label as an eyebrow over the heading, the same
+    // pattern the About page uses for its section labels.
+    <section id={id} aria-labelledby={`${id}-title`} className="scroll-mt-32">
+      <p className="mb-4 type-eyebrow text-bitcoin">
+        <span className="tabular-nums">{number}</span>
+        <span className="mx-2 text-zinc-600" aria-hidden="true">
+          ·
         </span>
         {label}
       </p>
-      <div className="min-w-0">
-        <h2
-          id={`${id}-title`}
-          className="mb-4 type-h3 text-white"
-        >
-          {title}
-        </h2>
-        {lede && <p className="mb-8 max-w-3xl type-lede text-zinc-300">{lede}</p>}
-        {children}
-      </div>
+      <h2 id={`${id}-title`} className="type-h2 text-white">
+        {title}
+      </h2>
+      {lede && <p className="mt-5 mb-10 max-w-2xl type-lede text-zinc-400">{lede}</p>}
+      {!lede && <div className="mb-10" />}
+      {children}
     </section>
   );
 }

@@ -49,8 +49,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
       <LegalSection id={SECTIONS[1].id} title={SECTIONS[1].title}>
         <p>
           The code for this website lives on GitHub at{" "}
-          <a href="https://github.com/CeyLabs/BitcoinDeepa-Web-FE" target="_blank" rel="noopener noreferrer">
-            CeyLabs/BitcoinDeepa-Web-FE
+          <a href="https://github.com/bitcoindeepa/website" target="_blank" rel="noopener noreferrer">
+            bitcoindeepa/website
           </a>
           . Release notes for each version are on our{" "}
           <a href="/releases">releases page</a>.

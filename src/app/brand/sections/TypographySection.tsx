@@ -78,7 +78,7 @@ export function TypographySection() {
   return (
     <Chapter
       id="typography"
-      number="08"
+      number="09"
       label="Typography"
       title="Three typefaces, two scripts"
       lede="Ubuntu for headlines, Nunito Sans for text, Noto Sans Sinhala for Sinhala. All three are free on Google Fonts. Ubuntu and Nunito Sans both appear in the master logo file."

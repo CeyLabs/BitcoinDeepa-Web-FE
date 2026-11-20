@@ -1,7 +1,10 @@
 import Image from "next/image";
 import { IMG } from "../brand-data";
+import { BrandTabs } from "../components/BrandTabs";
 import { DownloadAsset } from "../components/DownloadAsset";
 import { Chapter, Code, Muted, Rule, SubHeading } from "../components/ui";
+
+type IconImage = { src: string; w: number; h: number };
 
 const HOME_APPS = ["Photos", "Maps", "Notes", "Wallet", "Clock", null, "Music", "Mail"];
 
@@ -20,6 +23,45 @@ const MASKS = [
   { label: "Android squircle", radius: "32%" },
 ];
 
+/** Home-screen mockups: one column per icon variant, iOS and Android in each. */
+const OS_THEMES = [
+  {
+    key: "light",
+    title: "Light",
+    note: "Light-mode home screens",
+    icon: IMG.iconLight,
+    ios: "bg-linear-to-br from-[#5d88b8] to-[#c7865a]",
+    android: "bg-linear-to-br from-[#f4efe9] to-[#dde5ee]",
+    androidInk: "text-[#1d1e1d]",
+    androidBar: "bg-white",
+    placeholder: { ios: "bg-[#b9c6d6]", android: "bg-[#ffffff]" },
+  },
+  {
+    key: "dark",
+    title: "Dark",
+    note: "Dark-mode home screens",
+    icon: IMG.iconDark,
+    ios: "bg-linear-to-br from-[#2a2b31] to-[#0b0b0c]",
+    android: "bg-linear-to-br from-[#23262b] to-[#101112]",
+    androidInk: "text-white",
+    androidBar: "bg-[#2e3136]",
+    placeholder: { ios: "bg-[#3a3b40]", android: "bg-[#35383d]" },
+  },
+  {
+    key: "orange",
+    title: "Orange",
+    note: "Campaigns and events, any mode",
+    icon: IMG.iconOrange,
+    ios: "bg-linear-to-br from-[#6a4e8f] to-[#d77a52]",
+    android: "bg-linear-to-br from-[#33545e] to-[#b88a5a]",
+    androidInk: "text-white",
+    androidBar: "bg-white",
+    placeholder: { ios: "bg-[#a98aa6]", android: "bg-[#7b8c84]" },
+  },
+] as const;
+
+const OS_APPS = ["Photos", null, "Maps", "Wallet", "Notes", "Music"];
+
 export function AppIconSection() {
   return (
     <Chapter
@@ -27,7 +69,7 @@ export function AppIconSection() {
       number="03"
       label="App icon"
       title="The app icon"
-      lede="The app icon is the දීප symbol: the orange Sinhala glyph on a white tile. It is the one place the brand appears without the Yaka, because at icon sizes the mask's fine lines fill in."
+      lede="The app icon is the ₿ දීප mark: the ₿ symbol, with no coin, beside the Sinhala දීප, in orange on a white tile. It is the one place the brand appears without the Yaka, because at icon sizes the mask's fine lines fill in."
     >
       <div className="grid items-center gap-8 md:grid-cols-[300px_1fr]">
         {/* Home screen preview */}
@@ -40,7 +82,7 @@ export function AppIconSection() {
             {HOME_APPS.map((app, i) =>
               app ? (
                 <div key={i} className="flex flex-col items-center gap-1.5">
-                  <span className="block h-[52px] w-[52px] rounded-xl bg-white/15" />
+                  <span className="block h-[52px] w-[52px] rounded-xl bg-[#4a4441]" />
                   <span className="max-w-16 truncate text-[10px] text-white">{app}</span>
                 </div>
               ) : (
@@ -75,38 +117,84 @@ export function AppIconSection() {
             name="Large-glyph icon"
             note="48px and below"
             image={IMG.iconSmallLight}
-            alt="Large-glyph icon artwork"
+            alt="Large-mark icon artwork"
             ground="charcoal"
             previewClassName="p-10"
             downloads={[{ format: "PNG", path: IMG.iconSmallLight.src }]}
           />
           <Muted className="sm:col-span-2">
-            <b className="text-white">Standard</b>: the glyph fills about half the tile, leaving
-            room for the masks phones apply. <b className="text-white">Large glyph</b>: tighter
-            margins, for favicons, browser tabs and notification badges, where every pixel of glyph
-            counts.
+            <b className="text-white">Standard</b>: the mark spans about 60% of the tile and stays
+            inside Android&apos;s safe zone, leaving room for the masks phones apply.{" "}
+            <b className="text-white">Large glyph</b>: tighter margins, about 82% of the tile, for
+            favicons, browser tabs and notification badges, where every pixel of glyph counts.
           </Muted>
         </div>
       </div>
 
-      {/* Light / dark */}
-      <SubHeading className="mb-4 mt-12">Light and dark appearance</SubHeading>
-      <div className="grid gap-4 md:grid-cols-2">
+      {/* Light / dark / orange */}
+      <SubHeading className="mb-4 mt-12">Light, dark and orange</SubHeading>
+      <div className="grid gap-4 md:grid-cols-3">
         <ThemeCard
           tone="light"
           big={IMG.iconLight}
           small={IMG.iconSmallLight}
           title="Light"
-          body="Orange glyph on a white tile. The default icon, and the one for light-mode home screens and light browser tabs."
+          body="Orange mark on a white tile. The default icon, and the one for light-mode home screens and light browser tabs."
         />
         <ThemeCard
           tone="dark"
           big={IMG.iconDark}
           small={IMG.iconSmallDark}
           title="Dark"
-          body="The same orange glyph on a Cold Storage Charcoal (#1D1E1D) tile, for dark-mode home screens (iOS 18 and later supports a separate dark icon) and dark browser tabs."
+          body="The same orange mark on a Cold Storage Charcoal (#1D1E1D) tile, for dark-mode home screens (iOS 18 and later supports a separate dark icon) and dark browser tabs."
+        />
+        <ThemeCard
+          tone="light"
+          big={IMG.iconOrange}
+          small={IMG.iconSmallOrange}
+          title="Orange"
+          body="A white mark on a Satoshi Orange (#F8931A) tile. Use it for campaigns, event apps, launchers and sticker packs, where the icon should read as Bitcoin orange at a glance."
         />
       </div>
+
+      {/* On iOS and Android */}
+      <SubHeading className="mb-2 mt-12">On iOS and Android</SubHeading>
+      <Muted className="mb-4 max-w-2xl">
+        The same square artwork on both systems: iOS rounds its corners, and Android crops it to the
+        launcher&apos;s shape (a circle on Pixel phones). The mark stays clear of both.
+      </Muted>
+      <BrandTabs
+        label="Icon version"
+        tabs={OS_THEMES.map((t) => ({
+          value: t.key,
+          label: t.title,
+          content: (
+            <div className="rounded-xl bg-zinc-900 p-4 sm:p-6">
+              <p className="mb-4 text-sm text-zinc-400">{t.note}</p>
+              <div className="grid max-w-2xl grid-cols-2 gap-4">
+                <OsScreen
+                  os="ios"
+                  background={t.ios}
+                  ink="text-white"
+                  bar="bg-white"
+                  placeholder={t.placeholder.ios}
+                  icon={t.icon}
+                  label={`${t.title} icon on iOS`}
+                />
+                <OsScreen
+                  os="android"
+                  background={t.android}
+                  ink={t.androidInk}
+                  bar={t.androidBar}
+                  placeholder={t.placeholder.android}
+                  icon={t.icon}
+                  label={`${t.title} icon on Android`}
+                />
+              </div>
+            </div>
+          ),
+        }))}
+      />
 
       {/* Sizes */}
       <SubHeading className="mb-4 mt-12">Sizes</SubHeading>
@@ -149,19 +237,20 @@ export function AppIconSection() {
       </div>
       <Muted className="mt-3 max-w-2xl">
         The dashed circle is Android&apos;s adaptive-icon safe zone (the inner 66% of the tile). The
-        standard glyph sits inside it, so no mask crops it. Supply a square 1024px master with no
+        standard mark sits inside it, so no mask crops it. Supply a square 1024px master with no
         transparency; the phone or store rounds the corners.
       </Muted>
 
       {/* Rules */}
       <div className="mt-10 grid gap-6 md:grid-cols-3">
-        <Rule title="Orange glyph, plain tile">
-          The glyph is always <Code>#F8931A</Code>, on <Code>#FFFFFF</Code> (light) or Cold Storage
-          Charcoal <Code>#1D1E1D</Code> (dark). No orange tile, no gradient.
+        <Rule title="Two colours, plain tile">
+          An orange <Code>#F8931A</Code> mark on <Code>#FFFFFE</Code> (light) or Cold Storage
+          Charcoal <Code>#1D1E1D</Code> (dark), or a white mark on a <Code>#F8931A</Code> tile
+          (orange). Never an orange mark on orange, and no gradients.
         </Rule>
-        <Rule title="Nothing else on it">
-          No wordmark, no ₿ coin, no Yaka, no badge or border. The app name appears under the icon on
-          its own.
+        <Rule title="Only ₿ and දීප">
+          No coin behind the ₿, no wordmark, no Yaka, no badge or border. The app name appears under
+          the icon on its own.
         </Rule>
         <Rule title="Why not the Yaka">
           At 32px the mask turns into a smudge. The Yaka stays the brand symbol everywhere there is
@@ -176,7 +265,7 @@ export function AppIconSection() {
             />
             <Image
               src={IMG.iconSmallLight.src}
-              alt="Deepa icon at 32 pixels"
+              alt="₿ දීප icon at 32 pixels"
               width={64}
               height={64}
               className="h-8 w-8 rounded-md"
@@ -185,6 +274,68 @@ export function AppIconSection() {
         </Rule>
       </div>
     </Chapter>
+  );
+}
+
+function OsScreen({
+  os,
+  background,
+  ink,
+  bar,
+  placeholder,
+  icon,
+  label,
+}: {
+  os: "ios" | "android";
+  background: string;
+  ink: string;
+  bar: string;
+  placeholder: string;
+  icon: IconImage;
+  label: string;
+}) {
+  const shape = os === "ios" ? "rounded-[22.5%]" : "rounded-full";
+  return (
+    <figure className="m-0 min-w-0">
+      <div className={`overflow-hidden rounded-[18px] px-3.5 pb-3 pt-2.5 ${background} ${ink}`}>
+        <div className="mb-3 flex items-center justify-between text-[10px] font-semibold">
+          <span>9:41</span>
+          <span className="h-[7px] w-[26px] rounded-[3px] bg-current opacity-85" />
+        </div>
+        <div className="grid grid-cols-3 gap-x-2 gap-y-3">
+          {OS_APPS.map((app, i) => (
+            <div key={i} className="flex min-w-0 flex-col items-center gap-1">
+              {app ? (
+                <span className={`block size-10 sm:size-[46px] ${shape} ${placeholder}`} />
+              ) : (
+                <Image
+                  src={icon.src}
+                  alt={label}
+                  width={92}
+                  height={92}
+                  className={`size-10 sm:size-[46px] ${shape}`}
+                />
+              )}
+              <span className={`max-w-full truncate text-[9.5px] ${app ? "" : "font-bold"}`}>
+                {app ?? "Bitcoin Deepa"}
+              </span>
+            </div>
+          ))}
+        </div>
+        {os === "ios" ? (
+          <div className="mx-auto mt-3.5 w-16 rounded-full bg-[#1d1e1d] py-0.5 text-center text-[9px] text-white">
+            Search
+          </div>
+        ) : (
+          <div className={`mt-3.5 flex h-[22px] items-center rounded-full px-2 ${bar}`}>
+            <span className="size-2.5 rounded-full border-2 border-[#8d8d8d]" />
+          </div>
+        )}
+      </div>
+      <figcaption className="mt-1.5 text-xs text-zinc-500">
+        {os === "ios" ? "iOS · rounded square" : "Android · circle"}
+      </figcaption>
+    </figure>
   );
 }
 
@@ -204,7 +355,7 @@ function ThemeCard({
   const light = tone === "light";
   return (
     <div
-      className={`grid grid-cols-[auto_1fr] items-center gap-5 rounded-xl p-5 ${
+      className={`grid grid-cols-[auto_1fr] items-center gap-5 rounded-xl p-5 md:grid-cols-1 md:items-start ${
         light ? "bg-[#f2eee9] text-black" : "bg-black text-white ring-1 ring-inset ring-white/10"
       }`}
     >

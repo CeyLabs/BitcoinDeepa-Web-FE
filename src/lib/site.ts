@@ -10,10 +10,13 @@ export const SOCIAL_LINKS = {
   telegram: "https://t.me/BitcoinDeepa",
   x: "https://x.com/pearlofsatoshi",
   instagram: "https://instagram.com/bitcoindeepa",
-  github: "https://github.com/CeyLabs",
+  github: "https://github.com/bitcoindeepa",
 } as const;
 
 export const CONTACT_EMAIL = "hello@bitcoindeepa.com";
+
+/** The Bitcoin Deepa web app (also runs as a Telegram Mini App). */
+export const APP_URL = "https://app.bitcoindeepa.com";
 
 /** Absolute URL for a site path ("/terms" → "https://www.bitcoindeepa.com/terms"). */
 export function absoluteUrl(path = "/"): string {

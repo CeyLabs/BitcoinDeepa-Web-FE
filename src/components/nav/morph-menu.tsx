@@ -74,30 +74,41 @@ export function MenuItem({ item, onNavigate }: { item: NavLinkItem; onNavigate: 
 const TILE_SIZES = "208px";
 
 /** next/image's optimised srcset for a tile, shared by the tile and the idle preload. */
-function tileImageProps(feature: NavFeature) {
-  const { src, width, height, alt } = feature.image;
+function tileImageProps(image: NonNullable<NavFeature["image"]>) {
+  const { src, width, height, alt } = image;
   return getImageProps({ src, width, height, alt, sizes: TILE_SIZES, quality: 80 }).props;
 }
 
+function TileMedia({ feature }: { feature: NavFeature }) {
+  const { Art, image } = feature;
+  if (Art) return <Art />;
+  if (!image) return null;
+  const { alt, ...img } = tileImageProps(image);
+  return (
+    <>
+      {/* eslint-disable-next-line @next/next/no-img-element -- props come from getImageProps */}
+      <img {...img} alt={alt} className="absolute inset-0 size-full object-cover" />
+      {feature.video && (
+        <video
+          src={feature.video}
+          poster={img.src}
+          autoPlay
+          muted
+          loop
+          playsInline
+          aria-hidden
+          className="absolute inset-0 size-full object-cover motion-reduce:hidden"
+        />
+      )}
+    </>
+  );
+}
+
 function FeatureTile({ feature, onNavigate }: { feature: NavFeature; onNavigate: () => void }) {
-  const { alt, ...img } = tileImageProps(feature);
   const content = (
     <>
       <span className="relative block min-h-0 flex-1 overflow-hidden bg-zinc-950">
-        {/* eslint-disable-next-line @next/next/no-img-element -- props come from getImageProps */}
-        <img {...img} alt={alt} className="absolute inset-0 size-full object-cover" />
-        {feature.video && (
-          <video
-            src={feature.video}
-            poster={img.src}
-            autoPlay
-            muted
-            loop
-            playsInline
-            aria-hidden
-            className="absolute inset-0 size-full object-cover motion-reduce:hidden"
-          />
-        )}
+        <TileMedia feature={feature} />
       </span>
       <span className="block px-3 py-2.5">
         <span className="flex items-center gap-1 text-sm leading-5 font-medium text-white">
@@ -146,8 +157,8 @@ function usePreloadTiles() {
   useEffect(() => {
     const preload = () => {
       for (const menu of NAV_MENUS) {
-        if (!menu.feature) continue;
-        const props = tileImageProps(menu.feature);
+        if (!menu.feature?.image) continue;
+        const props = tileImageProps(menu.feature.image);
         const img = new window.Image();
         // sizes before srcset, so the browser picks the same candidate as the tile.
         img.sizes = props.sizes ?? TILE_SIZES;

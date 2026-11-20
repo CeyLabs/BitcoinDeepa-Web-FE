@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { BTC_PATTERN_STYLE, HERITAGE_STRIP, IMG } from "./brand-data";
+import { IMG } from "./brand-data";
 import { DownloadAllButton, DownloadSvgButton } from "./components/DownloadKit";
 import { DynamicIslandTOC } from "./components/DynamicIslandTOC";
 import { TableOfContents } from "./components/TableOfContents";
@@ -8,6 +8,7 @@ import { AssetsSection, PatternsSection, VoiceSection } from "./sections/Closing
 import { ColourSection } from "./sections/ColourSection";
 import { IdeaSection } from "./sections/IdeaSection";
 import { LogoSection } from "./sections/LogoSection";
+import { ProfilePictureSection } from "./sections/ProfilePictureSection";
 import { TypographySection } from "./sections/TypographySection";
 import { BackgroundsSection, ClearSpaceSection, MisuseSection } from "./sections/UsageSections";
 
@@ -37,87 +38,54 @@ export default function BrandPage() {
 
       <DynamicIslandTOC />
 
-      <div className="relative min-h-screen overflow-x-clip bg-black">
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-[700px] bg-[radial-gradient(ellipse_at_top,rgba(248,147,26,0.14),transparent_60%)]" />
-
-        <div className="relative mx-auto max-w-(--breakpoint-2xl) px-4 pb-24 pt-32 sm:px-6 lg:pb-40">
-          {/* Masthead */}
+      <div className="relative overflow-x-clip bg-black">
+        <div className="mx-auto max-w-7xl px-4 pb-24 pt-36 sm:px-6 md:pb-32 md:pt-44 lg:px-8">
+          {/* Hero: same frame as the other pages, text left and the lockup right. */}
           <header
             id="brand-guidelines"
-            className="scroll-mt-28 overflow-hidden rounded-xl bg-black ring-1 ring-white/10"
-            style={BTC_PATTERN_STYLE}
+            className="grid scroll-mt-28 items-center gap-12 md:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] md:gap-16"
           >
-            <div className="grid items-end gap-10 bg-linear-to-r from-black via-black/90 to-black/40 px-6 py-12 sm:px-10 md:grid-cols-[1.2fr_1fr] md:py-16 lg:px-14">
-              <div>
-                <h1 className="mb-5 type-display text-white">
-                  Bitcoin Deepa <em className="text-[#F8931A]">brand guidelines</em>
-                </h1>
-                <p className="max-w-xl text-lg text-zinc-300">
-                  How to use the logo, colours, type and pattern of Bitcoin Deepa, the CeylonCash
-                  brand that brings Bitcoin to Sri Lanka.
-                </p>
-                <div className="mt-6 flex flex-wrap gap-2">
-                  {["Marketing materials", "Press", "Partners", "Brand assets"].map((tag) => (
-                    <span
-                      key={tag}
-                      className="flex h-7 items-center rounded-md bg-zinc-800 px-2.5 text-sm text-zinc-300"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-                <div className="mt-7 grid gap-3 sm:flex sm:flex-wrap sm:items-center">
-                  <DownloadAllButton />
-                  <DownloadSvgButton />
-                </div>
-                <p className="mt-2.5 text-xs text-zinc-500">SVG + PNG · 44 files · 15 MB zip</p>
-                <dl className="mt-7 flex flex-wrap gap-x-6 gap-y-2 text-xs font-bold uppercase tracking-wider text-zinc-500">
-                  <div className="flex gap-1.5">
-                    <dt>Version</dt>
-                    <dd className="text-white">1.0</dd>
-                  </div>
-                  <div className="flex gap-1.5">
-                    <dt>Updated</dt>
-                    <dd className="text-white">October 2026</dd>
-                  </div>
-                  <div className="flex gap-1.5">
-                    <dt>Brand owner</dt>
-                    <dd className="text-white">CeylonCash</dd>
-                  </div>
-                </dl>
+            <div>
+              <h1 className="type-display text-white">
+                Bitcoin <span className="font-sinhala text-bitcoin">දීප</span>
+                <span className="block">Brand guidelines</span>
+              </h1>
+              <p className="mt-6 max-w-2xl type-lede text-zinc-300">
+                How to use the logo, colours, type and pattern of Bitcoin Deepa, the CeylonCash
+                brand that brings Bitcoin to Sri Lanka. For marketing, press and partners.
+              </p>
+              <div className="cta-row mt-10">
+                <DownloadAllButton />
+                <DownloadSvgButton />
               </div>
-              <Image
-                src={IMG.sloganWhite.src}
-                alt="Bitcoin Deepa logo with the slogan Pearl of Satoshi"
-                width={IMG.sloganWhite.w}
-                height={IMG.sloganWhite.h}
-                sizes="(min-width: 768px) 320px, 220px"
-                priority
-                className="h-auto w-[220px] justify-self-center md:w-[320px] md:justify-self-end"
-              />
+              <p className="mt-5 text-sm text-zinc-500">
+                SVG + PNG · 47 files · 17 MB · Version 1.0 · Updated October 2026 · Brand owner
+                CeylonCash
+              </p>
             </div>
-            <div className="flex h-5 gap-1.5 bg-black px-1.5 pb-1.5" aria-hidden="true">
-              {HERITAGE_STRIP.map((s, i) => (
-                <span
-                  key={i}
-                  className="rounded-b-md"
-                  style={{ background: s.c, flexGrow: s.f, flexBasis: 0 }}
-                />
-              ))}
-            </div>
+            <Image
+              src={IMG.sloganPrimaryWhite.src}
+              alt="Bitcoin Deepa logo with the slogan Pearl of Satoshi"
+              width={IMG.sloganPrimaryWhite.w}
+              height={IMG.sloganPrimaryWhite.h}
+              sizes="(min-width: 768px) 300px, 200px"
+              priority
+              className="mx-auto h-auto w-[200px] md:mr-0 md:w-[300px]"
+            />
           </header>
 
-          <div className="mt-16 grid grid-cols-1 lg:grid-cols-[250px_minmax(0,1fr)] lg:gap-12">
+          <div className="mt-24 grid grid-cols-1 border-t border-zinc-800 pt-16 md:mt-32 md:pt-24 lg:grid-cols-[200px_minmax(0,1fr)] lg:gap-16">
             <aside className="relative hidden lg:block">
-              <div className="sticky top-28">
+              <div className="sticky top-32">
                 <TableOfContents />
               </div>
             </aside>
 
-            <main className="min-w-0 space-y-24">
+            <main className="min-w-0 space-y-24 md:space-y-32">
               <IdeaSection />
               <LogoSection />
               <AppIconSection />
+              <ProfilePictureSection />
               <BackgroundsSection />
               <ClearSpaceSection />
               <MisuseSection />

@@ -40,7 +40,7 @@ const CHANNELS: Channel[] = [
   { tag: "Meetups", name: "Luma", detail: "Events calendar", href: "https://lu.ma/bitcoindeepa", Icon: CalendarDays },
   { tag: "Tools", name: "BitcoinDeepaBot", detail: "Lightning wallet on Telegram", href: "https://t.me/bitcoindeepabot", Icon: Bot },
   { tag: "Learning", name: "Blog", detail: "blog.bitcoindeepa.com", href: "https://blog.bitcoindeepa.com", Icon: Newspaper },
-  { tag: "Engineering", name: "GitHub", detail: "CeyLabs", href: SOCIAL_LINKS.github, Icon: Github },
+  { tag: "Engineering", name: "GitHub", detail: "bitcoindeepa", href: SOCIAL_LINKS.github, Icon: Github },
   { tag: "Contact", name: "Email", detail: CONTACT_EMAIL, href: `mailto:${CONTACT_EMAIL}`, Icon: Mail },
 ];
 
