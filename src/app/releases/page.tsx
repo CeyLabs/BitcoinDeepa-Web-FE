@@ -221,7 +221,7 @@ export default function ReleasesPage() {
                     </p>
                     <Link href={currentRepo.githubUrl} target="_blank">
                       <Button
-                        variant="outline"
+                        variant="secondary"
                         className="border-[1.5px] border-white bg-transparent text-white hover:border-bitcoin hover:bg-transparent hover:text-bitcoin"
                       >
                         <Github className="h-4 w-4 mr-2" />

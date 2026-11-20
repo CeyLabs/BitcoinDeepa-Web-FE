@@ -152,6 +152,27 @@ export const TelegramIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
+/**
+ * External-link arrow: a 9px hairline drawn as one filled shape with round
+ * ends, so it stays crisp at small sizes where stroked icons go soft.
+ */
+export const ExternalArrow = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 9 9" width="9" height="9" fill="currentColor" aria-hidden="true" focusable="false" className={className}>
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M0.646453 8.3536C0.451182 8.1583 0.451182 7.8417 0.646453 7.6465L7.2929 1H3C2.72386 1 2.5 0.77614 2.5 0.5C2.5 0.22386 2.72386 0 3 0H8.5C8.6326 0 8.7598 0.05268 8.8536 0.14645C8.9473 0.24022 9 0.36739 9 0.5V6.00001C9 6.27615 8.7761 6.50001 8.5 6.50001C8.2239 6.50001 8 6.27615 8 6.00001V1.70711L1.35355 8.3536C1.15829 8.5488 0.841713 8.5488 0.646453 8.3536Z"
+    />
+  </svg>
+);
+
+/** Luma's four-point sparkle mark, in one colour to sit with the other social icons. */
+export const LumaIcon = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="currentColor">
+    <path d="M12 1.5c.5 5.6 4.4 9.6 10.5 10.5-6.1.9-10 4.9-10.5 10.5-.5-5.6-4.4-9.6-10.5-10.5C7.6 11.1 11.5 7.1 12 1.5Z" />
+  </svg>
+);
+
 export const InstagramIcon = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 24 24" className={className} fill="currentColor">
     <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />

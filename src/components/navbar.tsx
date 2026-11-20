@@ -4,7 +4,8 @@ import { useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronDown, Rocket } from "lucide-react";
+import { ArrowUpRight, ChevronDown } from "lucide-react";
+import { Button } from "./ui/button";
 import { fbEvent } from "@/src/lib/facebook-pixel";
 import { cn } from "@/src/lib/utils";
 import { SOCIAL_LINKS } from "@/src/lib/site";
@@ -38,8 +39,10 @@ export default function Navbar() {
           ref={barRef}
           className="relative bg-[#1D1E1D]/85 backdrop-blur-xl rounded-3xl border border-zinc-800/50 shadow-lg overflow-visible"
         >
-          <div className="flex items-center justify-between h-16 px-6">
-            <Link href="/" className="flex items-center" onClick={closeMobile}>
+          {/* Desktop: three columns with equal-width sides, so the menu sits at
+              the exact centre of the bar however wide the logo or actions are. */}
+          <div className="flex h-16 items-center justify-between px-6 lg:grid lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] lg:gap-3">
+            <Link href="/" className="flex items-center justify-self-start" onClick={closeMobile}>
               <Image
                 src="/images/brand/DeepaLogo_WnO.svg"
                 alt={brand}
@@ -50,27 +53,26 @@ export default function Navbar() {
               />
             </Link>
 
-            {/* Desktop navigation, centred in the bar. */}
-            <div className="hidden md:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+            <div className="hidden justify-center lg:flex">
               <MorphMenu boundsRef={barRef} />
             </div>
 
-            <div className="hidden md:flex items-center gap-3">
+            {/* Kept compact so it fits its side column at every width. */}
+            <div className="hidden shrink-0 items-center gap-2 justify-self-end lg:flex">
               <div className="hidden xl:block">
-                <PriceTicker className="min-w-[165px]" />
+                {/* Same 40px height as the sm button beside it. */}
+                <PriceTicker className="h-10 min-w-[160px] px-3 py-0" />
               </div>
-              <Link
-                href={TELEGRAM_INVITE}
-                onClick={() => fbEvent("Lead")}
-                className="px-5 py-2 text-sm font-semibold text-black bg-bitcoin hover:bg-bitcoin-dark transition-colors rounded-xl flex items-center whitespace-nowrap"
-              >
-                Join the Community
-              </Link>
+              <Button asChild size="sm">
+                <a href={TELEGRAM_INVITE} target="_blank" rel="noopener noreferrer" onClick={() => fbEvent("Lead")}>
+                  Join us
+                </a>
+              </Button>
             </div>
 
             {/* Mobile menu button */}
             <button
-              className="md:hidden relative w-6 h-6 flex justify-center items-center"
+              className="lg:hidden relative w-6 h-6 flex justify-center items-center"
               onClick={() => (isMenuOpen ? closeMobile() : setIsMenuOpen(true))}
               aria-label={isMenuOpen ? "Close menu" : "Open menu"}
               aria-expanded={isMenuOpen}
@@ -109,7 +111,7 @@ export default function Navbar() {
                 animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
                 transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-                className="md:hidden overflow-hidden"
+                className="lg:hidden overflow-hidden"
               >
                 <div className="space-y-2 border-t border-zinc-800 p-3">
                   {NAV_MENUS.map((menu) => {
@@ -180,17 +182,20 @@ export default function Navbar() {
                     </div>
                   </div>
 
-                  <Link
-                    href={TELEGRAM_INVITE}
-                    className="flex items-center justify-center gap-2 rounded-xl bg-bitcoin px-5 py-3 font-semibold text-black transition-colors hover:bg-bitcoin-dark"
-                    onClick={() => {
-                      fbEvent("Lead");
-                      closeMobile();
-                    }}
-                  >
-                    Join the community
-                    <Rocket className="size-4" />
-                  </Link>
+                  <Button asChild size="lg" className="w-full">
+                    <a
+                      href={TELEGRAM_INVITE}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => {
+                        fbEvent("Lead");
+                        closeMobile();
+                      }}
+                    >
+                      Join the community
+                      <ArrowUpRight />
+                    </a>
+                  </Button>
                 </div>
               </motion.nav>
             )}

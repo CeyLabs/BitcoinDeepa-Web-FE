@@ -71,6 +71,17 @@ export const IMG = {
   spikyCharcoal: `${KIT}/08-Patterns/Secondary_SpikyTiles_Charcoal.png`,
 } as const;
 
+/** Heritage colour strip under mastheads (maroon, gold, green, thambili, orange, gold, maroon). */
+export const HERITAGE_STRIP = [
+  { c: "#8D183A", f: 3 },
+  { c: "#FFBE2B", f: 1 },
+  { c: "#00544F", f: 2 },
+  { c: "#EA7400", f: 1 },
+  { c: "#F8931A", f: 4 },
+  { c: "#FFBE2B", f: 1 },
+  { c: "#8D183A", f: 2 },
+] as const;
+
 /** The staggered ₿ field, used as a quiet background texture. */
 export const BTC_PATTERN_STYLE = {
   backgroundImage: `url('${IMG.btcPatternTile}')`,

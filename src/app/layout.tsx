@@ -30,12 +30,16 @@ const ubuntu = Ubuntu({
   display: "swap",
 });
 
+// Only Ubuntu (every heading, the hero) is preloaded. The secondary font
+// (form fields) and Sinhala load on first use instead of competing with the
+// hero on the critical path; `swap` means text never waits for them.
 const nunitoSans = Nunito_Sans({
   subsets: ["latin"],
   style: ["normal", "italic"],
   axes: ["wdth", "opsz"],
   variable: "--font-nunito-sans",
   display: "swap",
+  preload: false,
 });
 
 const notoSinhala = Noto_Sans_Sinhala({
@@ -43,6 +47,7 @@ const notoSinhala = Noto_Sans_Sinhala({
   weight: ["400", "700"],
   variable: "--font-noto-sinhala",
   display: "swap",
+  preload: false,
 });
 
 export const metadata: Metadata = {
@@ -53,6 +58,18 @@ export const metadata: Metadata = {
   },
   description: SITE_DESCRIPTION,
   applicationName: SITE_NAME,
+  // Brand app icon. Tabs: the large-glyph cut (the guidelines' choice for 48px
+  // and below) with rounded corners baked in, since tabs don't mask icons;
+  // white tile in light tabs, Cold Storage Charcoal in dark. favicon.ico
+  // (src/app) is the same artwork for browsers that ignore `media`.
+  // Home screen: the standard cut, square, because iOS applies its own mask.
+  icons: {
+    icon: [
+      { url: "/icons/favicon-light.png", type: "image/png", sizes: "64x64", media: "(prefers-color-scheme: light)" },
+      { url: "/icons/favicon-dark.png", type: "image/png", sizes: "64x64", media: "(prefers-color-scheme: dark)" },
+    ],
+    apple: [{ url: "/icons/apple-touch-icon.png", type: "image/png", sizes: "180x180" }],
+  },
   referrer: "origin-when-cross-origin",
   keywords: [
     "Bitcoin",

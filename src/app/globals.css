@@ -117,7 +117,48 @@
 
   --animate-shimmer-text: shimmer-text 2s infinite linear;
   --animate-float: float 6s ease-in-out infinite;
+  /* Endless strip: content is rendered twice and shifted by half its width. */
+  --animate-marquee: marquee var(--marquee-duration, 80s) linear infinite;
+  /* Join section coin: a slow turn either side, like it's hanging in the air. */
+  @keyframes coin-sway {
+    0%,
+    100% {
+      transform: rotateY(-18deg) rotateX(4deg);
+    }
+    50% {
+      transform: rotateY(18deg) rotateX(-4deg);
+    }
+  }
 
+  /* Accordion panels open/close to Radix's measured content height. */
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
   @keyframes shimmer-text {
     0% {
       background-position: 200% 0;
@@ -164,6 +205,14 @@
   h3,
   h4 {
     @apply font-display;
+    /* Even line lengths in headings; no orphans in body copy. */
+    text-wrap: balance;
+  }
+  p,
+  li,
+  figcaption,
+  blockquote {
+    text-wrap: pretty;
   }
   input,
   textarea,
@@ -174,6 +223,153 @@
   button:not(:disabled),
   [role="button"]:not(:disabled) {
     cursor: pointer;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Type scale. Pick a role, not a size: every heading on the site uses  */
+/* one of these, so sizes, leading and tracking stay consistent.        */
+/* Tracking tightens as size grows; all headings are Ubuntu Medium.     */
+/* ------------------------------------------------------------------ */
+
+/* Page heroes and short statement headlines ("Tap. Pay. Done."). */
+@utility type-display {
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  line-height: 0.96;
+  letter-spacing: -0.045em;
+  font-weight: 500;
+  text-wrap: balance;
+}
+/* Sentence-length headlines that must stay readable (home hero). */
+@utility type-h1 {
+  font-size: clamp(2.5rem, 5.4vw, 4rem);
+  line-height: 1.04;
+  letter-spacing: -0.04em;
+  font-weight: 500;
+  text-wrap: balance;
+}
+/* Section headings. */
+@utility type-h2 {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  font-weight: 500;
+  text-wrap: balance;
+}
+/* Panel, card-group and sub-section headings. */
+@utility type-h3 {
+  font-size: clamp(1.875rem, 3.4vw, 3rem);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  font-weight: 500;
+  text-wrap: balance;
+}
+/* The intro paragraph under a heading. Colour is set where it's used. */
+@utility type-lede {
+  font-size: 1.125rem;
+  line-height: 1.65;
+  text-wrap: pretty;
+  @media (width >= 48rem) {
+    font-size: 1.25rem;
+  }
+}
+/* Small uppercase labels above headings or on chips. */
+@utility type-eyebrow {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* ------------------------------------------------------------------ */
+/* Entrances, in CSS only, so content never waits for JavaScript.      */
+/* Server-rendered HTML is always visible; nothing starts at opacity 0 */
+/* in markup.                                                          */
+/* ------------------------------------------------------------------ */
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    translate: 0 16px;
+  }
+}
+
+/* Above the fold: plays on first paint. Stagger with style={{ "--enter-delay": "100ms" }}. */
+@utility animate-enter {
+  animation: rise-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) var(--enter-delay, 0ms) both;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+/* Below the fold: rises in as it scrolls into view, tied to scroll
+   position (so it can never get stuck invisible). Browsers without
+   scroll-driven animations simply show it. */
+@utility reveal {
+  @supports (animation-timeline: view()) {
+    animation: rise-in linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 30%;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+/* Join section: the two hands travel in from the sides as the section
+   scrolls up, driven by the browser (no JS). Unsupported: they just sit. */
+@keyframes hand-in-left {
+  from {
+    opacity: 0;
+    translate: -22% 0;
+  }
+}
+@keyframes hand-in-right {
+  from {
+    opacity: 0;
+    translate: 22% 0;
+  }
+}
+@utility hand-in-left {
+  @supports (animation-timeline: view()) {
+    animation: hand-in-left linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 45%;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+@utility hand-in-right {
+  @supports (animation-timeline: view()) {
+    animation: hand-in-right linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 45%;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+/* A row of call-to-action buttons. Phones: equal-width columns side by side
+   (two buttons share the row 50/50; a lone button spans it), with tighter
+   side padding so short labels fit. From 640px: an inline row at natural
+   widths. Add sm:justify-center where centred. Pair with short phone labels. */
+@utility cta-row {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: 0.75rem;
+  & > * {
+    padding-inline: 1rem;
+  }
+  @media (width >= 40rem) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    & > * {
+      padding-inline: revert-layer;
+    }
   }
 }
 

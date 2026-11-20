@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { buttonVariants } from "@/src/components/ui/button";
 
 // Branded 404. Without this file Next.js falls back to its built-in page, which
 // follows the visitor's OS colour scheme and renders white in light mode.
@@ -40,17 +41,11 @@ export default function NotFound() {
           made it into the chain.
         </p>
 
-        <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
-          <Link
-            href="/"
-            className="rounded-xl bg-bitcoin px-5 py-2.5 text-sm font-semibold text-black transition-colors hover:bg-bitcoin-dark"
-          >
+        <div className="cta-row mt-10 sm:justify-center">
+          <Link href="/" className={buttonVariants()}>
             Back to home
           </Link>
-          <Link
-            href="/satoshi-to-usd-and-lkr-converter"
-            className="rounded-xl border-[1.5px] border-white px-5 py-2.5 text-sm font-medium text-white transition-colors hover:border-bitcoin hover:text-bitcoin"
-          >
+          <Link href="/satoshi-to-usd-and-lkr-converter" className={buttonVariants({ variant: "secondary" })}>
             Sats converter
           </Link>
         </div>

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { BTC_PATTERN_STYLE, IMG } from "./brand-data";
+import { BTC_PATTERN_STYLE, HERITAGE_STRIP, IMG } from "./brand-data";
 import { DownloadAllButton, DownloadSvgButton } from "./components/DownloadKit";
 import { DynamicIslandTOC } from "./components/DynamicIslandTOC";
 import { TableOfContents } from "./components/TableOfContents";
@@ -12,17 +12,6 @@ import { TypographySection } from "./sections/TypographySection";
 import { BackgroundsSection, ClearSpaceSection, MisuseSection } from "./sections/UsageSections";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://www.bitcoindeepa.com";
-
-// Heritage colour strip under the masthead (maroon, gold, green, thambili, orange, gold, maroon).
-const STRIP = [
-  { c: "#8D183A", f: 3 },
-  { c: "#FFBE2B", f: 1 },
-  { c: "#00544F", f: 2 },
-  { c: "#EA7400", f: 1 },
-  { c: "#F8931A", f: 4 },
-  { c: "#FFBE2B", f: 1 },
-  { c: "#8D183A", f: 2 },
-];
 
 export default function BrandPage() {
   return (
@@ -60,7 +49,7 @@ export default function BrandPage() {
           >
             <div className="grid items-end gap-10 bg-linear-to-r from-black via-black/90 to-black/40 px-6 py-12 sm:px-10 md:grid-cols-[1.2fr_1fr] md:py-16 lg:px-14">
               <div>
-                <h1 className="mb-5 text-balance text-4xl font-bold leading-none tracking-tight text-white sm:text-5xl lg:text-6xl">
+                <h1 className="mb-5 type-display text-white">
                   Bitcoin Deepa <em className="text-[#F8931A]">brand guidelines</em>
                 </h1>
                 <p className="max-w-xl text-lg text-zinc-300">
@@ -77,7 +66,7 @@ export default function BrandPage() {
                     </span>
                   ))}
                 </div>
-                <div className="mt-7 flex flex-wrap items-center gap-3">
+                <div className="mt-7 grid gap-3 sm:flex sm:flex-wrap sm:items-center">
                   <DownloadAllButton />
                   <DownloadSvgButton />
                 </div>
@@ -108,7 +97,7 @@ export default function BrandPage() {
               />
             </div>
             <div className="flex h-5 gap-1.5 bg-black px-1.5 pb-1.5" aria-hidden="true">
-              {STRIP.map((s, i) => (
+              {HERITAGE_STRIP.map((s, i) => (
                 <span
                   key={i}
                   className="rounded-b-md"

@@ -49,12 +49,14 @@ const nextConfig = {
         source: '/(.*)',
         headers: [
           {
+            // Only origins the browser itself contacts. Event and news images
+            // come through /_next/image (same origin), and the blog is only
+            // linked, so preconnecting to those would just waste a connection.
             key: 'Link',
             value: [
               '<https://connect.facebook.net>; rel=preconnect',
+              // Events API, fetched from the browser.
               '<https://ceylabs.io>; rel=preconnect',
-              '<https://images.lumacdn.com>; rel=preconnect',
-              '<https://blog.bitcoindeepa.com>; rel=preconnect',
             ].join(', '),
           },
         ],
