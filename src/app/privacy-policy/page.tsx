@@ -32,8 +32,8 @@ export default function Privacy() {
     <LegalPage
       title="Privacy Policy"
       tag="Data & Privacy"
-      updated="Nov 09, 2026"
-      updatedIso="2026-11-09"
+      updated="Nov 12, 2026"
+      updatedIso="2026-11-12"
       path="/privacy-policy"
       sections={SECTIONS}
     >
@@ -140,6 +140,13 @@ export default function Privacy() {
           We use cookies and similar technologies to enhance your browsing
           experience, analyze website traffic, and gather information about your
           preferences and interactions with our website.
+        </p>
+        <p>
+          This includes the Meta Pixel, which we use to understand how visitors
+          find us and how our ads perform. It shares information such as the
+          pages you visit, your browser and device details and a Meta cookie
+          with Meta Platforms. You can limit this through your browser&apos;s
+          privacy settings or your Meta ad preferences.
         </p>
         <p>
           You have the option to disable cookies through your browser settings,
