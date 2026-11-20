@@ -20,7 +20,7 @@ const SOCIALS: Array<{ label: string; href: string; Icon: ComponentType<{ classN
   { label: "X (@pearlofsatoshi)", href: SOCIAL_LINKS.x, Icon: TwitterIcon },
   { label: "Instagram (@bitcoindeepa)", href: SOCIAL_LINKS.instagram, Icon: InstagramIcon },
   { label: "Events on Luma", href: "https://lu.ma/bitcoindeepa", Icon: LumaIcon },
-  { label: "GitHub (CeyLabs)", href: SOCIAL_LINKS.github, Icon: Github },
+  { label: "GitHub", href: SOCIAL_LINKS.github, Icon: Github },
 ];
 
 const Footer = () => {

@@ -10,7 +10,7 @@ export const SOCIAL_LINKS = {
   telegram: "https://t.me/BitcoinDeepa",
   x: "https://x.com/pearlofsatoshi",
   instagram: "https://instagram.com/bitcoindeepa",
-  github: "https://github.com/CeyLabs",
+  github: "https://github.com/bitcoindeepa",
 } as const;
 
 export const CONTACT_EMAIL = "hello@bitcoindeepa.com";
