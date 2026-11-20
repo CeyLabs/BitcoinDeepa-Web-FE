@@ -122,7 +122,10 @@ async function loadExchangeRates(): Promise<void> {
 
     exchangeRates = {
       usdRate: usdPerSat ?? 0,
-      lkrRate: lkrPerSatFromUsd ?? lkrPerSatFromBtc ?? 0,
+      // Ceylon Cash's own BTC->LKR rate first, so the converter matches the
+      // navbar ticker and the SATS/BTC rates we link as the source. USD x the
+      // bank's USD selling rate is only a fallback.
+      lkrRate: lkrPerSatFromBtc ?? lkrPerSatFromUsd ?? 0,
       // Only the BTC conversion is fixed and always correct
       btcRate: CONVERSION_CONSTANTS.SATS_TO_BTC,
     }

@@ -1,14 +1,24 @@
 "use client";
 
 import type React from "react";
-import { useState, useEffect, useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { useState, useEffect } from "react";
 import { useSatsConverterSync } from "../hooks/use-sats-converter-sync";
+import { cn } from "../lib/utils";
 
 import { ConverterInput } from "./sats-converter/converter-input";
 import { InfoSection } from "./sats-converter/info-section";
 
 type FieldKey = "sats" | "usd" | "btc" | "lkr";
+
+const PRESETS = [
+  { label: "1k", sats: 1_000 },
+  { label: "10k", sats: 10_000 },
+  { label: "100k", sats: 100_000 },
+  { label: "1M", sats: 1_000_000 },
+  { label: "1 BTC", sats: 100_000_000 },
+];
+
+const rateFmt = (n: number) => n.toLocaleString("en-US", { maximumFractionDigits: n >= 1000 ? 0 : 2 });
 
 const sanitizeIntegerInput = (value: string) => value.replace(/[^0-9]/g, "");
 
@@ -66,9 +76,6 @@ const formatBtcValue = (value: number) => {
 };
 
 export default function SatsConverter() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
-
   const initialSats = 10000;
   const { setSats, setFromUsd, setFromLkr, setFromBtc, result, isReady } =
     useSatsConverterSync(initialSats);
@@ -187,97 +194,141 @@ export default function SatsConverter() {
   const secondaryFieldsDisabled =
     !isReady || result.isLoading || result.hasError;
 
+  // Headline rates, derived from the latest conversion and kept when the
+  // amount is cleared (a zero amount can't tell us the rate).
+  const [rates, setRates] = useState<{ lkrPerBtc: number; lkrPerUsd: number } | null>(null);
+  useEffect(() => {
+    if (!result || result.isLoading || result.btc <= 0 || result.usd <= 0) return;
+    setRates({ lkrPerBtc: result.lkr / result.btc, lkrPerUsd: result.lkr / result.usd });
+  }, [result]);
+
+  const applyPreset = (sats: number) => {
+    setActiveField(null);
+    setInputs((prev) => ({ ...prev, sats: formatSatsValue(sats) }));
+    setSats(sats);
+  };
+
+  const loadingPlaceholder = secondaryFieldsDisabled ? "Loading rates…" : undefined;
+
   return (
-    <section
-      ref={sectionRef}
-      className="pt-28 sm:pt-28 pb-16 md:pt-32 md:pb-24 relative overflow-hidden"
-    >
-      {/* Background elements */}
-      <div className="absolute inset-0 bg-radial-[ellipse_at_top] from-bitcoin/20 via-transparent to-transparent pointer-events-none"></div>
+    <section className="relative isolate overflow-x-clip">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[560px] bg-radial-[ellipse_at_top] from-bitcoin/15 via-transparent to-transparent"
+      />
 
-      <div className="container mx-auto px-6 sm:px-8 md:px-8 relative z-10 max-w-4xl">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 20 }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-3xl sm:text-2xl md:text-4xl font-bold mb-4">
-            <span className="text-bitcoin">Sats to </span>
-            <span className="text-white">LKR</span>
-            <span className="text-white"> Converter</span>
-          </h2>
-          <p className="text-gray-400 max-w-2xl mx-auto">
-            Calculate satoshis to USD & LKR with real-time rates
-          </p>
-        </motion.div>
+      <div className="mx-auto max-w-7xl px-4 pt-36 pb-24 sm:px-6 md:pt-44 lg:px-8 lg:pb-32">
+        <div className="grid items-start gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,560px)] lg:gap-16">
+          {/* Intro */}
+          <div className="lg:sticky lg:top-32">
+            <p className="mb-5 type-eyebrow text-bitcoin">Sats converter</p>
+            <h1 className="type-display">
+              <span className="block text-white">Sats to rupees,</span>
+              <span className="block text-zinc-500">at live rates.</span>
+            </h1>
+            <p className="mt-6 max-w-xl type-lede text-zinc-300">
+              Convert between satoshis, bitcoin, US dollars and Sri Lankan rupees. Type in any field
+              and the others update instantly.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-2" aria-live="polite">
+              <span className="flex h-8 items-center rounded-md bg-zinc-900 px-3 text-sm text-zinc-300">
+                1 BTC ≈ Rs. {rates ? rateFmt(rates.lkrPerBtc) : "…"}
+              </span>
+              <span className="flex h-8 items-center rounded-md bg-zinc-900 px-3 text-sm text-zinc-300">
+                1 USD ≈ Rs. {rates ? rateFmt(rates.lkrPerUsd) : "…"}
+              </span>
+              <span className="flex h-8 items-center gap-2 rounded-md bg-zinc-900 px-3 text-sm text-zinc-400">
+                <span
+                  className={cn(
+                    "size-2 rounded-full",
+                    result.hasError ? "bg-red-500" : rates ? "bg-emerald-500" : "animate-pulse bg-zinc-500",
+                  )}
+                />
+                {result.hasError ? "Rates unavailable" : "Live from Ceylon Cash"}
+              </span>
+            </div>
+          </div>
 
-        <div className="max-w-xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 30 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="space-y-6"
-          >
-            <ConverterInput
-              value={inputs.sats}
-              onChange={handleSatsChange}
-              onFocus={handleFieldFocus("sats")}
-              onBlur={handleFieldBlur("sats")}
-              unit="SATS"
-              iconSrc="/images/icons/s_sats.webp"
-              iconAlt="Satoshi"
-              inputMode="numeric"
-            />
+          {/* Converter */}
+          <div className="rounded-xl bg-zinc-900 p-2">
+            <div className="space-y-2">
+              <ConverterInput
+                id="conv-sats"
+                value={inputs.sats}
+                onChange={handleSatsChange}
+                onFocus={handleFieldFocus("sats")}
+                onBlur={handleFieldBlur("sats")}
+                unit="SATS"
+                name="Satoshis"
+                iconSrc="/images/icons/s_sats.webp"
+                inputMode="numeric"
+              />
+              <ConverterInput
+                id="conv-btc"
+                value={inputs.btc}
+                onChange={handleBtcChange}
+                onFocus={handleFieldFocus("btc")}
+                onBlur={handleFieldBlur("btc")}
+                unit="BTC"
+                name="Bitcoin"
+                iconSrc="/images/icons/s_btc.webp"
+                inputMode="decimal"
+                placeholder={loadingPlaceholder ?? "0.0000"}
+                disabled={secondaryFieldsDisabled}
+              />
+              <ConverterInput
+                id="conv-usd"
+                value={inputs.usd}
+                onChange={handleUsdChange}
+                onFocus={handleFieldFocus("usd")}
+                onBlur={handleFieldBlur("usd")}
+                unit="USD"
+                name="US dollars"
+                iconSrc="/images/icons/s_usd.webp"
+                inputMode="decimal"
+                placeholder={loadingPlaceholder ?? "0.00"}
+                disabled={secondaryFieldsDisabled}
+              />
+              <ConverterInput
+                id="conv-lkr"
+                value={inputs.lkr}
+                onChange={handleLkrChange}
+                onFocus={handleFieldFocus("lkr")}
+                onBlur={handleFieldBlur("lkr")}
+                unit="LKR"
+                name="Sri Lankan rupees"
+                iconSrc="/images/icons/s_lkr.webp"
+                inputMode="decimal"
+                placeholder={loadingPlaceholder ?? "0.00"}
+                disabled={secondaryFieldsDisabled}
+              />
+            </div>
+            <div className="flex flex-wrap items-center gap-2 px-3 pt-4 pb-3">
+              <span className="mr-1 text-sm text-zinc-500">Quick amounts</span>
+              {PRESETS.map((p) => {
+                const active = result.sats === p.sats && activeField === null;
+                return (
+                  <button
+                    key={p.label}
+                    type="button"
+                    onClick={() => applyPreset(p.sats)}
+                    aria-pressed={active}
+                    className={cn(
+                      "flex h-8 items-center rounded-md px-2.5 text-sm font-medium tabular-nums transition-colors",
+                      active ? "bg-bitcoin text-black" : "bg-zinc-800 text-zinc-300 hover:text-white",
+                    )}
+                  >
+                    {p.label}
+                    {p.sats < 100_000_000 && <span className="ml-1 text-xs opacity-70">sats</span>}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
 
-            <ConverterInput
-              value={inputs.usd}
-              onChange={handleUsdChange}
-              onFocus={handleFieldFocus("usd")}
-              onBlur={handleFieldBlur("usd")}
-              unit="USD"
-              iconSrc="/images/icons/s_usd.webp"
-              iconAlt="USD"
-              inputMode="decimal"
-              placeholder={
-                secondaryFieldsDisabled ? "Loading rates..." : "0.00"
-              }
-              disabled={secondaryFieldsDisabled}
-            />
-
-            <ConverterInput
-              value={inputs.btc}
-              onChange={handleBtcChange}
-              onFocus={handleFieldFocus("btc")}
-              onBlur={handleFieldBlur("btc")}
-              unit="BTC"
-              iconSrc="/images/icons/s_btc.webp"
-              iconAlt="Bitcoin"
-              inputMode="decimal"
-              placeholder={
-                secondaryFieldsDisabled ? "Loading rates..." : "0.0000"
-              }
-              disabled={secondaryFieldsDisabled}
-            />
-
-            <ConverterInput
-              value={inputs.lkr}
-              onChange={handleLkrChange}
-              onFocus={handleFieldFocus("lkr")}
-              onBlur={handleFieldBlur("lkr")}
-              unit="LKR"
-              iconSrc="/images/icons/s_lkr.webp"
-              iconAlt="LKR"
-              inputMode="decimal"
-              placeholder={
-                secondaryFieldsDisabled ? "Loading rates..." : "0.00"
-              }
-              disabled={secondaryFieldsDisabled}
-            />
-
-            {/* Info Section */}
-            <InfoSection isInView={isInView} />
-          </motion.div>
+        <div className="mt-24 md:mt-32">
+          <InfoSection />
         </div>
       </div>
     </section>

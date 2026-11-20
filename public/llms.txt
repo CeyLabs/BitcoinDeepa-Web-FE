@@ -6,7 +6,10 @@ Bitcoin Deepa runs community events across Sri Lanka, a Telegram community, Bitc
 
 ## Key Pages
 
-- [Home](https://www.bitcoindeepa.com/): About the community, events, FAQ and how to join
+- [Home](https://www.bitcoindeepa.com/): The community, events, FAQ and how to join
+- [About Us](https://www.bitcoindeepa.com/about): Who we are, what we do and our journey since 2022
+- [News](https://www.bitcoindeepa.com/news): Latest posts on meetups, events and Bitcoin education from our blog
+- [Community](https://www.bitcoindeepa.com/community): Where to find us (Telegram, X, Instagram, Luma), photos from meetups and the latest news
 - [Satoshi to LKR & USD Converter](https://www.bitcoindeepa.com/satoshi-to-usd-and-lkr-converter): Convert sats to Sri Lankan Rupees, US Dollars and BTC at live rates
 - [Brand Guidelines](https://www.bitcoindeepa.com/brand): Logo, Yaka symbol, colours, typography and downloadable brand assets
 - [Release Notes](https://www.bitcoindeepa.com/releases): Changes to the website, BitcoinDeepaBot and Telegram mini app
