@@ -22,7 +22,7 @@ export default function Hero() {
               Bitcoin{" "}
               <span className="whitespace-nowrap">
                 community
-                <SriLankaFlag className="ml-[0.22em] h-[0.62em] align-[0.02em]" />
+                <SriLankaFlag className="ml-[0.18em] align-[0.02em] text-[0.9em]" />
               </span>
             </span>
           </h1>

@@ -149,7 +149,7 @@ const Footer = () => {
                       heartClicked ? "scale-100 opacity-100 blur-0" : "scale-25 opacity-0 blur-[4px]"
                     }`}
                   >
-                    ♥ <SriLankaFlag className="h-3.5" />
+                    ♥ <SriLankaFlag className="text-base" />
                   </span>
                 </motion.button>
               </div>

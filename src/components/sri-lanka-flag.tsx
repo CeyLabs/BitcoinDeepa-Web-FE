@@ -1,20 +1,21 @@
-import Image from "next/image";
 import { cn } from "@/src/lib/utils";
 
 /**
- * The national flag of Sri Lanka, unaltered: the public-domain artwork from
- * Wikimedia Commons ("Flag of Sri Lanka.svg"). Only the corners are softened
- * with CSS. Replaces the 🇱🇰 emoji, which renders differently everywhere.
+ * The 🇱🇰 flag as a native emoji. The font stack puts Apple Color Emoji first,
+ * so Apple devices show the iOS artwork; elsewhere it falls back to the
+ * platform's emoji font. Size it with font-size, not height.
  */
 export function SriLankaFlag({ className }: { className?: string }) {
   return (
-    <Image
-      src="/images/flags/lk.svg"
-      alt="Sri Lanka"
-      width={1200}
-      height={600}
-      unoptimized
-      className={cn("inline-block aspect-[2/1] w-auto rounded-[0.12em]", className)}
-    />
+    <span
+      role="img"
+      aria-label="Sri Lanka"
+      className={cn(
+        "inline-block leading-none font-['Apple_Color_Emoji','Segoe_UI_Emoji','Noto_Color_Emoji',sans-serif]",
+        className,
+      )}
+    >
+      🇱🇰
+    </span>
   );
 }
