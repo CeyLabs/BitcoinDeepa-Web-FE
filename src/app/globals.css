@@ -500,3 +500,26 @@
     @apply mt-6 overflow-x-auto rounded-xl bg-zinc-900 p-5 font-mono text-[13px] leading-relaxed whitespace-pre-wrap text-zinc-400;
   }
 }
+
+/* Nav feature tiles (src/components/nav/tile-art.tsx). */
+@keyframes tile-sheen {
+  0%,
+  15% {
+    background-position: 100% 0;
+  }
+  65%,
+  100% {
+    background-position: 0% 0;
+  }
+}
+@keyframes tile-glow {
+  0%,
+  100% {
+    opacity: 0.6;
+    transform: scale(0.92);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+}

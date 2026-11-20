@@ -11,6 +11,7 @@ import {
   TelegramDuoIcon,
   TranslateIcon,
 } from "./nav-icons";
+import { RibbonsArt, YakaArt } from "./tile-art";
 
 export const TELEGRAM_INVITE = "https://t.me/+OoVmewRlUHg1MTA1";
 
@@ -31,9 +32,11 @@ export interface NavFeature {
   href: string;
   external?: boolean;
   /** Poster image, and the only media when there is no video. */
-  image: { src: string; width: number; height: number; alt: string };
+  image?: { src: string; width: number; height: number; alt: string };
   /** Optional muted loop shown over the poster (small mp4). */
   video?: string;
+  /** Code-drawn art, used instead of an image. */
+  Art?: ComponentType;
 }
 
 export interface NavMenu {
@@ -119,13 +122,7 @@ export const NAV_MENUS: NavMenu[] = [
       caption: "See upcoming events",
       href: "https://lu.ma/bitcoindeepa",
       external: true,
-      image: {
-        src: "/media/nav/ribbons-poster.png",
-        width: 480,
-        height: 400,
-        alt: "",
-      },
-      video: "/media/nav/ribbons.mp4",
+      Art: RibbonsArt,
     },
   },
   {
@@ -155,13 +152,7 @@ export const NAV_MENUS: NavMenu[] = [
       title: "Bitcoin Deepa Card",
       caption: "Tap. Pay. Done.",
       href: "/#card",
-      image: {
-        src: "/media/nav/yaka-poster.png",
-        width: 480,
-        height: 400,
-        alt: "",
-      },
-      video: "/media/nav/yaka.mp4",
+      Art: YakaArt,
     },
   },
 ];
