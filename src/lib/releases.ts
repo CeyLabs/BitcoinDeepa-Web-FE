@@ -12,29 +12,53 @@ export const PRODUCTS = {
     name: "Website",
     full: "Bitcoin Deepa website",
     blurb: "This site: events, news, the converter and the book store.",
-    owner: "CeyLabs",
-    repo: "BitcoinDeepa-Web-FE",
+    owner: "bitcoindeepa",
+    repo: "website",
   },
   bot: {
     name: "BitcoinDeepaBot",
     full: "BitcoinDeepaBot",
     blurb: "The Telegram Lightning wallet and tip bot for group chats.",
-    owner: "CeyLabs",
-    repo: "BitcoinDeepaBot",
+    owner: "bitcoindeepa",
+    repo: "bot",
   },
   tma: {
     name: "Mini App",
     full: "BitcoinDeepaBot Mini App",
     blurb: "The Telegram Mini App that goes with the bot.",
-    owner: "CeyLabs",
-    repo: "BitcoinDeepaBot-TMA",
+    owner: "bitcoindeepa",
+    repo: "app-frontend",
   },
 } as const;
 
 export type ProductKey = keyof typeof PRODUCTS;
 export const PRODUCT_KEYS = Object.keys(PRODUCTS) as ProductKey[];
 
-export const repoUrl = (key: ProductKey) => `https://github.com/${PRODUCTS[key].owner}/${PRODUCTS[key].repo}`;
+export const GITHUB_ORG = "bitcoindeepa";
+export const GITHUB_ORG_URL = `https://github.com/${GITHUB_ORG}`;
+
+export const repoSlug = (key: ProductKey) => `${PRODUCTS[key].owner}/${PRODUCTS[key].repo}`;
+export const repoUrl = (key: ProductKey) => `https://github.com/${repoSlug(key)}`;
+
+const GITHUB_HEADERS = { Accept: "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28" };
+
+/**
+ * GET from the GitHub API. A token (optional) lifts the anonymous 60
+ * requests/hour limit; if GitHub rejects it (expired, revoked), fall back to
+ * an anonymous request so a stale secret never blanks the page.
+ */
+async function githubGet(path: string, revalidate: number): Promise<Response> {
+  const url = `https://api.github.com${path}`;
+  const token = process.env.GITHUB_TOKEN;
+  if (token) {
+    const res = await fetch(url, {
+      headers: { ...GITHUB_HEADERS, Authorization: `Bearer ${token}` },
+      next: { revalidate },
+    });
+    if (res.status !== 401) return res;
+  }
+  return fetch(url, { headers: GITHUB_HEADERS, next: { revalidate } });
+}
 
 export interface GitHubRelease {
   id: number;
@@ -55,15 +79,44 @@ export type ReleaseFeed = { releases: GitHubRelease[]; error: string | null };
 export async function getReleases(key: ProductKey): Promise<ReleaseFeed> {
   const { owner, repo } = PRODUCTS[key];
   try {
-    const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/releases?per_page=20`, {
-      headers: { Accept: "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28" },
-      next: { revalidate: 300 },
-    });
+    const res = await githubGet(`/repos/${owner}/${repo}/releases?per_page=20`, 300);
     if (!res.ok) return { releases: [], error: `GitHub returned ${res.status}` };
     const data = (await res.json()) as GitHubRelease[];
     return { releases: data.filter((r) => !r.prerelease && !r.draft), error: null };
   } catch {
     return { releases: [], error: "Couldn't reach GitHub" };
+  }
+}
+
+export interface RepoMeta {
+  description: string | null;
+  language: string | null;
+  license: string | null;
+  stars: number;
+  forks: number;
+  openIssues: number;
+  defaultBranch: string;
+  pushedAt: string;
+}
+
+/** Repo facts for the dev bar, cached for an hour. Null when GitHub can't be reached. */
+export async function getRepoMeta(key: ProductKey): Promise<RepoMeta | null> {
+  try {
+    const res = await githubGet(`/repos/${repoSlug(key)}`, 3600);
+    if (!res.ok) return null;
+    const r = await res.json();
+    return {
+      description: r.description ?? null,
+      language: r.language ?? null,
+      license: r.license?.spdx_id && r.license.spdx_id !== "NOASSERTION" ? r.license.spdx_id : null,
+      stars: r.stargazers_count ?? 0,
+      forks: r.forks_count ?? 0,
+      openIssues: r.open_issues_count ?? 0,
+      defaultBranch: r.default_branch ?? "main",
+      pushedAt: r.pushed_at,
+    };
+  } catch {
+    return null;
   }
 }
 
@@ -86,6 +139,10 @@ export const KIND_LABEL: Record<ChangeKind, string> = {
 export interface ChangeItem {
   text: string;
   kind: ChangeKind;
+  /** Conventional-commit scope, e.g. "nav" in "feat(nav): …". */
+  scope?: string;
+  /** Marked breaking with "!" (e.g. "feat!: …") or "BREAKING". */
+  breaking?: boolean;
   author?: string;
   pr?: { number: string; url: string };
 }
@@ -152,18 +209,39 @@ function parseItem(raw: string, sectionKind: ChangeKind | null, base: string): C
   }
 
   let kind: ChangeKind = sectionKind ?? "other";
+  let scope: string | undefined;
+  let breaking = /^breaking( change)?:/i.test(text);
+  if (breaking) text = text.replace(/^breaking( change)?:\s*/i, "");
   const prefix = text.match(PREFIX);
   if (prefix) {
     kind = kindFromPrefix(prefix[1]);
+    scope = prefix[2]?.slice(1, -1).trim() || undefined;
+    breaking ||= prefix[0].includes("!");
     text = text.slice(prefix[0].length);
   }
   text = capitalise(text.replace(EMOJI, "").replace(/\s{2,}/g, " ").trim());
   if (!text) return null;
-  return { text, kind, author, pr };
+  return { text, kind, scope, breaking: breaking || undefined, author, pr };
 }
+
+/** Where the repos lived before moving to the bitcoindeepa org; old notes still link there. */
+const MOVED_REPOS: Record<string, string> = {
+  "CeyLabs/BitcoinDeepa-Web-FE": "bitcoindeepa/website",
+  "CeyLabs/BitcoinDeepaBot": "bitcoindeepa/bot",
+  "CeyLabs/BitcoinDeepaBot-TMA": "bitcoindeepa/app-frontend",
+};
+const MOVED_URL = /https:\/\/github\.com\/(CeyLabs\/BitcoinDeepa(?:-Web-FE|Bot-TMA|Bot))(?=[/)\s]|$)/gi;
+
+/** Point links at a repo's old home to its new one. */
+const rewriteMovedRepos = (text: string) =>
+  text.replace(MOVED_URL, (m, slug: string) => {
+    const hit = Object.keys(MOVED_REPOS).find((k) => k.toLowerCase() === slug.toLowerCase());
+    return hit ? `https://github.com/${MOVED_REPOS[hit]}` : m;
+  });
 
 export function parseReleaseNotes(body: string | null | undefined, key: ProductKey): ParsedNotes {
   const base = repoUrl(key);
+  body = rewriteMovedRepos(body ?? "");
   const paragraphs: string[] = [];
   const items: ChangeItem[] = [];
   const newContributors: string[] = [];
