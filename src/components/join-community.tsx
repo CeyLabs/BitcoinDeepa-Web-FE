@@ -1,180 +1,138 @@
 "use client";
 
-import type React from "react";
-
-import { motion } from "framer-motion";
-import { Bitcoin, ExternalLink } from "lucide-react";
-import Link from "next/link";
-import { useEffect, useState } from "react";
+import Image from "next/image";
+import { ArrowUpRight } from "lucide-react";
+import { IMG } from "@/src/app/brand/brand-data";
 import { fbEvent } from "@/src/lib/facebook-pixel";
-import { BitcoinIcon1, BitcoinIcon2, LightningIcon } from "./icons";
 import { BrandName } from "./brand-provider";
+import { TELEGRAM_INVITE } from "./nav/nav-data";
+import { Button } from "./ui/button";
 
-const FloatingElement = ({
-  icon,
-  size,
-  initialPosition,
-  delay,
-}: {
-  icon: React.ReactNode;
-  size: number;
-  initialPosition: { x: number; y: number };
-  delay: number;
-}) => {
-  const xMovement = Math.random() * 30 + 10;
-  const yMovement = Math.random() * 30 + 10;
-  const duration = Math.random() * 10 + 15;
+// Non-breaking spaces around the dots: SVG would trim the trailing one at the seam.
+const RING_PHRASE = "BITCOIN DEEPA · PEARL OF SATOSHI · ";
+const RING_TEXT = RING_PHRASE.repeat(2);
+const COIN_EDGE = [1, 2, 3, 4, 5, 6];
+
+// Each forearm dissolves into the page towards its outer edge.
+const fadeLeft = "linear-gradient(to right, transparent 0%, #000 38%)";
+const fadeRight = "linear-gradient(to left, transparent 0%, #000 38%)";
+
+/** The Yaka mark in a round seal; the lettering ring turns slowly. */
+function YakaSeal() {
+  return (
+    <div className="relative size-28 shrink-0 sm:size-36 md:size-48 lg:size-52">
+      <svg
+        viewBox="0 0 160 160"
+        aria-hidden
+        className="absolute inset-0 size-full animate-[spin_40s_linear_infinite] motion-reduce:animate-none"
+      >
+        <defs>
+          <path id="seal-ring" d="M80,80 m-62,0 a62,62 0 1,1 124,0 a62,62 0 1,1 -124,0" />
+        </defs>
+        <circle cx="80" cy="80" r="78" fill="none" stroke="currentColor" strokeWidth="1" className="text-zinc-700" />
+        {/* textLength = ring circumference (2π·62), so the phrase closes the loop exactly. */}
+        <text className="fill-zinc-400 text-[9.5px] font-semibold">
+          <textPath href="#seal-ring" textLength={389} lengthAdjust="spacing">
+            {RING_TEXT}
+          </textPath>
+        </text>
+      </svg>
+      <div className="absolute inset-[17%] [perspective:600px]">
+        <div className="relative size-full animate-[coin-sway_7s_ease-in-out_infinite] [transform-style:preserve-3d] motion-reduce:animate-none">
+          {/* Stacked, darkened copies behind the face give the coin a real
+              edge that shows as it turns. */}
+          {COIN_EDGE.map((z) => (
+            <Image
+              key={z}
+              src="/images/join/coin.webp"
+              alt=""
+              fill
+              sizes="(min-width: 768px) 140px, 70px"
+              className="select-none"
+              style={{ transform: `translateZ(-${z}px)`, filter: "brightness(0.45)" }}
+            />
+          ))}
+          <Image src="/images/join/coin.webp" alt="" fill sizes="(min-width: 768px) 140px, 70px" className="select-none" />
+          <YakaInlay />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * The official Yaka vector set into the coin as black enamel (brand rule:
+ * on Satoshi Orange the mark is black). A dark upper-left lip and a lit
+ * lower-right lip make it read as recessed into the metal.
+ */
+function YakaInlay() {
+  const mask = {
+    maskImage: `url('${IMG.yakaBoldSvg}')`,
+    WebkitMaskImage: `url('${IMG.yakaBoldSvg}')`,
+    maskSize: "contain",
+    WebkitMaskSize: "contain",
+    maskRepeat: "no-repeat",
+    WebkitMaskRepeat: "no-repeat",
+    maskPosition: "center",
+    WebkitMaskPosition: "center",
+  } as const;
+  const layer = "absolute inset-0";
 
   return (
-    <motion.div
-      className="absolute text-bitcoin/30 pointer-events-none"
-      style={{
-        left: `${initialPosition.x}%`,
-        top: `${initialPosition.y}%`,
-        width: size,
-        height: size,
-      }}
-      initial={{ opacity: 0 }}
-      animate={{
-        opacity: [0, 0.7, 0.5, 0.7, 0],
-        x: [0, xMovement, -xMovement, xMovement / 2, 0],
-        y: [0, -yMovement, yMovement / 2, -yMovement, 0],
-        rotate: [0, 20, -20, 10, 0],
-      }}
-      transition={{
-        duration: duration,
-        repeat: Number.POSITIVE_INFINITY,
-        delay: delay,
-        ease: "easeInOut",
-      }}
-    >
-      {icon}
-    </motion.div>
+    <div className="absolute top-1/2 left-1/2 h-[54%] [transform:translate(-50%,-50%)_translateZ(0.5px)]" style={{ aspectRatio: `${IMG.yakaBold.w} / ${IMG.yakaBold.h}` }}>
+      <div className={layer} style={{ ...mask, background: "#ffd9a0", transform: "translate(0.8px, 0.8px)", opacity: 0.85 }} />
+      <div className={layer} style={{ ...mask, background: "#5a2a00", transform: "translate(-0.6px, -0.6px)" }} />
+      <div className={layer} style={{ ...mask, background: "linear-gradient(140deg, #2b2b2b 0%, #0a0a0a 55%, #000 100%)" }} />
+    </div>
   );
-};
+}
 
 export default function JoinCommunity() {
-  const [floatingElements, setFloatingElements] = useState<React.ReactNode[]>(
-    []
-  );
-
-  useEffect(() => {
-    let resizeTimeout: NodeJS.Timeout;
-
-    const generateElements = () => {
-      const elements = [];
-      const count = window.innerWidth < 768 ? 8 : 15;
-
-      const icons = [
-        (size: number) => <BitcoinIcon1 className="text-bitcoin/30" />,
-        (size: number) => <BitcoinIcon2 className="text-bitcoin/20" />,
-        (size: number) => <LightningIcon className="text-purple-500/30" />,
-        (size: number) => <Bitcoin size={size} className="text-bitcoin/25" />,
-      ];
-
-      for (let i = 0; i < count; i++) {
-        const size = Math.floor(Math.random() * 40) + 20;
-        const xPos = Math.random() * 90 + 5;
-        const yPos = Math.random() * 80 + 10;
-        const delay = Math.random() * 5;
-        const iconIndex = Math.floor(Math.random() * icons.length);
-
-        elements.push(
-          <FloatingElement
-            key={i}
-            icon={icons[iconIndex](size)}
-            size={size}
-            initialPosition={{ x: xPos, y: yPos }}
-            delay={delay}
-          />
-        );
-      }
-
-      setFloatingElements(elements);
-    };
-
-    generateElements();
-
-    const debouncedResize = () => {
-      clearTimeout(resizeTimeout);
-      resizeTimeout = setTimeout(generateElements, 300);
-    };
-
-    window.addEventListener("resize", debouncedResize);
-    return () => {
-      clearTimeout(resizeTimeout);
-      window.removeEventListener("resize", debouncedResize);
-    };
-  }, []);
-
   return (
-    <section id="join" className="py-16 md:py-24 relative overflow-hidden">
-      <div className="absolute inset-0 bg-radial-[ellipse_at_center] from-bitcoin/10 via-transparent to-transparent pointer-events-none"></div>
+    <section id="join" aria-labelledby="join-title" className="relative overflow-clip py-20 md:py-28">
+      <div className="mx-auto max-w-3xl px-4 text-center sm:px-6">
+        <h2 id="join-title" className="reveal type-display text-white">
+          Reach out. <span className="text-bitcoin">Join in.</span>
+        </h2>
+        <p className="reveal mx-auto mt-5 max-w-xl type-lede text-zinc-400">
+          Sri Lanka&apos;s fastest-growing Bitcoin community, from grassroots meetups to <BrandName />{" "}
+          initiatives by Pearl of Satoshi.
+        </p>
+      </div>
 
-      {floatingElements}
+      {/* Two hands reaching for the Yaka seal; they travel in as you scroll. */}
+      <div className="mt-10 grid grid-cols-[1fr_auto_1fr] items-center md:mt-14" aria-hidden>
+        <div className="hand-in-left flex justify-end">
+          <Image
+            src="/images/join/hand-left.webp"
+            alt=""
+            width={768}
+            height={420}
+            sizes="(min-width: 1536px) 768px, 45vw"
+            className="h-auto w-full max-w-[768px]"
+            style={{ maskImage: fadeLeft, WebkitMaskImage: fadeLeft }}
+          />
+        </div>
+        <YakaSeal />
+        <div className="hand-in-right flex justify-start">
+          <Image
+            src="/images/join/hand-right.webp"
+            alt=""
+            width={768}
+            height={420}
+            sizes="(min-width: 1536px) 768px, 45vw"
+            className="h-auto w-full max-w-[768px]"
+            style={{ maskImage: fadeRight, WebkitMaskImage: fadeRight }}
+          />
+        </div>
+      </div>
 
-      <div className="container mx-auto px-4 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="max-w-3xl mx-auto text-center"
-        >
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">
-            <span className="text-white">Join Sri Lanka's</span>
-            <span className="block text-bitcoin mt-2">
-              Fastest Growing Bitcoin Community 🇱🇰
-            </span>
-          </h2>
-          <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
-            Learn, connect, and grow with Sri Lanka’s Bitcoin community from
-            grassroots meetups to <BrandName /> initiatives by Pearl of Satoshi.
-          </p>
-
-          <div className="relative">
-            <div className="absolute inset-0 bg-bitcoin/20 blur-2xl rounded-full transform scale-75 opacity-70"></div>
-
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.98 }}
-              transition={{ type: "spring", stiffness: 400, damping: 17 }}
-              className="relative"
-            >
-              <Link
-                href="https://t.me/+OoVmewRlUHg1MTA1"
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => fbEvent('Lead')}
-                className="inline-flex items-center justify-center bg-bitcoin hover:bg-bitcoin-dark text-black font-bold py-3 px-6 rounded-xl text-base md:text-lg transition-colors duration-200 shadow-lg"
-              >
-                Join Our Community
-                <ExternalLink className="ml-2 h-5 w-5" />
-              </Link>
-            </motion.div>
-          </div>
-
-          <div className="mt-12 flex flex-row flex-wrap items-center justify-center gap-x-6 gap-y-4">
-            <div className="flex items-center gap-2">
-              <div className="w-3 h-3 rounded-full bg-bitcoin"></div>
-              <p className="text-gray-300 font-medium text-base sm:text-lg">
-                Community Meetups 🗓️
-              </p>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-3 h-3 rounded-full bg-bitcoin"></div>
-              <p className="text-gray-300 font-medium text-base sm:text-lg">
-                <BrandName /> Initiatives ⚡
-              </p>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-3 h-3 rounded-full bg-bitcoin"></div>
-              <p className="text-gray-300 font-medium text-base sm:text-lg">
-                Global Reach 🌍
-              </p>
-            </div>
-          </div>
-        </motion.div>
+      <div className="mt-10 flex justify-center px-4 md:mt-14">
+        <Button asChild size="lg">
+          <a href={TELEGRAM_INVITE} target="_blank" rel="noopener noreferrer" onClick={() => fbEvent("Lead")}>
+            Join the community on Telegram <ArrowUpRight />
+          </a>
+        </Button>
       </div>
     </section>
   );
